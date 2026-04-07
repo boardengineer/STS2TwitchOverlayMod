@@ -1,8 +1,7 @@
-using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Nodes;
-using MegaCrit.Sts2.Core.Nodes.Debug;
+using TwitchOverlayMod.Utility;
 
 namespace TwitchOverlayMod;
 
@@ -22,8 +21,6 @@ public class MainMenuPatch
     [HarmonyPostfix]
     public static void Postfix()
     {
-        var console = NDevConsole.Instance;
-        var outputBuffer = console.GetNode<RichTextLabel>("OutputContainer/OutputBuffer");
-        outputBuffer.Text += "[TwitchOverlayMod] Hello World!\n";
+        Logging.Log("Hello World!");
     }
 }
