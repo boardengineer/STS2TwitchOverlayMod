@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>13.0</LangVersion>
     <EnableDynamicLoading>true</EnableDynamicLoading>
+    <DefineConstants>$(DefineConstants);DUMP_JSON</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup>
