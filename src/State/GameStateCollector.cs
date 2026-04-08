@@ -67,11 +67,9 @@ internal static class GameStateCollector
 
         foreach (var relic in player.Relics)
         {
-            info.Relics.Add(new RelicInfo
-            {
-                Id = relic.Id.ToString(),
-                Name = relic.Title.GetRawText()
-            });
+            var seqId = RelicIdMapper.GetSequentialId(relic.Id.ToString());
+            if (seqId.HasValue)
+                info.Relics.Add(seqId.Value);
         }
 
         foreach (var potion in player.PotionSlots)
@@ -123,7 +121,7 @@ internal static class GameStateCollector
 
             var enemyInfo = new EnemyInfo
             {
-                Name = enemy.Name,
+                Id = EnemyIdMapper.GetSequentialId(enemy.Name) ?? -1,
                 CurrentHp = enemy.CurrentHp,
                 MaxHp = enemy.MaxHp,
                 Block = enemy.Block,

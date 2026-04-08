@@ -5,8 +5,8 @@ namespace TwitchOverlayMod.Models;
 
 internal class EnemyInfo
 {
-    [JsonPropertyName("name")]
-    public string Name { get; set; } = "";
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
 
     [JsonPropertyName("currentHp")]
     public int CurrentHp { get; set; }

@@ -6,45 +6,38 @@ using System.Text.Json.Serialization;
 
 namespace TwitchOverlayMod.State;
 
-internal static class CardIdMapper
+internal static class RelicIdMapper
 {
     private static Dictionary<string, int>? _map;
 
     internal static void Load()
     {
         using var stream = Assembly.GetExecutingAssembly()
-            .GetManifestResourceStream("TwitchOverlayMod.data.cards.json");
+            .GetManifestResourceStream("TwitchOverlayMod.data.relics.json");
         if (stream == null) return;
 
         using var reader = new StreamReader(stream);
         var json = reader.ReadToEnd();
-        var cards = JsonSerializer.Deserialize<List<CardEntry>>(json);
-        if (cards == null) return;
+        var relics = JsonSerializer.Deserialize<List<RelicEntry>>(json);
+        if (relics == null) return;
 
         _map = new Dictionary<string, int>();
-        foreach (var card in cards)
-        {
-            var key = $"{card.GameId}:{card.UpgradeLevel}";
-            _map.TryAdd(key, card.Id);
-        }
+        foreach (var relic in relics)
+            _map.TryAdd(relic.GameId, relic.Id);
     }
 
-    internal static int? GetSequentialId(string gameId, int upgradeLevel)
+    internal static int? GetSequentialId(string gameId)
     {
         if (_map == null) return null;
-        var key = $"{gameId}:{upgradeLevel}";
-        return _map.TryGetValue(key, out var id) ? id : null;
+        return _map.TryGetValue(gameId, out var id) ? id : null;
     }
 
-    private class CardEntry
+    private class RelicEntry
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
         [JsonPropertyName("game_id")]
         public string GameId { get; set; } = "";
-
-        [JsonPropertyName("upgrade_level")]
-        public int UpgradeLevel { get; set; }
     }
 }

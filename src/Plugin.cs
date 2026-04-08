@@ -27,6 +27,12 @@ public class Plugin
         CardIdMapper.Load();
         Logging.Log("Card ID map loaded.");
 
+        EnemyIdMapper.Load();
+        Logging.Log("Enemy ID map loaded.");
+
+        RelicIdMapper.Load();
+        Logging.Log("Relic ID map loaded.");
+
         var harmony = new Harmony("com.author.twitchoverlaymod");
         harmony.PatchAll(typeof(Plugin).Assembly);
     }

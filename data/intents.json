@@ -1,0 +1,87 @@
+[
+  {
+    "id": 0,
+    "intent_type": "attack_1",
+    "image": "attack_1.png"
+  },
+  {
+    "id": 1,
+    "intent_type": "attack_2",
+    "image": "attack_2.png"
+  },
+  {
+    "id": 2,
+    "intent_type": "attack_3",
+    "image": "attack_3.png"
+  },
+  {
+    "id": 3,
+    "intent_type": "attack_4",
+    "image": "attack_4.png"
+  },
+  {
+    "id": 4,
+    "intent_type": "attack_5",
+    "image": "attack_5.png"
+  },
+  {
+    "id": 5,
+    "intent_type": "buff",
+    "image": "buff.png"
+  },
+  {
+    "id": 6,
+    "intent_type": "debuff",
+    "image": "debuff.png"
+  },
+  {
+    "id": 7,
+    "intent_type": "defend",
+    "image": "defend.png"
+  },
+  {
+    "id": 8,
+    "intent_type": "escape",
+    "image": "escape.png"
+  },
+  {
+    "id": 9,
+    "intent_type": "heal",
+    "image": "heal.png"
+  },
+  {
+    "id": 10,
+    "intent_type": "sleep",
+    "image": "sleep.png"
+  },
+  {
+    "id": 11,
+    "intent_type": "stun",
+    "image": "stun.png"
+  },
+  {
+    "id": 12,
+    "intent_type": "summon",
+    "image": "summon.png"
+  },
+  {
+    "id": 13,
+    "intent_type": "status_card",
+    "image": "status_card.png"
+  },
+  {
+    "id": 14,
+    "intent_type": "card_debuff",
+    "image": "card_debuff.png"
+  },
+  {
+    "id": 15,
+    "intent_type": "death_blow",
+    "image": "death_blow.png"
+  },
+  {
+    "id": 16,
+    "intent_type": "unknown",
+    "image": "unknown.png"
+  }
+]
