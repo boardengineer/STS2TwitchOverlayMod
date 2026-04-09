@@ -10,6 +10,9 @@ internal class GameStatePayload
     [JsonPropertyName("combat")]
     public CombatInfo? Combat { get; set; }
 
+    [JsonPropertyName("ui")]
+    public UiInfo? Ui { get; set; }
+
     [JsonPropertyName("timestamp")]
     public long Timestamp { get; set; }
 }

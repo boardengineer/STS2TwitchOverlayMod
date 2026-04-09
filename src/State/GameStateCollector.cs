@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Runs;
 using TwitchOverlayMod.Models;
 using TwitchOverlayMod.Utility;
@@ -36,6 +37,15 @@ internal static class GameStateCollector
         catch (Exception ex)
         {
             Logging.Log($"Error collecting combat info: {ex.Message}");
+        }
+
+        try
+        {
+            payload.Ui = CollectUiInfo();
+        }
+        catch (Exception ex)
+        {
+            Logging.Log($"Error collecting UI info: {ex.Message}");
         }
 
         return payload;
@@ -153,5 +163,23 @@ internal static class GameStateCollector
         if (intents == null || intents.Count == 0) return "unknown";
 
         return string.Join(",", intents.Select(i => i.IntentType.ToString()));
+    }
+
+    private static UiInfo? CollectUiInfo()
+    {
+        var deckButton = NRun.Instance?.GlobalUi.TopBar.Deck;
+        if (deckButton == null) return null;
+
+        var windowSize = Godot.DisplayServer.WindowGetSize();
+        var screenRect = deckButton.GetViewport().GetScreenTransform() * deckButton.GetGlobalRect();
+        return new UiInfo
+        {
+            WindowWidth = windowSize.X,
+            WindowHeight = windowSize.Y,
+            DeckButtonX = screenRect.Position.X,
+            DeckButtonY = screenRect.Position.Y,
+            DeckButtonWidth = screenRect.Size.X,
+            DeckButtonHeight = screenRect.Size.Y
+        };
     }
 }
