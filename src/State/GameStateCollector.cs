@@ -75,11 +75,26 @@ internal static class GameStateCollector
                 info.Deck.Add(seqId.Value);
         }
 
-        foreach (var relic in player.Relics)
+        var relicNodes = NRun.Instance?.GlobalUi.RelicInventory.RelicNodes;
+        var screenTransform = relicNodes?.Count > 0
+            ? relicNodes[0].GetViewport().GetScreenTransform()
+            : (Godot.Transform2D?)null;
+
+        for (var i = 0; i < player.Relics.Count; i++)
         {
-            var seqId = RelicIdMapper.GetSequentialId(relic.Id.ToString());
-            if (seqId.HasValue)
-                info.Relics.Add(seqId.Value);
+            var seqId = RelicIdMapper.GetSequentialId(player.Relics[i].Id.ToString());
+            if (!seqId.HasValue) continue;
+
+            var relicInfo = new RelicInfo { Id = seqId.Value };
+
+            if (screenTransform.HasValue && relicNodes != null && i < relicNodes.Count)
+            {
+                var rect = screenTransform.Value * relicNodes[i].GetGlobalRect();
+                relicInfo.X = rect.Position.X;
+                relicInfo.Y = rect.Position.Y;
+            }
+
+            info.Relics.Add(relicInfo);
         }
 
         foreach (var potion in player.PotionSlots)
@@ -171,15 +186,17 @@ internal static class GameStateCollector
         if (deckButton == null) return null;
 
         var windowSize = Godot.DisplayServer.WindowGetSize();
-        var screenRect = deckButton.GetViewport().GetScreenTransform() * deckButton.GetGlobalRect();
+        var screenTransform = deckButton.GetViewport().GetScreenTransform();
+        var deckRect = screenTransform * deckButton.GetGlobalRect();
+
         return new UiInfo
         {
             WindowWidth = windowSize.X,
             WindowHeight = windowSize.Y,
-            DeckButtonX = screenRect.Position.X,
-            DeckButtonY = screenRect.Position.Y,
-            DeckButtonWidth = screenRect.Size.X,
-            DeckButtonHeight = screenRect.Size.Y
+            DeckButtonX = deckRect.Position.X,
+            DeckButtonY = deckRect.Position.Y,
+            DeckButtonWidth = deckRect.Size.X,
+            DeckButtonHeight = deckRect.Size.Y
         };
     }
 }
