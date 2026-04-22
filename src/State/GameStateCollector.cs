@@ -198,6 +198,7 @@ internal static class GameStateCollector
                 info.ExhaustPile.Add(seqId.Value);
         }
 
+        var targets = combatState.Players.Select(p => p.Creature).ToList();
         foreach (var enemy in combatState.Enemies)
         {
             if (enemy.IsDead) continue;
@@ -207,9 +208,15 @@ internal static class GameStateCollector
                 Id = EnemyIdMapper.GetSequentialId(enemy.Name) ?? -1,
                 CurrentHp = enemy.CurrentHp,
                 MaxHp = enemy.MaxHp,
-                Block = enemy.Block,
-                IntentId = GetIntentId(enemy)
+                Block = enemy.Block
             };
+
+            var intent = enemy.Monster?.NextMove?.Intents?.FirstOrDefault();
+            if (intent != null)
+            {
+                var animation = intent.GetAnimation(targets, enemy);
+                enemyInfo.Intent = IntentIdMapper.GetSequentialId(animation);
+            }
 
             foreach (var power in enemy.Powers)
             {
@@ -248,17 +255,6 @@ internal static class GameStateCollector
         }
 
         return info;
-    }
-
-    private static string GetIntentId(Creature enemy)
-    {
-        var move = enemy.Monster?.NextMove;
-        if (move == null) return "unknown";
-
-        var intents = move.Intents;
-        if (intents == null || intents.Count == 0) return "unknown";
-
-        return string.Join(",", intents.Select(i => i.IntentType.ToString()));
     }
 
     private static UiInfo? CollectUiInfo()

@@ -17,8 +17,8 @@ internal class EnemyInfo
     [JsonPropertyName("block")]
     public int Block { get; set; }
 
-    [JsonPropertyName("intentId")]
-    public string IntentId { get; set; } = "";
+    [JsonPropertyName("intent")]
+    public int? Intent { get; set; }
 
     [JsonPropertyName("powers")]
     public List<PowerInfo> Powers { get; set; } = [];

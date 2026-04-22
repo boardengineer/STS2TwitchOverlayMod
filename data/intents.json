@@ -2,86 +2,120 @@
   {
     "id": 0,
     "intent_type": "attack_1",
+    "title": "Aggressive",
+    "description": "This enemy intends to [gold]Attack[/gold] {IsMultiplayer:everyone |}for [blue]{Damage}[/blue] damage{Repeat:plural:| [blue]{}[/blue] times}.",
     "image": "attack_1.png"
   },
   {
     "id": 1,
     "intent_type": "attack_2",
+    "title": "Aggressive",
+    "description": "This enemy intends to [gold]Attack[/gold] {IsMultiplayer:everyone |}for [blue]{Damage}[/blue] damage{Repeat:plural:| [blue]{}[/blue] times}.",
     "image": "attack_2.png"
   },
   {
     "id": 2,
     "intent_type": "attack_3",
+    "title": "Aggressive",
+    "description": "This enemy intends to [gold]Attack[/gold] {IsMultiplayer:everyone |}for [blue]{Damage}[/blue] damage{Repeat:plural:| [blue]{}[/blue] times}.",
     "image": "attack_3.png"
   },
   {
     "id": 3,
     "intent_type": "attack_4",
+    "title": "Aggressive",
+    "description": "This enemy intends to [gold]Attack[/gold] {IsMultiplayer:everyone |}for [blue]{Damage}[/blue] damage{Repeat:plural:| [blue]{}[/blue] times}.",
     "image": "attack_4.png"
   },
   {
     "id": 4,
     "intent_type": "attack_5",
+    "title": "Aggressive",
+    "description": "This enemy intends to [gold]Attack[/gold] {IsMultiplayer:everyone |}for [blue]{Damage}[/blue] damage{Repeat:plural:| [blue]{}[/blue] times}.",
     "image": "attack_5.png"
   },
   {
     "id": 5,
     "intent_type": "buff",
+    "title": "Empower",
+    "description": "This enemy intends to use a [gold]Buff[/gold].",
     "image": "buff.png"
   },
   {
     "id": 6,
     "intent_type": "debuff",
+    "title": "Strategic",
+    "description": "This enemy intends to apply a [gold]Debuff[/gold] to you.",
     "image": "debuff.png"
   },
   {
     "id": 7,
     "intent_type": "defend",
+    "title": "Defensive",
+    "description": "This enemy intends to [gold]Block[/gold] on its turn.",
     "image": "defend.png"
   },
   {
     "id": 8,
     "intent_type": "escape",
+    "title": "Cowardly",
+    "description": "This enemy intends to [gold]Escape[/gold].",
     "image": "escape.png"
   },
   {
     "id": 9,
     "intent_type": "heal",
+    "title": "Heal",
+    "description": "This enemy intends to [gold]Heal[/gold].",
     "image": "heal.png"
   },
   {
     "id": 10,
     "intent_type": "sleep",
+    "title": "Sleeping",
+    "description": "This enemy is doing nothing this turn.",
     "image": "sleep.png"
   },
   {
     "id": 11,
     "intent_type": "stun",
+    "title": "Stunned",
+    "description": "This enemy can\u0027t act on its next turn.",
     "image": "stun.png"
   },
   {
     "id": 12,
     "intent_type": "summon",
+    "title": "Summon",
+    "description": "This enemy intends to summon [gold]Monsters[/gold].",
     "image": "summon.png"
   },
   {
     "id": 13,
     "intent_type": "status_card",
+    "title": "Strategic",
+    "description": "This enemy intends to give you [blue]{CardCount}[/blue] [gold]Status[/gold] {CardCount:plural:card|cards}.",
     "image": "status_card.png"
   },
   {
     "id": 14,
     "intent_type": "card_debuff",
+    "title": "Malicious",
+    "description": "This enemy intends to apply [gold]Afflictions[/gold] on your cards.",
     "image": "card_debuff.png"
   },
   {
     "id": 15,
     "intent_type": "death_blow",
+    "title": "Death Blow",
+    "description": "This creature is trying to take you down with it. It will attack you for [blue]{Damage}[/blue] damage before being destroyed.",
     "image": "death_blow.png"
   },
   {
     "id": 16,
     "intent_type": "unknown",
+    "title": "Unknown",
+    "description": "This enemy\u0027s intentions are [gold]Unknown[/gold].",
     "image": "unknown.png"
   }
 ]

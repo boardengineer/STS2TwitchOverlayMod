@@ -33,6 +33,9 @@ public class Plugin
         RelicIdMapper.Load();
         Logging.Log("Relic ID map loaded.");
 
+        IntentIdMapper.Load();
+        Logging.Log("Intent ID map loaded.");
+
         var harmony = new Harmony("com.author.twitchoverlaymod");
         harmony.PatchAll(typeof(Plugin).Assembly);
     }
