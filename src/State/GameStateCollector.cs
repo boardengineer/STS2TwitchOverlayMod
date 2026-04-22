@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using TwitchOverlayMod.Models;
 using TwitchOverlayMod.Utility;
@@ -176,6 +177,27 @@ internal static class GameStateCollector
                 info.Hand.Add(seqId.Value);
         }
 
+        foreach (var card in pcs.DrawPile.Cards)
+        {
+            var seqId = CardIdMapper.GetSequentialId(card.Id.ToString(), card.CurrentUpgradeLevel);
+            if (seqId.HasValue)
+                info.DrawPile.Add(seqId.Value);
+        }
+
+        foreach (var card in pcs.DiscardPile.Cards)
+        {
+            var seqId = CardIdMapper.GetSequentialId(card.Id.ToString(), card.CurrentUpgradeLevel);
+            if (seqId.HasValue)
+                info.DiscardPile.Add(seqId.Value);
+        }
+
+        foreach (var card in pcs.ExhaustPile.Cards)
+        {
+            var seqId = CardIdMapper.GetSequentialId(card.Id.ToString(), card.CurrentUpgradeLevel);
+            if (seqId.HasValue)
+                info.ExhaustPile.Add(seqId.Value);
+        }
+
         foreach (var enemy in combatState.Enemies)
         {
             if (enemy.IsDead) continue;
@@ -200,6 +222,29 @@ internal static class GameStateCollector
             }
 
             info.Enemies.Add(enemyInfo);
+        }
+
+        var combatUi = NCombatRoom.Instance?.Ui;
+        if (combatUi != null)
+        {
+            var screenTransform = combatUi.GetViewport().GetScreenTransform();
+            var drawRect = screenTransform * combatUi.DrawPile.GetGlobalRect();
+            info.DrawPileButtonX = drawRect.Position.X;
+            info.DrawPileButtonY = drawRect.Position.Y;
+            info.DrawPileButtonWidth = drawRect.Size.X;
+            info.DrawPileButtonHeight = drawRect.Size.Y;
+
+            var discardRect = screenTransform * combatUi.DiscardPile.GetGlobalRect();
+            info.DiscardPileButtonX = discardRect.Position.X;
+            info.DiscardPileButtonY = discardRect.Position.Y;
+            info.DiscardPileButtonWidth = discardRect.Size.X;
+            info.DiscardPileButtonHeight = discardRect.Size.Y;
+
+            var exhaustRect = screenTransform * combatUi.ExhaustPile.GetGlobalRect();
+            info.ExhaustPileButtonX = exhaustRect.Position.X;
+            info.ExhaustPileButtonY = exhaustRect.Position.Y;
+            info.ExhaustPileButtonWidth = exhaustRect.Size.X;
+            info.ExhaustPileButtonHeight = exhaustRect.Size.Y;
         }
 
         return info;
