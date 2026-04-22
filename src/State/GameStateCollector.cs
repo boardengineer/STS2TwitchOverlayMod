@@ -166,9 +166,19 @@ internal static class GameStateCollector
         {
             Energy = pcs.Energy,
             MaxEnergy = pcs.MaxEnergy,
+            Block = player.Creature.Block,
             DrawPileCount = pcs.DrawPile.Cards.Count,
             DiscardPileCount = pcs.DiscardPile.Cards.Count
         };
+
+        foreach (var power in player.Creature.Powers)
+        {
+            info.Powers.Add(new PowerInfo
+            {
+                Id = PowerIdMapper.GetSequentialId(power.Id.Entry) ?? -1,
+                Amount = power.Amount
+            });
+        }
 
         foreach (var card in pcs.Hand.Cards)
         {
@@ -222,8 +232,7 @@ internal static class GameStateCollector
             {
                 enemyInfo.Powers.Add(new PowerInfo
                 {
-                    Id = power.Id.ToString(),
-                    Name = power.Title.GetRawText(),
+                    Id = PowerIdMapper.GetSequentialId(power.Id.Entry) ?? -1,
                     Amount = power.Amount
                 });
             }

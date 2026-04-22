@@ -26,6 +26,12 @@ internal class CombatInfo
     [JsonPropertyName("maxEnergy")]
     public int MaxEnergy { get; set; }
 
+    [JsonPropertyName("block")]
+    public int Block { get; set; }
+
+    [JsonPropertyName("powers")]
+    public List<PowerInfo> Powers { get; set; } = [];
+
     [JsonPropertyName("drawPileCount")]
     public int DrawPileCount { get; set; }
 

@@ -36,6 +36,9 @@ public class Plugin
         IntentIdMapper.Load();
         Logging.Log("Intent ID map loaded.");
 
+        PowerIdMapper.Load();
+        Logging.Log("Power ID map loaded.");
+
         var harmony = new Harmony("com.author.twitchoverlaymod");
         harmony.PatchAll(typeof(Plugin).Assembly);
     }

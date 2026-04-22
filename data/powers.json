@@ -57,7 +57,7 @@
     "id": 6,
     "game_id": "ARSENAL_POWER",
     "name": "Arsenal",
-    "description": "Whenever you play a Colorless card, gain [blue]1[/blue] [gold]Strength[/gold].",
+    "description": "Whenever you create a card, gain [blue]1[/blue] [gold]Strength[/gold].",
     "type": "Buff",
     "stack_type": "Counter",
     "image": "ARSENAL_POWER.png"
@@ -131,7 +131,7 @@
     "name": "Beacon of Hope",
     "description": "Whenever you gain [gold]Block[/gold] on your turn, other players gain half that much [gold]Block[/gold].",
     "type": "Buff",
-    "stack_type": "Counter",
+    "stack_type": "Single",
     "image": "BEACON_OF_HOPE_POWER.png"
   },
   {
@@ -154,15 +154,6 @@
   },
   {
     "id": 17,
-    "game_id": "BLADE_OF_INK_POWER",
-    "name": "Blade of Ink",
-    "description": "Whenever you play an Attack this turn, gain [blue]2[/blue] [gold]Strength[/gold] this turn.",
-    "type": "Buff",
-    "stack_type": "Counter",
-    "image": "BLADE_OF_INK_POWER.png"
-  },
-  {
-    "id": 18,
     "game_id": "BLOCK_NEXT_TURN_POWER",
     "name": "Block Next Turn",
     "description": "At the start of your next turn, gain [blue]4[/blue] [gold]Block[/gold].",
@@ -171,13 +162,22 @@
     "image": "BLOCK_NEXT_TURN_POWER.png"
   },
   {
-    "id": 19,
+    "id": 18,
     "game_id": "BLUR_POWER",
     "name": "Blur",
     "description": "[gold]Block[/gold] is not removed at the start of your next turn.",
     "type": "Buff",
     "stack_type": "Counter",
     "image": "BLUR_POWER.png"
+  },
+  {
+    "id": 19,
+    "game_id": "BORROWED_TIME_POWER",
+    "name": "Borrowed Time",
+    "description": "Cards cost an additional Energy this turn.",
+    "type": "Debuff",
+    "stack_type": "Counter",
+    "image": "BORROWED_TIME_POWER.png"
   },
   {
     "id": 20,
@@ -550,15 +550,6 @@
   },
   {
     "id": 61,
-    "game_id": "DOOR_REVIVAL_POWER",
-    "name": "Door Revival",
-    "description": "Internal power for Door revival mechanics.",
-    "type": "Buff",
-    "stack_type": "Single",
-    "image": "DOOR_REVIVAL_POWER.png"
-  },
-  {
-    "id": 62,
     "game_id": "DOUBLE_DAMAGE_POWER",
     "name": "Double Damage",
     "description": "This turn, Attacks deal double damage.",
@@ -567,7 +558,7 @@
     "image": "DOUBLE_DAMAGE_POWER.png"
   },
   {
-    "id": 63,
+    "id": 62,
     "game_id": "DRAW_CARDS_NEXT_TURN_POWER",
     "name": "Draw Cards Next Turn",
     "description": "At the start of your next turn, draw [blue]1[/blue] additional card.",
@@ -576,16 +567,16 @@
     "image": "DRAW_CARDS_NEXT_TURN_POWER.png"
   },
   {
-    "id": 64,
+    "id": 63,
     "game_id": "DRUM_OF_BATTLE_POWER",
     "name": "Drum of Battle",
-    "description": "At the start of your turn, [gold]Exhaust[/gold] the top {Amount:plural:card|[blue]{}[/blue] cards} of your [gold]Draw Pile[/gold].",
+    "description": "At the start of your turn, [gold]Exhaust[/gold] the top [blue]0[/blue] cards of your [gold]Draw Pile[/gold].",
     "type": "Buff",
     "stack_type": "Counter",
     "image": "DRUM_OF_BATTLE_POWER.png"
   },
   {
-    "id": 65,
+    "id": 64,
     "game_id": "DUPLICATION_POWER",
     "name": "Duplication",
     "description": "Your next card is played an extra time.",
@@ -594,7 +585,7 @@
     "image": "DUPLICATION_POWER.png"
   },
   {
-    "id": 66,
+    "id": 65,
     "game_id": "DYING_STAR_POWER",
     "name": "Dying Star",
     "description": "Lose [gold]Strength[/gold] until the end of this turn.",
@@ -603,7 +594,7 @@
     "image": "DYING_STAR_POWER.png"
   },
   {
-    "id": 67,
+    "id": 66,
     "game_id": "ECHO_FORM_POWER",
     "name": "Echo Form",
     "description": "The first card you play each turn is played an extra time.",
@@ -612,7 +603,7 @@
     "image": "ECHO_FORM_POWER.png"
   },
   {
-    "id": 68,
+    "id": 67,
     "game_id": "ENERGY_NEXT_TURN_POWER",
     "name": "Energy Next Turn",
     "description": "Gain additional [gold]Energy[/gold] next turn.",
@@ -621,7 +612,7 @@
     "image": "ENERGY_NEXT_TURN_POWER.png"
   },
   {
-    "id": 69,
+    "id": 68,
     "game_id": "ENFEEBLING_TOUCH_POWER",
     "name": "Enfeebling Touch",
     "description": "Lose [gold]Strength[/gold] until the end of this turn.",
@@ -630,7 +621,7 @@
     "image": "ENFEEBLING_TOUCH_POWER.png"
   },
   {
-    "id": 70,
+    "id": 69,
     "game_id": "ENRAGE_POWER",
     "name": "Enrage",
     "description": "Whenever you play a Skill, gains [blue]2[/blue] [gold]Strength[/gold].",
@@ -639,7 +630,7 @@
     "image": "ENRAGE_POWER.png"
   },
   {
-    "id": 71,
+    "id": 70,
     "game_id": "ENTROPY_POWER",
     "name": "Entropy",
     "description": "At the start of your turn, [gold]Transform[/gold] [blue]1[/blue] card in your [gold]Hand[/gold].",
@@ -648,7 +639,7 @@
     "image": "ENTROPY_POWER.png"
   },
   {
-    "id": 72,
+    "id": 71,
     "game_id": "ENVENOM_POWER",
     "name": "Envenom",
     "description": "Whenever you deal unblocked attack damage, apply [blue]1[/blue] [gold]Poison[/gold].",
@@ -657,7 +648,7 @@
     "image": "ENVENOM_POWER.png"
   },
   {
-    "id": 73,
+    "id": 72,
     "game_id": "ESCAPE_ARTIST_POWER",
     "name": "Escape Artist",
     "description": "Exits the combat after 4 turns.",
@@ -666,7 +657,7 @@
     "image": "ESCAPE_ARTIST_POWER.png"
   },
   {
-    "id": 74,
+    "id": 73,
     "game_id": "FAN_OF_KNIVES_POWER",
     "name": "Fan of Knives",
     "description": "[gold]Shivs[/gold] hit ALL enemies.",
@@ -675,7 +666,7 @@
     "image": "FAN_OF_KNIVES_POWER.png"
   },
   {
-    "id": 75,
+    "id": 74,
     "game_id": "FASTEN_POWER",
     "name": "Fasten",
     "description": "Gain an additional [blue]4[/blue] [gold]Block[/gold] from Defend cards.",
@@ -684,7 +675,7 @@
     "image": "FASTEN_POWER.png"
   },
   {
-    "id": 76,
+    "id": 75,
     "game_id": "FEEDING_FRENZY_POWER",
     "name": "Feeding Frenzy",
     "description": "Gain [gold]Strength[/gold] until the end of this turn.",
@@ -693,7 +684,7 @@
     "image": "FEEDING_FRENZY_POWER.png"
   },
   {
-    "id": 77,
+    "id": 76,
     "game_id": "FEEL_NO_PAIN_POWER",
     "name": "Feel No Pain",
     "description": "Whenever a card is Exhausted, gain [blue]3[/blue] [gold]Block[/gold].",
@@ -702,7 +693,7 @@
     "image": "FEEL_NO_PAIN_POWER.png"
   },
   {
-    "id": 78,
+    "id": 77,
     "game_id": "FERAL_POWER",
     "name": "Feral",
     "description": "The first time you play a 0{energyPrefix:energyIcons(1)} Attack each turn, return it to your [gold]Hand[/gold].",
@@ -711,7 +702,7 @@
     "image": "FERAL_POWER.png"
   },
   {
-    "id": 79,
+    "id": 78,
     "game_id": "FLAME_BARRIER_POWER",
     "name": "Flame Barrier",
     "description": "Whenever you are attacked this turn, deal [blue]4[/blue] damage back.",
@@ -720,16 +711,16 @@
     "image": "FLAME_BARRIER_POWER.png"
   },
   {
-    "id": 80,
+    "id": 79,
     "game_id": "FLANKING_POWER",
     "name": "Flanking",
-    "description": "Other allies deal [blue]2x[/blue] more damage to this enemy this turn.",
+    "description": "Other allies deal [blue]2x[/blue] more attack damage to this enemy this turn.",
     "type": "Debuff",
     "stack_type": "Counter",
     "image": "FLANKING_POWER.png"
   },
   {
-    "id": 81,
+    "id": 80,
     "game_id": "FLEX_POTION_POWER",
     "name": "Flex Potion",
     "description": "Gain [gold]Strength[/gold] until the end of this turn.",
@@ -738,7 +729,7 @@
     "image": "FLEX_POTION_POWER.png"
   },
   {
-    "id": 82,
+    "id": 81,
     "game_id": "FLUTTER_POWER",
     "name": "Flutter",
     "description": "Receives [gold]50%[/gold] less damage from Attacks.",
@@ -747,7 +738,7 @@
     "image": "FLUTTER_POWER.png"
   },
   {
-    "id": 83,
+    "id": 82,
     "game_id": "FOCUSED_STRIKE_POWER",
     "name": "Focused Strike",
     "description": "Gain [gold]Focus[/gold] until the end of this turn.",
@@ -756,7 +747,7 @@
     "image": "FOCUSED_STRIKE_POWER.png"
   },
   {
-    "id": 84,
+    "id": 83,
     "game_id": "FOCUS_POWER",
     "name": "Focus",
     "description": "Increases the effectiveness of Orbs.",
@@ -765,7 +756,7 @@
     "image": "FOCUS_POWER.png"
   },
   {
-    "id": 85,
+    "id": 84,
     "game_id": "FORBIDDEN_GRIMOIRE_POWER",
     "name": "Forbidden Grimoire",
     "description": "At the end of combat, remove a card from your [gold]Deck[/gold].",
@@ -774,7 +765,7 @@
     "image": "FORBIDDEN_GRIMOIRE_POWER.png"
   },
   {
-    "id": 86,
+    "id": 85,
     "game_id": "FOREGONE_CONCLUSION_POWER",
     "name": "Foregone Conclusion",
     "description": "Next turn, put [blue]3[/blue] cards from your [gold]Draw Pile[/gold] into your [gold]Hand[/gold].",
@@ -783,7 +774,7 @@
     "image": "FOREGONE_CONCLUSION_POWER.png"
   },
   {
-    "id": 87,
+    "id": 86,
     "game_id": "FRAIL_POWER",
     "name": "Frail",
     "description": "While Frail, gain [blue]25%[/blue] less [gold]Block[/gold] from cards.",
@@ -792,7 +783,7 @@
     "image": "FRAIL_POWER.png"
   },
   {
-    "id": 88,
+    "id": 87,
     "game_id": "FREE_ATTACK_POWER",
     "name": "Free Attack",
     "description": "Your next Attack costs [blue]0[/blue] {energyPrefix:energyIcons(1)}.",
@@ -801,7 +792,7 @@
     "image": "FREE_ATTACK_POWER.png"
   },
   {
-    "id": 89,
+    "id": 88,
     "game_id": "FREE_POWER_POWER",
     "name": "Free Power",
     "description": "The next Power you play costs [blue]0[/blue] {energyPrefix:energyIcons(1)}.",
@@ -810,7 +801,7 @@
     "image": "FREE_POWER_POWER.png"
   },
   {
-    "id": 90,
+    "id": 89,
     "game_id": "FREE_SKILL_POWER",
     "name": "Free Skill",
     "description": "The next Skill you play costs [blue]0[/blue] {energyPrefix:energyIcons(1)}.",
@@ -819,7 +810,7 @@
     "image": "FREE_SKILL_POWER.png"
   },
   {
-    "id": 91,
+    "id": 90,
     "game_id": "FRIENDSHIP_POWER",
     "name": "Friendship",
     "description": "Gain [blue]1[/blue] [gold]Energy[/gold] at the start of each turn.",
@@ -828,7 +819,7 @@
     "image": "FRIENDSHIP_POWER.png"
   },
   {
-    "id": 92,
+    "id": 91,
     "game_id": "FURNACE_POWER",
     "name": "Furnace",
     "description": "At the start of your turn, [gold]Forge[/gold] [blue]5[/blue].",
@@ -837,7 +828,7 @@
     "image": "FURNACE_POWER.png"
   },
   {
-    "id": 93,
+    "id": 92,
     "game_id": "GALVANIC_POWER",
     "name": "Galvanic",
     "description": "Powers are afflicted with [gold]Galvanized[/gold].",
@@ -846,7 +837,7 @@
     "image": "GALVANIC_POWER.png"
   },
   {
-    "id": 94,
+    "id": 93,
     "game_id": "GENESIS_POWER",
     "name": "Genesis",
     "description": "At the start of your turn, gain {singleStarIcon}.",
@@ -855,7 +846,7 @@
     "image": "GENESIS_POWER.png"
   },
   {
-    "id": 95,
+    "id": 94,
     "game_id": "GIGANTIFICATION_POWER",
     "name": "Gigantification",
     "description": "The next Attack you play deals triple damage.",
@@ -864,16 +855,16 @@
     "image": "GIGANTIFICATION_POWER.png"
   },
   {
-    "id": 96,
-    "game_id": "GRAPPLE_POWER",
-    "name": "Grapple",
-    "description": "Whenever you gain [gold]Block[/gold] this turn, deal [blue]5[/blue] damage to the enemy.",
-    "type": "Debuff",
-    "stack_type": "Counter",
-    "image": "GRAPPLE_POWER.png"
+    "id": 95,
+    "game_id": "GRASP_POWER",
+    "name": "Grasp",
+    "description": "Whenever you play a card, lose [blue]1[/blue] Energy.",
+    "type": "Buff",
+    "stack_type": "Single",
+    "image": "GRASP_POWER.png"
   },
   {
-    "id": 97,
+    "id": 96,
     "game_id": "GRAVITY_POWER",
     "name": "Gravity",
     "description": "Whenever you play a card this turn, deal [blue]2[/blue] damage to ALL enemies.",
@@ -882,7 +873,7 @@
     "image": "GRAVITY_POWER.png"
   },
   {
-    "id": 98,
+    "id": 97,
     "game_id": "GUARDED_POWER",
     "name": "Guarded",
     "description": "Take half damage from enemies.",
@@ -891,7 +882,7 @@
     "image": "GUARDED_POWER.png"
   },
   {
-    "id": 99,
+    "id": 98,
     "game_id": "HAILSTORM_POWER",
     "name": "Hailstorm",
     "description": "At the end of your turn, if you have [gold]Frost[/gold], deal [blue]6[/blue] damage to ALL enemies.",
@@ -900,7 +891,7 @@
     "image": "HAILSTORM_POWER.png"
   },
   {
-    "id": 100,
+    "id": 99,
     "game_id": "HAMMER_TIME_POWER",
     "name": "Hammer Time",
     "description": "Whenever you [gold]Forge[/gold], all allies [gold]Forge[/gold] as well.",
@@ -909,7 +900,7 @@
     "image": "HAMMER_TIME_POWER.png"
   },
   {
-    "id": 101,
+    "id": 100,
     "game_id": "HANG_POWER",
     "name": "Hang",
     "description": "All [gold]Hangs[/gold] deal [blue]2[/blue] times more damage to this enemy.",
@@ -918,7 +909,7 @@
     "image": "HANG_POWER.png"
   },
   {
-    "id": 102,
+    "id": 101,
     "game_id": "HARDENED_SHELL_POWER",
     "name": "Hardened Shell",
     "description": "This creature cannot lose more than [blue]20[/blue] HP each turn.",
@@ -927,7 +918,7 @@
     "image": "HARDENED_SHELL_POWER.png"
   },
   {
-    "id": 103,
+    "id": 102,
     "game_id": "HARD_TO_KILL_POWER",
     "name": "Hard to Kill",
     "description": "Reduce all damage taken and HP lost by [gold]Exoskeleton[/gold] to [blue]9[/blue].",
@@ -936,7 +927,7 @@
     "image": "HARD_TO_KILL_POWER.png"
   },
   {
-    "id": 104,
+    "id": 103,
     "game_id": "HATCH_POWER",
     "name": "Hatch",
     "description": "Hatches after X turns.",
@@ -945,7 +936,7 @@
     "image": "HATCH_POWER.png"
   },
   {
-    "id": 105,
+    "id": 104,
     "game_id": "HAUNT_POWER",
     "name": "Haunt",
     "description": "Whenever you play a [gold]Soul[/gold], a random enemy loses [blue]3[/blue] HP.",
@@ -954,7 +945,7 @@
     "image": "HAUNT_POWER.png"
   },
   {
-    "id": 106,
+    "id": 105,
     "game_id": "HEIST_POWER",
     "name": "Heist",
     "description": "When killed, returns all the stolen [gold]Gold[/gold].",
@@ -963,7 +954,7 @@
     "image": "HEIST_POWER.png"
   },
   {
-    "id": 107,
+    "id": 106,
     "game_id": "HELICAL_DART_POWER",
     "name": "Helical Dart",
     "description": "Gain [gold]Dexterity[/gold] until the end of this turn.",
@@ -972,7 +963,7 @@
     "image": "HELICAL_DART_POWER.png"
   },
   {
-    "id": 108,
+    "id": 107,
     "game_id": "HELLO_WORLD_POWER",
     "name": "Hello World",
     "description": "At the start of your turn, add [blue]1[/blue] random Common card into your [gold]Hand[/gold].",
@@ -981,7 +972,7 @@
     "image": "HELLO_WORLD_POWER.png"
   },
   {
-    "id": 109,
+    "id": 108,
     "game_id": "HELLRAISER_POWER",
     "name": "Hellraiser",
     "description": "Whenever you draw a card containing \u0022Strike\u0022, it is played against a random enemy.",
@@ -990,7 +981,7 @@
     "image": "HELLRAISER_POWER.png"
   },
   {
-    "id": 110,
+    "id": 109,
     "game_id": "HEX_POWER",
     "name": "Hex",
     "description": "While Spectral Knight is alive, ALL your cards are [gold]Ethereal[/gold].",
@@ -999,7 +990,7 @@
     "image": "HEX_POWER.png"
   },
   {
-    "id": 111,
+    "id": 110,
     "game_id": "HIGH_VOLTAGE_POWER",
     "name": "High Voltage",
     "description": "At the start of this creature\u0027s turn, it gains [blue]2[/blue] [gold]Strength[/gold].",
@@ -1008,13 +999,22 @@
     "image": "HIGH_VOLTAGE_POWER.png"
   },
   {
-    "id": 112,
+    "id": 111,
     "game_id": "HOTFIX_POWER",
     "name": "Hotfix",
     "description": "Gain [gold]Focus[/gold] until the end of this turn.",
     "type": "Buff",
     "stack_type": "Counter",
     "image": "HOTFIX_POWER.png"
+  },
+  {
+    "id": 112,
+    "game_id": "HUNGER_POWER",
+    "name": "Hunger",
+    "description": "Whenever you play an Attack or Skill, it is [gold]Exhausted[/gold].",
+    "type": "Buff",
+    "stack_type": "Single",
+    "image": "HUNGER_POWER.png"
   },
   {
     "id": 113,
@@ -1092,7 +1092,7 @@
     "id": 121,
     "game_id": "ITERATION_POWER",
     "name": "Iteration",
-    "description": "The first time you draw a [gold]Status[/gold] card each turn, draw more cards.",
+    "description": "The first time you draw a Status each turn, draw more cards.",
     "type": "Buff",
     "stack_type": "Counter",
     "image": "ITERATION_POWER.png"
@@ -1119,7 +1119,7 @@
     "id": 124,
     "game_id": "KNOCKDOWN_POWER",
     "name": "Knockdown",
-    "description": "This creature takes [blue]{Amount}[/blue] times the damage from other players this turn.",
+    "description": "This creature takes [blue]0[/blue] times the damage from other players this turn.",
     "type": "Debuff",
     "stack_type": "Counter",
     "image": "KNOCKDOWN_POWER.png"
@@ -1288,6 +1288,15 @@
   },
   {
     "id": 143,
+    "game_id": "MOCK_REMOVE_DRAWN_CARDS_FROM_COMBAT_POWER",
+    "name": "Mock Remove Drawn Cards from Combat",
+    "description": "",
+    "type": "Debuff",
+    "stack_type": "Single",
+    "image": "MOCK_REMOVE_DRAWN_CARDS_FROM_COMBAT_POWER.png"
+  },
+  {
+    "id": 144,
     "game_id": "MOCK_RESET_COMBAT_ON_SHUFFLE_POWER",
     "name": "Mock Reset Combat on Shuffle",
     "description": "",
@@ -1296,7 +1305,7 @@
     "image": "MOCK_RESET_COMBAT_ON_SHUFFLE_POWER.png"
   },
   {
-    "id": 144,
+    "id": 145,
     "game_id": "MOCK_REVIVE_POWER",
     "name": "Mock Revive",
     "description": "",
@@ -1305,7 +1314,7 @@
     "image": "MOCK_REVIVE_POWER.png"
   },
   {
-    "id": 145,
+    "id": 146,
     "game_id": "MOCK_TEMPORARY_STRENGTH_LOSS_POWER",
     "name": "Mock Skill Card",
     "description": "Lose [gold]Strength[/gold] until the end of this turn.",
@@ -1314,7 +1323,7 @@
     "image": "MOCK_TEMPORARY_STRENGTH_LOSS_POWER.png"
   },
   {
-    "id": 146,
+    "id": 147,
     "game_id": "MONARCHS_GAZE_POWER",
     "name": "Monarch\u0027s Gaze",
     "description": "Whenever you attack an enemy, it loses [blue]1[/blue] [gold]Strength[/gold] this turn.",
@@ -1323,7 +1332,7 @@
     "image": "MONARCHS_GAZE_POWER.png"
   },
   {
-    "id": 147,
+    "id": 148,
     "game_id": "MONARCHS_GAZE_STRENGTH_DOWN_POWER",
     "name": "Monarch\u0027s Gaze",
     "description": "Lose [gold]Strength[/gold] until the end of this turn.",
@@ -1332,7 +1341,7 @@
     "image": "MONARCHS_GAZE_STRENGTH_DOWN_POWER.png"
   },
   {
-    "id": 148,
+    "id": 149,
     "game_id": "MONOLOGUE_POWER",
     "name": "Monologue",
     "description": "Whenever you play a card this turn, gain [blue]1[/blue] [gold]Strength[/gold] this turn.",
@@ -1341,7 +1350,7 @@
     "image": "MONOLOGUE_POWER.png"
   },
   {
-    "id": 149,
+    "id": 150,
     "game_id": "NECRO_MASTERY_POWER",
     "name": "Necro Mastery",
     "description": "Whenever [gold]Osty[/gold] loses HP, ALL enemies lose that much HP as well.",
@@ -1350,7 +1359,7 @@
     "image": "NECRO_MASTERY_POWER.png"
   },
   {
-    "id": 150,
+    "id": 151,
     "game_id": "NEMESIS_POWER",
     "name": "Nemesis",
     "description": "At the end of every other turn, gains [gold]Intangible[/gold] [blue]1[/blue].",
@@ -1359,7 +1368,7 @@
     "image": "NEMESIS_POWER.png"
   },
   {
-    "id": 151,
+    "id": 152,
     "game_id": "NEUROSURGE_POWER",
     "name": "Neurosurge",
     "description": "At the start of your turn, apply [blue]3[/blue] [gold]Doom[/gold] to yourself.",
@@ -1368,7 +1377,7 @@
     "image": "NEUROSURGE_POWER.png"
   },
   {
-    "id": 152,
+    "id": 153,
     "game_id": "NIGHTMARE_POWER",
     "name": "Nightmare",
     "description": "Add [blue]3[/blue] of a chosen card into your [gold]Hand[/gold] next turn.",
@@ -1377,7 +1386,7 @@
     "image": "NIGHTMARE_POWER.png"
   },
   {
-    "id": 153,
+    "id": 154,
     "game_id": "NO_BLOCK_POWER",
     "name": "No Block",
     "description": "You cannot gain [gold]Block[/gold] from cards.",
@@ -1386,7 +1395,7 @@
     "image": "NO_BLOCK_POWER.png"
   },
   {
-    "id": 154,
+    "id": 155,
     "game_id": "NO_DRAW_POWER",
     "name": "No Draw",
     "description": "You may not draw any more cards this turn.",
@@ -1395,7 +1404,16 @@
     "image": "NO_DRAW_POWER.png"
   },
   {
-    "id": 155,
+    "id": 156,
+    "game_id": "NO_ENERGY_GAIN_POWER",
+    "name": "No Energy Gain",
+    "description": "You cannot gain additional {energyPrefix:energyIcons(1)} this turn.",
+    "type": "Debuff",
+    "stack_type": "Single",
+    "image": "NO_ENERGY_GAIN_POWER.png"
+  },
+  {
+    "id": 157,
     "game_id": "NOSTALGIA_POWER",
     "name": "Nostalgia",
     "description": "The first Attack or Skill you play each turn is placed on top of your [gold]Draw Pile[/gold].",
@@ -1404,7 +1422,7 @@
     "image": "NOSTALGIA_POWER.png"
   },
   {
-    "id": 156,
+    "id": 158,
     "game_id": "NOXIOUS_FUMES_POWER",
     "name": "Noxious Fumes",
     "description": "At the start of your turn, apply [blue]2[/blue] [gold]Poison[/gold] to ALL enemies.",
@@ -1413,7 +1431,7 @@
     "image": "NOXIOUS_FUMES_POWER.png"
   },
   {
-    "id": 157,
+    "id": 159,
     "game_id": "OBLIVION_POWER",
     "name": "Oblivion",
     "description": "Whenever you play a card, this enemy gains [blue]1[/blue] [gold]Doom[/gold].",
@@ -1422,7 +1440,7 @@
     "image": "OBLIVION_POWER.png"
   },
   {
-    "id": 158,
+    "id": 160,
     "game_id": "ONE_TWO_PUNCH_POWER",
     "name": "One-Two Punch",
     "description": "Your next Attack is played an extra time this turn.",
@@ -1431,7 +1449,7 @@
     "image": "ONE_TWO_PUNCH_POWER.png"
   },
   {
-    "id": 159,
+    "id": 161,
     "game_id": "ORBIT_POWER",
     "name": "Orbit",
     "description": "Every [blue]4[/blue] Energy you spend, gain an Energy.",
@@ -1440,7 +1458,7 @@
     "image": "ORBIT_POWER.png"
   },
   {
-    "id": 160,
+    "id": 162,
     "game_id": "OUTBREAK_POWER",
     "name": "Outbreak",
     "description": "Every [blue]10[/blue] times you apply [gold]Poison[/gold], deal damage to ALL enemies.",
@@ -1449,7 +1467,7 @@
     "image": "OUTBREAK_POWER.png"
   },
   {
-    "id": 161,
+    "id": 163,
     "game_id": "PAGESTORM_POWER",
     "name": "Pagestorm",
     "description": "Whenever you draw an [gold]Ethereal[/gold] card, draw [blue]1[/blue] card.",
@@ -1458,7 +1476,7 @@
     "image": "PAGESTORM_POWER.png"
   },
   {
-    "id": 162,
+    "id": 164,
     "game_id": "PAINFUL_STABS_POWER",
     "name": "Painful Stabs",
     "description": "Shuffle [blue]1[/blue] [gold]Wound[/gold] into your [gold]Discard Pile[/gold] each time you receive unblocked attack damage.",
@@ -1467,7 +1485,7 @@
     "image": "PAINFUL_STABS_POWER.png"
   },
   {
-    "id": 163,
+    "id": 165,
     "game_id": "PALE_BLUE_DOT_POWER",
     "name": "Pale Blue Dot",
     "description": "If you play enough cards in a turn, draw additional cards at the start of your next turn.",
@@ -1476,7 +1494,7 @@
     "image": "PALE_BLUE_DOT_POWER.png"
   },
   {
-    "id": 164,
+    "id": 166,
     "game_id": "PANACHE_POWER",
     "name": "Panache",
     "description": "If you play [blue]5[/blue] cards this turn, deal damage to ALL enemies.",
@@ -1485,7 +1503,7 @@
     "image": "PANACHE_POWER.png"
   },
   {
-    "id": 165,
+    "id": 167,
     "game_id": "PAPER_CUTS_POWER",
     "name": "Paper Cuts",
     "description": "Whenever this creature deals unblocked attack damage to you, you lose [blue]1[/blue] [gold]Max HP[/gold].",
@@ -1494,7 +1512,7 @@
     "image": "PAPER_CUTS_POWER.png"
   },
   {
-    "id": 166,
+    "id": 168,
     "game_id": "PARRY_POWER",
     "name": "Parry",
     "description": "Whenever you play [gold]Sovereign Blade[/gold], gain [blue]8[/blue] [gold]Block[/gold].",
@@ -1503,7 +1521,7 @@
     "image": "PARRY_POWER.png"
   },
   {
-    "id": 167,
+    "id": 169,
     "game_id": "PERSONAL_HIVE_POWER",
     "name": "Personal Hive",
     "description": "Whenever this enemy is hit by an Attack, add [gold]Dazed[/gold] into your [gold]Draw Pile[/gold].",
@@ -1512,7 +1530,7 @@
     "image": "PERSONAL_HIVE_POWER.png"
   },
   {
-    "id": 168,
+    "id": 170,
     "game_id": "PHANTOM_BLADES_POWER",
     "name": "Phantom Blades",
     "description": "[gold]Shivs[/gold] gain [gold]Retain[/gold].\nThe first [gold]Shiv[/gold] you play each turn deals [blue]9[/blue] additional damage.",
@@ -1521,7 +1539,7 @@
     "image": "PHANTOM_BLADES_POWER.png"
   },
   {
-    "id": 169,
+    "id": 171,
     "game_id": "PIERCING_WAIL_POWER",
     "name": "Piercing Wail",
     "description": "Lose [gold]Strength[/gold] until the end of this turn.",
@@ -1530,7 +1548,7 @@
     "image": "PIERCING_WAIL_POWER.png"
   },
   {
-    "id": 170,
+    "id": 172,
     "game_id": "PILLAR_OF_CREATION_POWER",
     "name": "Pillar of Creation",
     "description": "Whenever you create a card, gain [blue]5[/blue] [gold]Block[/gold].",
@@ -1539,7 +1557,7 @@
     "image": "PILLAR_OF_CREATION_POWER.png"
   },
   {
-    "id": 171,
+    "id": 173,
     "game_id": "PLATING_POWER",
     "name": "Plating",
     "description": "At the end of your turn, gain [gold]Block[/gold]. [gold]Plating[/gold] is reduced by [blue]1[/blue] at the start of your turn.",
@@ -1548,7 +1566,7 @@
     "image": "PLATING_POWER.png"
   },
   {
-    "id": 172,
+    "id": 174,
     "game_id": "PLOW_POWER",
     "name": "Plow",
     "description": "The first time this creature\u0027s HP reaches [blue]150[/blue] or below, it becomes [gold]Stunned[/gold].",
@@ -1557,7 +1575,7 @@
     "image": "PLOW_POWER.png"
   },
   {
-    "id": 173,
+    "id": 175,
     "game_id": "POISON_POWER",
     "name": "Poison",
     "description": "Poisoned creatures lose HP at the start of their turn. Each turn, Poison is reduced by [blue]1[/blue].",
@@ -1566,7 +1584,7 @@
     "image": "POISON_POWER.png"
   },
   {
-    "id": 174,
+    "id": 176,
     "game_id": "POSSESS_SPEED_POWER",
     "name": "Possess Speed",
     "description": "When killed, return all stolen [gold]Dexterity[/gold] to the player.",
@@ -1575,7 +1593,7 @@
     "image": "POSSESS_SPEED_POWER.png"
   },
   {
-    "id": 175,
+    "id": 177,
     "game_id": "POSSESS_STRENGTH_POWER",
     "name": "Possess Strength",
     "description": "When killed, return all stolen [gold]Strength[/gold] to the player.",
@@ -1584,7 +1602,7 @@
     "image": "POSSESS_STRENGTH_POWER.png"
   },
   {
-    "id": 176,
+    "id": 178,
     "game_id": "PREP_TIME_POWER",
     "name": "Prep Time",
     "description": "At the start of your turn, gain [blue]4[/blue] [gold]Vigor[/gold].",
@@ -1593,7 +1611,7 @@
     "image": "PREP_TIME_POWER.png"
   },
   {
-    "id": 177,
+    "id": 179,
     "game_id": "PYRE_POWER",
     "name": "Pyre",
     "description": "Gain [blue]1[/blue] [gold]Energy[/gold] at the start of each turn.",
@@ -1602,7 +1620,7 @@
     "image": "PYRE_POWER.png"
   },
   {
-    "id": 178,
+    "id": 180,
     "game_id": "RADIANCE_POWER",
     "name": "Radiance",
     "description": "Gain an additional [gold]Energy[/gold] next turn.",
@@ -1611,7 +1629,7 @@
     "image": "RADIANCE_POWER.png"
   },
   {
-    "id": 179,
+    "id": 181,
     "game_id": "RAGE_POWER",
     "name": "Rage",
     "description": "Whenever you play an Attack this turn, gain [blue]3[/blue] [gold]Block[/gold].",
@@ -1620,7 +1638,7 @@
     "image": "RAGE_POWER.png"
   },
   {
-    "id": 180,
+    "id": 182,
     "game_id": "RAMPART_POWER",
     "name": "Rampart",
     "description": "At the start of the player\u0027s turn, Turret Operator gains [blue]25[/blue] [gold]Block[/gold].",
@@ -1629,7 +1647,7 @@
     "image": "RAMPART_POWER.png"
   },
   {
-    "id": 181,
+    "id": 183,
     "game_id": "RAVENOUS_POWER",
     "name": "Ravenous",
     "description": "When an enemy dies, Corpse Slug immediately eats it, becoming [gold]Stunned[/gold] and gaining [blue]1[/blue] [gold]Strength[/gold].",
@@ -1638,7 +1656,7 @@
     "image": "RAVENOUS_POWER.png"
   },
   {
-    "id": 182,
+    "id": 184,
     "game_id": "REAPER_FORM_POWER",
     "name": "Reaper Form",
     "description": "Whenever Attacks deal damage, they also apply that much [gold]Doom[/gold].",
@@ -1647,7 +1665,7 @@
     "image": "REAPER_FORM_POWER.png"
   },
   {
-    "id": 183,
+    "id": 185,
     "game_id": "REATTACH_POWER",
     "name": "Reattach",
     "description": "If other segments are still alive, revives in [blue]2[/blue] turns with [blue]25[/blue] HP.",
@@ -1656,7 +1674,7 @@
     "image": "REATTACH_POWER.png"
   },
   {
-    "id": 184,
+    "id": 186,
     "game_id": "REBOUND_POWER",
     "name": "Rebound",
     "description": "The next card you play this turn is placed on the top of your [gold]Draw Pile[/gold].",
@@ -1665,7 +1683,7 @@
     "image": "REBOUND_POWER.png"
   },
   {
-    "id": 185,
+    "id": 187,
     "game_id": "REFLECT_POWER",
     "name": "Reflect",
     "description": "Blocked damage is reflected to your attacker.",
@@ -1674,7 +1692,7 @@
     "image": "REFLECT_POWER.png"
   },
   {
-    "id": 186,
+    "id": 188,
     "game_id": "REGEN_POWER",
     "name": "Regen",
     "description": "[gold]Regen[/gold] heals HP at the end of your turn. Each turn, [gold]Regen[/gold] is reduced by [blue]1[/blue].",
@@ -1683,7 +1701,7 @@
     "image": "REGEN_POWER.png"
   },
   {
-    "id": 187,
+    "id": 189,
     "game_id": "REPTILE_TRINKET_POWER",
     "name": "Reptile Trinket",
     "description": "Gain [gold]Strength[/gold] until the end of this turn.",
@@ -1692,7 +1710,7 @@
     "image": "REPTILE_TRINKET_POWER.png"
   },
   {
-    "id": 188,
+    "id": 190,
     "game_id": "RETAIN_HAND_POWER",
     "name": "Retain Hand",
     "description": "[gold]Retain[/gold] your [gold]Hand[/gold] for the next [blue]2[/blue] turns.",
@@ -1701,7 +1719,7 @@
     "image": "RETAIN_HAND_POWER.png"
   },
   {
-    "id": 189,
+    "id": 191,
     "game_id": "RINGING_POWER",
     "name": "Ringing",
     "description": "You can only play [blue]1[/blue] card this turn.",
@@ -1710,7 +1728,7 @@
     "image": "RINGING_POWER.png"
   },
   {
-    "id": 190,
+    "id": 192,
     "game_id": "RITUAL_POWER",
     "name": "Ritual",
     "description": "Gain [gold]Strength[/gold] at the end of your turn.",
@@ -1719,7 +1737,7 @@
     "image": "RITUAL_POWER.png"
   },
   {
-    "id": 191,
+    "id": 193,
     "game_id": "ROLLING_BOULDER_POWER",
     "name": "Rolling Boulder",
     "description": "At the start of your turn, deal [blue]5[/blue] damage to ALL enemies and increase this damage by [blue]5[/blue].",
@@ -1728,7 +1746,7 @@
     "image": "ROLLING_BOULDER_POWER.png"
   },
   {
-    "id": 192,
+    "id": 194,
     "game_id": "ROYALTIES_POWER",
     "name": "Royalties",
     "description": "At the end of combat, gain [blue]25[/blue] [gold]Gold[/gold].",
@@ -1737,7 +1755,7 @@
     "image": "ROYALTIES_POWER.png"
   },
   {
-    "id": 193,
+    "id": 195,
     "game_id": "RUPTURE_POWER",
     "name": "Rupture",
     "description": "Whenever you lose HP on your turn, gain [blue]1[/blue] [gold]Strength[/gold].",
@@ -1746,7 +1764,7 @@
     "image": "RUPTURE_POWER.png"
   },
   {
-    "id": 194,
+    "id": 196,
     "game_id": "SANDPIT_POWER",
     "name": "Sandpit",
     "description": "A power used by The Insatiable.",
@@ -1755,7 +1773,16 @@
     "image": "SANDPIT_POWER.png"
   },
   {
-    "id": 195,
+    "id": 197,
+    "game_id": "SCRUTINY_POWER",
+    "name": "Scrutiny",
+    "description": "You cannot draw additional cards during your turn.",
+    "type": "Buff",
+    "stack_type": "Single",
+    "image": "SCRUTINY_POWER.png"
+  },
+  {
+    "id": 198,
     "game_id": "SEEKING_EDGE_POWER",
     "name": "Seeking Edge",
     "description": "[gold]Sovereign Blade[/gold] now hits ALL enemies.",
@@ -1764,7 +1791,7 @@
     "image": "SEEKING_EDGE_POWER.png"
   },
   {
-    "id": 196,
+    "id": 199,
     "game_id": "SELF_FORMING_CLAY_POWER",
     "name": "Self-Forming Clay",
     "description": "Gain [blue]3[/blue] [gold]Block[/gold] next turn.",
@@ -1773,7 +1800,7 @@
     "image": "SELF_FORMING_CLAY_POWER.png"
   },
   {
-    "id": 197,
+    "id": 200,
     "game_id": "SENTRY_MODE_POWER",
     "name": "Sentry Mode",
     "description": "At the start of your turn, add [blue]1[/blue] [gold]Sweeping Gaze[/gold] into your [gold]Hand[/gold].",
@@ -1782,7 +1809,7 @@
     "image": "SENTRY_MODE_POWER.png"
   },
   {
-    "id": 198,
+    "id": 201,
     "game_id": "SERPENT_FORM_POWER",
     "name": "Serpent Form",
     "description": "Whenever you play a card, deal [blue]4[/blue] damage to a random enemy.",
@@ -1791,7 +1818,7 @@
     "image": "SERPENT_FORM_POWER.png"
   },
   {
-    "id": 199,
+    "id": 202,
     "game_id": "SETUP_STRIKE_POWER",
     "name": "Setup Strike",
     "description": "Gain [gold]Strength[/gold] until the end of this turn.",
@@ -1800,7 +1827,7 @@
     "image": "SETUP_STRIKE_POWER.png"
   },
   {
-    "id": 200,
+    "id": 203,
     "game_id": "SHACKLING_POTION_POWER",
     "name": "Shackling Potion",
     "description": "Lose [gold]Strength[/gold] until the end of this turn.",
@@ -1809,7 +1836,7 @@
     "image": "SHACKLING_POTION_POWER.png"
   },
   {
-    "id": 201,
+    "id": 204,
     "game_id": "SHADOWMELD_POWER",
     "name": "Shadowmeld",
     "description": "Double your [gold]Block[/gold] gain this turn.",
@@ -1818,7 +1845,7 @@
     "image": "SHADOWMELD_POWER.png"
   },
   {
-    "id": 202,
+    "id": 205,
     "game_id": "SHADOW_STEP_POWER",
     "name": "Shadow Step",
     "description": "Next turn, Attacks deal double damage.",
@@ -1827,7 +1854,7 @@
     "image": "SHADOW_STEP_POWER.png"
   },
   {
-    "id": 203,
+    "id": 206,
     "game_id": "SHRIEK_POWER",
     "name": "Shriek",
     "description": "The first time this creature\u0027s HP reaches [blue]50%[/blue] or below, it becomes [gold]Stunned[/gold].",
@@ -1836,7 +1863,7 @@
     "image": "SHRIEK_POWER.png"
   },
   {
-    "id": 204,
+    "id": 207,
     "game_id": "SHRINK_POWER",
     "name": "Shrink",
     "description": "This creature\u0027s Attacks deal [blue]30%[/blue] less damage for the next 3 turns.",
@@ -1845,7 +1872,7 @@
     "image": "SHRINK_POWER.png"
   },
   {
-    "id": 205,
+    "id": 208,
     "game_id": "SHROUD_POWER",
     "name": "Shroud",
     "description": "Whenever you apply [gold]Doom[/gold], gain [blue]3[/blue] [gold]Block[/gold].",
@@ -1854,7 +1881,7 @@
     "image": "SHROUD_POWER.png"
   },
   {
-    "id": 206,
+    "id": 209,
     "game_id": "SIC_EM_POWER",
     "name": "Sic \u0027Em",
     "description": "Whenever [gold]Osty[/gold] hits this enemy this turn, [gold]Summon[/gold] [blue]3[/blue].",
@@ -1863,7 +1890,7 @@
     "image": "SIC_EM_POWER.png"
   },
   {
-    "id": 207,
+    "id": 210,
     "game_id": "SIGNAL_BOOST_POWER",
     "name": "Signal Boost",
     "description": "Your next Power is played an extra time.",
@@ -1872,7 +1899,7 @@
     "image": "SIGNAL_BOOST_POWER.png"
   },
   {
-    "id": 208,
+    "id": 211,
     "game_id": "SKITTISH_POWER",
     "name": "Skittish",
     "description": "The first time this creature is hit each turn, it gains [blue]1[/blue] [gold]Block[/gold].",
@@ -1881,7 +1908,7 @@
     "image": "SKITTISH_POWER.png"
   },
   {
-    "id": 209,
+    "id": 212,
     "game_id": "SLEIGHT_OF_FLESH_POWER",
     "name": "Sleight of Flesh",
     "description": "Whenever you apply a debuff to an enemy, they take [blue]13[/blue] damage.",
@@ -1890,7 +1917,7 @@
     "image": "SLEIGHT_OF_FLESH_POWER.png"
   },
   {
-    "id": 210,
+    "id": 213,
     "game_id": "SLIPPERY_POWER",
     "name": "Slippery",
     "description": "The next time this creature loses HP, it only loses [blue]1[/blue] HP instead.",
@@ -1899,7 +1926,7 @@
     "image": "SLIPPERY_POWER.png"
   },
   {
-    "id": 211,
+    "id": 214,
     "game_id": "SLOTH_POWER",
     "name": "Sloth",
     "description": "You cannot play more than [blue]3[/blue] cards each turn.",
@@ -1908,7 +1935,7 @@
     "image": "SLOTH_POWER.png"
   },
   {
-    "id": 212,
+    "id": 215,
     "game_id": "SLOW_POWER",
     "name": "Slow",
     "description": "Whenever you play a card, this enemy receives [blue]10%[/blue] more damage from Attacks this turn.",
@@ -1917,7 +1944,7 @@
     "image": "SLOW_POWER.png"
   },
   {
-    "id": 213,
+    "id": 216,
     "game_id": "SLUMBER_POWER",
     "name": "Slumber",
     "description": "Awakens upon taking turns or losing HP 3 times.",
@@ -1926,7 +1953,7 @@
     "image": "SLUMBER_POWER.png"
   },
   {
-    "id": 214,
+    "id": 217,
     "game_id": "SMOGGY_POWER",
     "name": "Smoggy",
     "description": "You can only play [blue]1[/blue] Skill per turn.",
@@ -1935,7 +1962,7 @@
     "image": "SMOGGY_POWER.png"
   },
   {
-    "id": 215,
+    "id": 218,
     "game_id": "SMOKESTACK_POWER",
     "name": "Smokestack",
     "description": "Whenever you create a Status, deal damage to ALL enemies.",
@@ -1944,7 +1971,7 @@
     "image": "SMOKESTACK_POWER.png"
   },
   {
-    "id": 216,
+    "id": 219,
     "game_id": "SNEAKY_POWER",
     "name": "Sneaky",
     "description": "Whenever another player attacks an enemy, gain [gold]Block[/gold].",
@@ -1953,7 +1980,7 @@
     "image": "SNEAKY_POWER.png"
   },
   {
-    "id": 217,
+    "id": 220,
     "game_id": "SOAR_POWER",
     "name": "Soar",
     "description": "Receives [gold]50%[/gold] less attack damage until it lands.",
@@ -1962,7 +1989,7 @@
     "image": "SOAR_POWER.png"
   },
   {
-    "id": 218,
+    "id": 221,
     "game_id": "SPECTRUM_SHIFT_POWER",
     "name": "Spectrum Shift",
     "description": "At the start of your turn, add [blue]1[/blue] random Colorless card into your [gold]Hand[/gold].",
@@ -1971,7 +1998,7 @@
     "image": "SPECTRUM_SHIFT_POWER.png"
   },
   {
-    "id": 219,
+    "id": 222,
     "game_id": "SPEED_POTION_POWER",
     "name": "Speed Potion",
     "description": "Gain [gold]Dexterity[/gold] until the end of this turn.",
@@ -1980,7 +2007,7 @@
     "image": "SPEED_POTION_POWER.png"
   },
   {
-    "id": 220,
+    "id": 223,
     "game_id": "SPEEDSTER_POWER",
     "name": "Speedster",
     "description": "Whenever you draw a card during your turn, deal [blue]1[/blue] damage to ALL enemies.",
@@ -1989,7 +2016,7 @@
     "image": "SPEEDSTER_POWER.png"
   },
   {
-    "id": 221,
+    "id": 224,
     "game_id": "SPINNER_POWER",
     "name": "Spinner",
     "description": "At the start of your turn, [gold]Channel[/gold] [blue]1[/blue] [gold]Glass[/gold].",
@@ -1998,7 +2025,7 @@
     "image": "SPINNER_POWER.png"
   },
   {
-    "id": 222,
+    "id": 225,
     "game_id": "SPIRIT_OF_ASH_POWER",
     "name": "Spirit of Ash",
     "description": "Whenever you play an [gold]Ethereal[/gold] card, gain [blue]4[/blue] [gold]Block[/gold].",
@@ -2007,7 +2034,7 @@
     "image": "SPIRIT_OF_ASH_POWER.png"
   },
   {
-    "id": 223,
+    "id": 226,
     "game_id": "STAMPEDE_POWER",
     "name": "Stampede",
     "description": "At the end of your turn, [blue]1[/blue] random Attack in your [gold]Hand[/gold] is played against a random enemy.",
@@ -2016,7 +2043,7 @@
     "image": "STAMPEDE_POWER.png"
   },
   {
-    "id": 224,
+    "id": 227,
     "game_id": "STAR_NEXT_TURN_POWER",
     "name": "Star Next Turn",
     "description": "Gain 1 {singleStarIcon} next turn.",
@@ -2025,7 +2052,7 @@
     "image": "STAR_NEXT_TURN_POWER.png"
   },
   {
-    "id": 225,
+    "id": 228,
     "game_id": "STEAM_ERUPTION_POWER",
     "name": "Steam Eruption",
     "description": "When killed, deals damage at the end of your next turn.",
@@ -2034,7 +2061,7 @@
     "image": "STEAM_ERUPTION_POWER.png"
   },
   {
-    "id": 226,
+    "id": 229,
     "game_id": "STOCK_POWER",
     "name": "Stock",
     "description": "When killed, a new Axebot is summoned in its place.",
@@ -2043,7 +2070,7 @@
     "image": "STOCK_POWER.png"
   },
   {
-    "id": 227,
+    "id": 230,
     "game_id": "STORM_POWER",
     "name": "Storm",
     "description": "Whenever you play a Power, [gold]Channel[/gold] [blue]1[/blue] [gold]Lightning[/gold].",
@@ -2052,7 +2079,7 @@
     "image": "STORM_POWER.png"
   },
   {
-    "id": 228,
+    "id": 231,
     "game_id": "STRANGLE_POWER",
     "name": "Strangle",
     "description": "Whenever you play a card this turn, this enemy loses [blue]2[/blue] HP.",
@@ -2061,7 +2088,7 @@
     "image": "STRANGLE_POWER.png"
   },
   {
-    "id": 229,
+    "id": 232,
     "game_id": "STRATAGEM_POWER",
     "name": "Stratagem",
     "description": "Whenever you shuffle your [gold]Draw Pile[/gold], choose [blue]1[/blue] card from it to put into your [gold]Hand[/gold].",
@@ -2070,7 +2097,7 @@
     "image": "STRATAGEM_POWER.png"
   },
   {
-    "id": 230,
+    "id": 233,
     "game_id": "STRENGTH_POWER",
     "name": "Strength",
     "description": "Strength adds additional damage to Attacks.",
@@ -2079,7 +2106,7 @@
     "image": "STRENGTH_POWER.png"
   },
   {
-    "id": 231,
+    "id": 234,
     "game_id": "SUBROUTINE_POWER",
     "name": "Subroutine",
     "description": "Whenever you play a Power, gain [blue]1[/blue] {energyPrefix:energyIcons(1)}.",
@@ -2088,7 +2115,7 @@
     "image": "SUBROUTINE_POWER.png"
   },
   {
-    "id": 232,
+    "id": 235,
     "game_id": "SUCK_POWER",
     "name": "Suck",
     "description": "Whenever this creature deals unblocked attack damage, it gains [blue]1[/blue] [gold]Strength[/gold].",
@@ -2097,7 +2124,7 @@
     "image": "SUCK_POWER.png"
   },
   {
-    "id": 233,
+    "id": 236,
     "game_id": "SUMMON_NEXT_TURN_POWER",
     "name": "Summon Next Turn",
     "description": "At the start of your next turn, [gold]Summon[/gold] [blue]2[/blue].",
@@ -2106,7 +2133,7 @@
     "image": "SUMMON_NEXT_TURN_POWER.png"
   },
   {
-    "id": 234,
+    "id": 237,
     "game_id": "SURPRISE_POWER",
     "name": "Surprise",
     "description": "Something is off about this creature...",
@@ -2115,7 +2142,7 @@
     "image": "SURPRISE_POWER.png"
   },
   {
-    "id": 235,
+    "id": 238,
     "game_id": "SURROUNDED_POWER",
     "name": "Surrounded",
     "description": "Receive [blue]50%[/blue] more damage if attacked from behind. Use targeting cards or potions to change your orientation.",
@@ -2124,7 +2151,7 @@
     "image": "SURROUNDED_POWER.png"
   },
   {
-    "id": 236,
+    "id": 239,
     "game_id": "SWIPE_POWER",
     "name": "Swipe",
     "description": "Upon killing this enemy, the stolen card is returned.",
@@ -2133,16 +2160,16 @@
     "image": "SWIPE_POWER.png"
   },
   {
-    "id": 237,
+    "id": 240,
     "game_id": "SWORD_SAGE_POWER",
     "name": "Sword Sage",
-    "description": "Increase the cost of [gold]Sovereign Blade[/gold] by [blue]1[/blue]. [gold]Sovereign Blade[/gold] now hits [blue]1[/blue] additional time.",
+    "description": "[gold]Sovereign Blade[/gold] now hits [blue]1[/blue] additional time.",
     "type": "Buff",
     "stack_type": "Counter",
     "image": "SWORD_SAGE_POWER.png"
   },
   {
-    "id": 238,
+    "id": 241,
     "game_id": "SYNCHRONIZE_POWER",
     "name": "Synchronize",
     "description": "Gain [gold]Focus[/gold] until the end of this turn.",
@@ -2151,16 +2178,16 @@
     "image": "SYNCHRONIZE_POWER.png"
   },
   {
-    "id": 239,
+    "id": 242,
     "game_id": "TAG_TEAM_POWER",
     "name": "Tag Team",
-    "description": "The next Attack another player plays on the enemy is played {Amount:plural:an extra time|[blue]{}[/blue] extra times}.",
+    "description": "The next Attack another player plays on the enemy is played [blue]0[/blue] extra times.",
     "type": "Debuff",
     "stack_type": "Counter",
     "image": "TAG_TEAM_POWER.png"
   },
   {
-    "id": 240,
+    "id": 243,
     "game_id": "TANGLED_POWER",
     "name": "Tangled",
     "description": "Attacks cost [blue]1[/blue] additional [gold]Energy[/gold] this turn.",
@@ -2169,7 +2196,7 @@
     "image": "TANGLED_POWER.png"
   },
   {
-    "id": 241,
+    "id": 244,
     "game_id": "TANK_POWER",
     "name": "Tank",
     "description": "Take double damage from enemies. Allies take half damage from enemies.",
@@ -2178,7 +2205,7 @@
     "image": "TANK_POWER.png"
   },
   {
-    "id": 242,
+    "id": 245,
     "game_id": "TENDER_POWER",
     "name": "Tender",
     "description": "Whenever you play a card, lose [blue]1[/blue] [gold]Strength[/gold] and [blue]1[/blue] [gold]Dexterity[/gold] this turn.",
@@ -2187,7 +2214,7 @@
     "image": "TENDER_POWER.png"
   },
   {
-    "id": 243,
+    "id": 246,
     "game_id": "TERRITORIAL_POWER",
     "name": "Territorial",
     "description": "At the end of its turn, gains [blue]1[/blue] [gold]Strength[/gold].",
@@ -2196,7 +2223,7 @@
     "image": "TERRITORIAL_POWER.png"
   },
   {
-    "id": 244,
+    "id": 247,
     "game_id": "THE_BOMB_POWER",
     "name": "The Bomb",
     "description": "At the end of [blue]3[/blue] turns, deal [blue]40[/blue] damage to ALL enemies.",
@@ -2205,7 +2232,7 @@
     "image": "THE_BOMB_POWER.png"
   },
   {
-    "id": 245,
+    "id": 248,
     "game_id": "THE_GAMBIT_POWER",
     "name": "The Gambit",
     "description": "If you take unblocked attack damage this combat, die.",
@@ -2214,7 +2241,7 @@
     "image": "THE_GAMBIT_POWER.png"
   },
   {
-    "id": 246,
+    "id": 249,
     "game_id": "THE_HUNT_POWER",
     "name": "The Hunt",
     "description": "Gain [blue]1[/blue] additional card reward at the end of combat.",
@@ -2223,7 +2250,7 @@
     "image": "THE_HUNT_POWER.png"
   },
   {
-    "id": 247,
+    "id": 250,
     "game_id": "THE_SEALED_THRONE_POWER",
     "name": "The Sealed Throne",
     "description": "Whenever you play a card, gain {singleStarIcon}.",
@@ -2232,7 +2259,7 @@
     "image": "THE_SEALED_THRONE_POWER.png"
   },
   {
-    "id": 248,
+    "id": 251,
     "game_id": "THIEVERY_POWER",
     "name": "Thievery",
     "description": "Steals [gold]Gold[/gold] when Attacking.",
@@ -2241,7 +2268,7 @@
     "image": "THIEVERY_POWER.png"
   },
   {
-    "id": 249,
+    "id": 252,
     "game_id": "THORNS_POWER",
     "name": "Thorns",
     "description": "When hit by an attack, deal damage back.",
@@ -2250,7 +2277,7 @@
     "image": "THORNS_POWER.png"
   },
   {
-    "id": 250,
+    "id": 253,
     "game_id": "THUNDER_POWER",
     "name": "Thunder",
     "description": "Whenever you [gold]Evoke Lightning[/gold], deal [blue]8[/blue] damage to each enemy hit.",
@@ -2259,7 +2286,7 @@
     "image": "THUNDER_POWER.png"
   },
   {
-    "id": 251,
+    "id": 254,
     "game_id": "TOOLS_OF_THE_TRADE_POWER",
     "name": "Tools of the Trade",
     "description": "At the start of your turn, draw [blue]1[/blue] card and discard [blue]1[/blue] card.",
@@ -2268,7 +2295,7 @@
     "image": "TOOLS_OF_THE_TRADE_POWER.png"
   },
   {
-    "id": 252,
+    "id": 255,
     "game_id": "TORIC_TOUGHNESS_POWER",
     "name": "Toric Toughness",
     "description": "Gain [blue]5[/blue] [gold]Block[/gold] at the start of the next [blue]2[/blue] turns.",
@@ -2277,7 +2304,7 @@
     "image": "TORIC_TOUGHNESS_POWER.png"
   },
   {
-    "id": 253,
+    "id": 256,
     "game_id": "TRACKING_POWER",
     "name": "Tracking",
     "description": "[gold]Weak[/gold] enemies take [blue]2[/blue] times more damage from Attacks.",
@@ -2286,7 +2313,7 @@
     "image": "TRACKING_POWER.png"
   },
   {
-    "id": 254,
+    "id": 257,
     "game_id": "TRASH_TO_TREASURE_POWER",
     "name": "Trash to Treasure",
     "description": "Whenever you create a Status, [gold]Channel[/gold] [blue]1[/blue] random Orb.",
@@ -2295,7 +2322,7 @@
     "image": "TRASH_TO_TREASURE_POWER.png"
   },
   {
-    "id": 255,
+    "id": 258,
     "game_id": "TYRANNY_POWER",
     "name": "Tyranny",
     "description": "At the start of your turn, draw a card and [gold]Exhaust[/gold] a card from your [gold]Hand[/gold].",
@@ -2304,7 +2331,7 @@
     "image": "TYRANNY_POWER.png"
   },
   {
-    "id": 256,
+    "id": 259,
     "game_id": "UNMOVABLE_POWER",
     "name": "Unmovable",
     "description": "The first time you gain [gold]Block[/gold] from a card each turn, double the amount gained.",
@@ -2313,7 +2340,7 @@
     "image": "UNMOVABLE_POWER.png"
   },
   {
-    "id": 257,
+    "id": 260,
     "game_id": "VEILPIERCER_POWER",
     "name": "Veilpiercer",
     "description": "The next [gold]Ethereal card[/gold] you play costs [blue]0[/blue].",
@@ -2322,7 +2349,7 @@
     "image": "VEILPIERCER_POWER.png"
   },
   {
-    "id": 258,
+    "id": 261,
     "game_id": "VICIOUS_POWER",
     "name": "Vicious",
     "description": "Whenever you apply [gold]Vulnerable[/gold], draw [blue]1[/blue] card.",
@@ -2331,7 +2358,7 @@
     "image": "VICIOUS_POWER.png"
   },
   {
-    "id": 259,
+    "id": 262,
     "game_id": "VIGOR_POWER",
     "name": "Vigor",
     "description": "Your next Attack deals additional damage.",
@@ -2340,7 +2367,7 @@
     "image": "VIGOR_POWER.png"
   },
   {
-    "id": 260,
+    "id": 263,
     "game_id": "VITAL_SPARK_POWER",
     "name": "Vital Spark",
     "description": "The first time this enemy takes Attack damage each turn, the attacker gains [blue]1[/blue] [gold]Energy[/gold].",
@@ -2349,7 +2376,7 @@
     "image": "VITAL_SPARK_POWER.png"
   },
   {
-    "id": 261,
+    "id": 264,
     "game_id": "VOID_FORM_POWER",
     "name": "Void Form",
     "description": "The first [blue]2[/blue] cards you play each turn are free to play.",
@@ -2358,7 +2385,7 @@
     "image": "VOID_FORM_POWER.png"
   },
   {
-    "id": 262,
+    "id": 265,
     "game_id": "VULNERABLE_POWER",
     "name": "Vulnerable",
     "description": "Vulnerable creatures take [blue]50%[/blue] more damage from Attacks.",
@@ -2367,7 +2394,7 @@
     "image": "VULNERABLE_POWER.png"
   },
   {
-    "id": 263,
+    "id": 266,
     "game_id": "WASTE_AWAY_POWER",
     "name": "Waste Away",
     "description": "Gain [blue]1[/blue] less [gold]Energy[/gold] per turn.",
@@ -2376,7 +2403,7 @@
     "image": "WASTE_AWAY_POWER.png"
   },
   {
-    "id": 264,
+    "id": 267,
     "game_id": "WEAK_POWER",
     "name": "Weak",
     "description": "Weakened creatures deal [blue]25%[/blue] less damage with Attacks.",
@@ -2385,7 +2412,7 @@
     "image": "WEAK_POWER.png"
   },
   {
-    "id": 265,
+    "id": 268,
     "game_id": "WELL_LAID_PLANS_POWER",
     "name": "Well-Laid Plans",
     "description": "At the end of your turn, [gold]Retain[/gold] up to [blue]1[/blue] card.",
@@ -2394,7 +2421,7 @@
     "image": "WELL_LAID_PLANS_POWER.png"
   },
   {
-    "id": 266,
+    "id": 269,
     "game_id": "WRAITH_FORM_POWER",
     "name": "Wraith Form",
     "description": "At the start of your turn, lose [blue]1[/blue] [gold]Dexterity[/gold].",
