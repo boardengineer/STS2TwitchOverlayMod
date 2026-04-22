@@ -21,4 +21,16 @@ internal class UiInfo
 
     [JsonPropertyName("deckButtonHeight")]
     public float DeckButtonHeight { get; set; }
+
+    [JsonPropertyName("mapButtonX")]
+    public float MapButtonX { get; set; }
+
+    [JsonPropertyName("mapButtonY")]
+    public float MapButtonY { get; set; }
+
+    [JsonPropertyName("mapButtonWidth")]
+    public float MapButtonWidth { get; set; }
+
+    [JsonPropertyName("mapButtonHeight")]
+    public float MapButtonHeight { get; set; }
 }

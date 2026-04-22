@@ -48,7 +48,43 @@ internal static class GameStateCollector
             Logging.Log($"Error collecting UI info: {ex.Message}");
         }
 
+        try
+        {
+            payload.Map = CollectMapInfo();
+        }
+        catch (Exception ex)
+        {
+            Logging.Log($"Error collecting map info: {ex.Message}");
+        }
+
         return payload;
+    }
+
+    private static MapInfo? CollectMapInfo()
+    {
+        var runState = RunManager.Instance?.DebugOnlyGetState();
+        if (runState == null) return null;
+
+        if (!MapSnapshotCache.TryGetSnapshot(runState.CurrentActIndex, out var cached)) return null;
+
+        var states = MapSnapshotCache.ReadLiveStates();
+        var current = runState.CurrentMapCoord;
+        var map = new MapInfo
+        {
+            CurrentCol = current?.col,
+            CurrentRow = current?.row
+        };
+        foreach (var p in cached)
+        {
+            map.Cols.Add(p.Col);
+            map.Rows.Add(p.Row);
+            map.Xs.Add(p.X);
+            map.Ys.Add(p.Y);
+            map.Types.Add(p.Type);
+            map.States.Add(states != null && states.TryGetValue((p.Col, p.Row), out var s) ? s : 0);
+            map.Children.Add(p.Children);
+        }
+        return map;
     }
 
     private static PlayerInfo? CollectPlayerInfo()
@@ -182,14 +218,15 @@ internal static class GameStateCollector
 
     private static UiInfo? CollectUiInfo()
     {
-        var deckButton = NRun.Instance?.GlobalUi.TopBar.Deck;
+        var topBar = NRun.Instance?.GlobalUi.TopBar;
+        var deckButton = topBar?.Deck;
         if (deckButton == null) return null;
 
         var windowSize = Godot.DisplayServer.WindowGetSize();
         var screenTransform = deckButton.GetViewport().GetScreenTransform();
         var deckRect = screenTransform * deckButton.GetGlobalRect();
 
-        return new UiInfo
+        var info = new UiInfo
         {
             WindowWidth = windowSize.X,
             WindowHeight = windowSize.Y,
@@ -198,5 +235,17 @@ internal static class GameStateCollector
             DeckButtonWidth = deckRect.Size.X,
             DeckButtonHeight = deckRect.Size.Y
         };
+
+        var mapButton = topBar?.Map;
+        if (mapButton != null)
+        {
+            var mapRect = screenTransform * mapButton.GetGlobalRect();
+            info.MapButtonX = mapRect.Position.X;
+            info.MapButtonY = mapRect.Position.Y;
+            info.MapButtonWidth = mapRect.Size.X;
+            info.MapButtonHeight = mapRect.Size.Y;
+        }
+
+        return info;
     }
 }

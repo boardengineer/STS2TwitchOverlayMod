@@ -40,9 +40,9 @@ internal static class BroadcastScheduler
         try
         {
             var payload = GameStateCollector.Collect();
-            var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true });
+            var json = JsonSerializer.Serialize(payload);
 #if DUMP_JSON
-            File.WriteAllText(DebugJsonPath, json);
+            File.WriteAllText(DebugJsonPath, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
 #endif
             var jwt = JwtHelper.CreateToken(_config.ExtensionSecret, _config.ChannelId, _config.ChannelOwnerId);
             Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt, _config));
