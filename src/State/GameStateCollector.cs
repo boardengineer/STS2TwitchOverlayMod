@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using TwitchOverlayMod.Models;
@@ -171,14 +172,17 @@ internal static class GameStateCollector
             DiscardPileCount = pcs.DiscardPile.Cards.Count
         };
 
-        foreach (var power in player.Creature.Powers)
+        var powerNodes = new Dictionary<PowerModel, NPower>();
+        var combatRoom = NCombatRoom.Instance;
+        Godot.Transform2D screenTransform = default;
+        if (combatRoom != null)
         {
-            info.Powers.Add(new PowerInfo
-            {
-                Id = PowerIdMapper.GetSequentialId(power.Id.Entry) ?? -1,
-                Amount = power.Amount
-            });
+            CollectNPowers(combatRoom, powerNodes);
+            screenTransform = combatRoom.GetViewport().GetScreenTransform();
         }
+
+        foreach (var power in player.Creature.Powers)
+            info.Powers.Add(MakePowerInfo(power, powerNodes, screenTransform));
 
         foreach (var card in pcs.Hand.Cards)
         {
@@ -229,21 +233,14 @@ internal static class GameStateCollector
             }
 
             foreach (var power in enemy.Powers)
-            {
-                enemyInfo.Powers.Add(new PowerInfo
-                {
-                    Id = PowerIdMapper.GetSequentialId(power.Id.Entry) ?? -1,
-                    Amount = power.Amount
-                });
-            }
+                enemyInfo.Powers.Add(MakePowerInfo(power, powerNodes, screenTransform));
 
             info.Enemies.Add(enemyInfo);
         }
 
-        var combatUi = NCombatRoom.Instance?.Ui;
+        var combatUi = combatRoom?.Ui;
         if (combatUi != null)
         {
-            var screenTransform = combatUi.GetViewport().GetScreenTransform();
             var drawRect = screenTransform * combatUi.DrawPile.GetGlobalRect();
             info.DrawPileButtonX = drawRect.Position.X;
             info.DrawPileButtonY = drawRect.Position.Y;
@@ -263,6 +260,37 @@ internal static class GameStateCollector
             info.ExhaustPileButtonHeight = exhaustRect.Size.Y;
         }
 
+        return info;
+    }
+
+    private static void CollectNPowers(Godot.Node node, Dictionary<PowerModel, NPower> dict)
+    {
+        if (node is NPower np)
+        {
+            try { dict[np.Model] = np; }
+            catch { }
+        }
+        foreach (var child in node.GetChildren())
+            CollectNPowers(child, dict);
+    }
+
+    private static PowerInfo MakePowerInfo(PowerModel power, Dictionary<PowerModel, NPower> nodes, Godot.Transform2D screenTransform)
+    {
+        var info = new PowerInfo
+        {
+            Id = PowerIdMapper.GetSequentialId(power.Id.Entry) ?? -1,
+            Amount = power.Amount
+        };
+        if (nodes.TryGetValue(power, out var nPower))
+        {
+            var rect = screenTransform * nPower.GetGlobalRect();
+            info.X = rect.Position.X;
+            info.Y = rect.Position.Y;
+            info.Width = rect.Size.X;
+            info.Height = rect.Size.Y;
+        }
+        foreach (var v in power.DynamicVars)
+            info.Vars[v.Key] = (float)v.Value.BaseValue;
         return info;
     }
 
