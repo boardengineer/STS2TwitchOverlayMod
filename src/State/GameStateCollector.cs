@@ -147,6 +147,8 @@ internal static class GameStateCollector
                 var rect = screenTransform.Value * relicNodes[i].GetGlobalRect();
                 relicInfo.X = rect.Position.X;
                 relicInfo.Y = rect.Position.Y;
+                relicInfo.Width = rect.Size.X;
+                relicInfo.Height = rect.Size.Y;
             }
 
             info.Relics.Add(relicInfo);
