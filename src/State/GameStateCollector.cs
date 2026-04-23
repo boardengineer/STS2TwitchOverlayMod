@@ -21,9 +21,6 @@ internal static class GameStateCollector
     private static readonly FieldInfo? PotionHoldersField =
         typeof(NPotionContainer).GetField("_holders", BindingFlags.Instance | BindingFlags.NonPublic);
 
-    private static readonly FieldInfo? AscensionIconField =
-        typeof(MegaCrit.Sts2.Core.Nodes.CommonUi.NTopBar).GetField("_ascensionIcon", BindingFlags.Instance | BindingFlags.NonPublic);
-
 
     internal static GameStatePayload Collect()
     {
@@ -369,13 +366,14 @@ internal static class GameStateCollector
             info.MapButtonHeight = mapRect.Size.Y;
         }
 
-        if (topBar != null && AscensionIconField?.GetValue(topBar) is Godot.Control ascensionIcon)
+        var portrait = topBar?.Portrait;
+        if (portrait != null)
         {
-            var ascensionRect = screenTransform * ascensionIcon.GetGlobalRect();
-            info.AscensionWidgetX = ascensionRect.Position.X;
-            info.AscensionWidgetY = ascensionRect.Position.Y;
-            info.AscensionWidgetWidth = ascensionRect.Size.X;
-            info.AscensionWidgetHeight = ascensionRect.Size.Y;
+            var portraitRect = screenTransform * portrait.GetGlobalRect();
+            info.AscensionWidgetX = portraitRect.Position.X;
+            info.AscensionWidgetY = portraitRect.Position.Y;
+            info.AscensionWidgetWidth = portraitRect.Size.X;
+            info.AscensionWidgetHeight = portraitRect.Size.Y;
         }
 
         return info;
