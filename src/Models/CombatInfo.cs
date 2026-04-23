@@ -73,4 +73,16 @@ internal class CombatInfo
 
     [JsonPropertyName("exhaustPileButtonHeight")]
     public float ExhaustPileButtonHeight { get; set; }
+
+    [JsonPropertyName("playerHitboxX")]
+    public float PlayerHitboxX { get; set; }
+
+    [JsonPropertyName("playerHitboxY")]
+    public float PlayerHitboxY { get; set; }
+
+    [JsonPropertyName("playerHitboxWidth")]
+    public float PlayerHitboxWidth { get; set; }
+
+    [JsonPropertyName("playerHitboxHeight")]
+    public float PlayerHitboxHeight { get; set; }
 }

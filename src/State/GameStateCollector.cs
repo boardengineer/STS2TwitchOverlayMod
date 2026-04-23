@@ -235,6 +235,16 @@ internal static class GameStateCollector
                 info.ExhaustPile.Add(seqId.Value);
         }
 
+        var playerHitbox = combatRoom?.GetCreatureNode(player.Creature)?.Hitbox;
+        if (playerHitbox != null)
+        {
+            var playerRect = screenTransform * playerHitbox.GetGlobalRect();
+            info.PlayerHitboxX = playerRect.Position.X;
+            info.PlayerHitboxY = playerRect.Position.Y;
+            info.PlayerHitboxWidth = playerRect.Size.X;
+            info.PlayerHitboxHeight = playerRect.Size.Y;
+        }
+
         var targets = combatState.Players.Select(p => p.Creature).ToList();
         foreach (var enemy in combatState.Enemies)
         {
@@ -257,6 +267,16 @@ internal static class GameStateCollector
 
             foreach (var power in enemy.Powers)
                 enemyInfo.Powers.Add(MakePowerInfo(power, powerNodes, screenTransform));
+
+            var enemyHitbox = combatRoom?.GetCreatureNode(enemy)?.Hitbox;
+            if (enemyHitbox != null)
+            {
+                var enemyRect = screenTransform * enemyHitbox.GetGlobalRect();
+                enemyInfo.X = enemyRect.Position.X;
+                enemyInfo.Y = enemyRect.Position.Y;
+                enemyInfo.Width = enemyRect.Size.X;
+                enemyInfo.Height = enemyRect.Size.Y;
+            }
 
             info.Enemies.Add(enemyInfo);
         }
