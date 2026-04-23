@@ -23,6 +23,12 @@ internal class PlayerInfo
     [JsonPropertyName("ascensionLevel")]
     public int AscensionLevel { get; set; }
 
+    [JsonPropertyName("bossId")]
+    public string? BossId { get; set; }
+
+    [JsonPropertyName("ancientId")]
+    public string? AncientId { get; set; }
+
     [JsonPropertyName("deck")]
     public List<int> Deck { get; set; } = [];
 

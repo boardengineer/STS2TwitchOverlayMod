@@ -116,6 +116,13 @@ internal static class GameStateCollector
             AscensionLevel = runState.AscensionLevel
         };
 
+        var act = runState.Act;
+        if (act != null)
+        {
+            try { info.BossId = act.BossEncounter?.Id.Entry; } catch { }
+            try { info.AncientId = act.Ancient?.Id.Entry; } catch { }
+        }
+
         foreach (var card in player.Deck.Cards)
         {
             var seqId = CardIdMapper.GetSequentialId(card.Id.ToString(), card.CurrentUpgradeLevel);
