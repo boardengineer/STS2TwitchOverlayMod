@@ -20,6 +20,9 @@ internal class PlayerInfo
     [JsonPropertyName("actFloor")]
     public int ActFloor { get; set; }
 
+    [JsonPropertyName("ascensionLevel")]
+    public int AscensionLevel { get; set; }
+
     [JsonPropertyName("deck")]
     public List<int> Deck { get; set; } = [];
 

@@ -21,6 +21,9 @@ internal static class GameStateCollector
     private static readonly FieldInfo? PotionHoldersField =
         typeof(NPotionContainer).GetField("_holders", BindingFlags.Instance | BindingFlags.NonPublic);
 
+    private static readonly FieldInfo? AscensionIconField =
+        typeof(MegaCrit.Sts2.Core.Nodes.CommonUi.NTopBar).GetField("_ascensionIcon", BindingFlags.Instance | BindingFlags.NonPublic);
+
 
     internal static GameStatePayload Collect()
     {
@@ -109,7 +112,8 @@ internal static class GameStateCollector
             MaxHp = player.Creature.MaxHp,
             Gold = player.Gold,
             CurrentAct = runState.CurrentActIndex,
-            ActFloor = runState.ActFloor
+            ActFloor = runState.ActFloor,
+            AscensionLevel = runState.AscensionLevel
         };
 
         foreach (var card in player.Deck.Cards)
@@ -334,6 +338,15 @@ internal static class GameStateCollector
             info.MapButtonY = mapRect.Position.Y;
             info.MapButtonWidth = mapRect.Size.X;
             info.MapButtonHeight = mapRect.Size.Y;
+        }
+
+        if (topBar != null && AscensionIconField?.GetValue(topBar) is Godot.Control ascensionIcon)
+        {
+            var ascensionRect = screenTransform * ascensionIcon.GetGlobalRect();
+            info.AscensionWidgetX = ascensionRect.Position.X;
+            info.AscensionWidgetY = ascensionRect.Position.Y;
+            info.AscensionWidgetWidth = ascensionRect.Size.X;
+            info.AscensionWidgetHeight = ascensionRect.Size.Y;
         }
 
         return info;

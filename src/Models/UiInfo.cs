@@ -33,4 +33,16 @@ internal class UiInfo
 
     [JsonPropertyName("mapButtonHeight")]
     public float MapButtonHeight { get; set; }
+
+    [JsonPropertyName("ascensionWidgetX")]
+    public float AscensionWidgetX { get; set; }
+
+    [JsonPropertyName("ascensionWidgetY")]
+    public float AscensionWidgetY { get; set; }
+
+    [JsonPropertyName("ascensionWidgetWidth")]
+    public float AscensionWidgetWidth { get; set; }
+
+    [JsonPropertyName("ascensionWidgetHeight")]
+    public float AscensionWidgetHeight { get; set; }
 }
