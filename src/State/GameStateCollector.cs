@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.Potions;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Runs;
 using TwitchOverlayMod.Models;
@@ -16,6 +18,10 @@ namespace TwitchOverlayMod.State;
 
 internal static class GameStateCollector
 {
+    private static readonly FieldInfo? PotionHoldersField =
+        typeof(NPotionContainer).GetField("_holders", BindingFlags.Instance | BindingFlags.NonPublic);
+
+
     internal static GameStatePayload Collect()
     {
         var payload = new GameStatePayload
@@ -135,20 +141,26 @@ internal static class GameStateCollector
             info.Relics.Add(relicInfo);
         }
 
-        foreach (var potion in player.PotionSlots)
+        var potionContainer = NRun.Instance?.GlobalUi.TopBar.PotionContainer;
+        var holders = PotionHoldersField?.GetValue(potionContainer) as List<NPotionHolder>;
+        for (var i = 0; i < player.PotionSlots.Count; i++)
         {
-            if (potion == null)
+            var potion = player.PotionSlots[i];
+            var potionInfo = new PotionInfo
             {
-                info.Potions.Add(null);
-            }
-            else
+                Id = potion == null
+                    ? -1
+                    : (PotionIdMapper.GetSequentialId(potion.Id.Entry) ?? -1)
+            };
+            if (holders != null && i < holders.Count && holders[i] is Godot.Control holder)
             {
-                info.Potions.Add(new PotionInfo
-                {
-                    Id = potion.Id.ToString(),
-                    Name = potion.Title.GetRawText()
-                });
+                var rect = holder.GetViewport().GetScreenTransform() * holder.GetGlobalRect();
+                potionInfo.X = rect.Position.X;
+                potionInfo.Y = rect.Position.Y;
+                potionInfo.Width = rect.Size.X;
+                potionInfo.Height = rect.Size.Y;
             }
+            info.Potions.Add(potionInfo);
         }
 
         return info;

@@ -27,5 +27,5 @@ internal class PlayerInfo
     public List<RelicInfo> Relics { get; set; } = [];
 
     [JsonPropertyName("potions")]
-    public List<PotionInfo?> Potions { get; set; } = [];
+    public List<PotionInfo> Potions { get; set; } = [];
 }
