@@ -13,43 +13,86 @@ internal static class MainMenuTwitchButton
     private static Button?      _button;
     private static bool         _connecting;
 
-    internal static void SetupIfNeeded(Node parent)
+    // The Twitch "glitch" logo as an inline SVG (white fill, transparent bg).
+    private const string TwitchSvg = """
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 28">
+        <path fill="white" d="M2.149 0l-1.612 4.119v16.836h5.731v3.045h3.224l3.045-3.045h4.657
+             l6.269-6.269v-14.686h-21.314zm19.164 13.612l-3.582 3.582h-5.731l-3.045 3.045
+             v-3.045h-4.836v-14.791h17.194v11.209zm-3.582-7.343v6.262h-2.149v-6.262h2.149z
+             m-5.731 0v6.262h-2.149v-6.262h2.149z"/>
+        </svg>
+        """;
+
+    internal static void SetupIfNeeded(Node mainMenu)
     {
-        if (_layer != null) return;
+        // Already set up and the main menu scene is still alive — nothing to do.
+        if (_layer != null && GodotObject.IsInstanceValid(_layer)) return;
+
+        // Layer was freed when the previous main menu scene exited — reset state.
+        _layer      = null;
+        _button     = null;
+        _connecting = false;
 
         _layer = new CanvasLayer { Layer = 100 };
 
         _button = new Button
         {
-            Text              = "Twitch",
-            CustomMinimumSize = new Vector2(120f, 40f),
+            CustomMinimumSize = new Vector2(44f, 44f),
+            Icon              = CreateTwitchIcon(),
+            ExpandIcon        = false,
+            IconAlignment     = HorizontalAlignment.Center,
         };
 
-        // Anchor to top-right corner with a small margin
-        _button.AnchorLeft   = 1f;
-        _button.AnchorRight  = 1f;
+        // Fallback: top-left — overwritten by PositionBelowProfileButton once layout is ready.
+        _button.AnchorLeft   = 0f;
+        _button.AnchorRight  = 0f;
         _button.AnchorTop    = 0f;
         _button.AnchorBottom = 0f;
-        _button.OffsetLeft   = -130f;
-        _button.OffsetRight  = -10f;
+        _button.OffsetLeft   = 10f;
+        _button.OffsetRight  = 54f;
         _button.OffsetTop    = 10f;
-        _button.OffsetBottom = 50f;
+        _button.OffsetBottom = 54f;
 
-        ApplyTwitchStyle(_button, connected: false);
+        ApplyTwitchStyle(_button, connected: false, connecting: false);
         _button.Pressed += OnPressed;
 
         _layer.AddChild(_button);
-        parent.AddChild(_layer);
+        mainMenu.AddChild(_layer);  // owned by the main menu scene, freed with it
+
+        // Defer so the scene layout is complete before we read the profile button's rect.
+        Callable.From(() => PositionBelowProfileButton(mainMenu)).CallDeferred();
 
         if (CredentialManager.IsConnected)
-            UpdateLabel("Connected");
+            ApplyTwitchStyle(_button, connected: true, connecting: false);
+    }
+
+    private static void PositionBelowProfileButton(Node mainMenu)
+    {
+        if (_button == null || !GodotObject.IsInstanceValid(_button)) return;
+
+        var profileBtn = mainMenu.GetNodeOrNull<Control>("%ChangeProfileButton");
+        if (profileBtn == null || !GodotObject.IsInstanceValid(profileBtn)) return;
+
+        var rect = profileBtn.GetGlobalRect();
+        _button.AnchorLeft   = 0f;
+        _button.AnchorRight  = 0f;
+        _button.AnchorTop    = 0f;
+        _button.AnchorBottom = 0f;
+        _button.OffsetLeft   = rect.Position.X;
+        _button.OffsetRight  = rect.Position.X + 44f;
+        _button.OffsetTop    = rect.End.Y + 5f;
+        _button.OffsetBottom = rect.End.Y + 49f;
     }
 
     private static void OnPressed()
     {
         if (_connecting) return;
         _connecting = true;
-        UpdateLabel("Connecting...");
+        Callable.From(() =>
+        {
+            if (_button == null || !GodotObject.IsInstanceValid(_button)) return;
+            ApplyTwitchStyle(_button, connected: false, connecting: true);
+        }).CallDeferred();
         Task.Run(ConnectAsync);
     }
 
@@ -58,13 +101,13 @@ internal static class MainMenuTwitchButton
         if (Plugin.Config == null || string.IsNullOrEmpty(Plugin.Config.EbsUrl))
         {
             Logging.Log("Cannot connect: EbsUrl is not configured.");
-            FinishConnect(null, "No config");
+            FinishConnect(success: false);
             return;
         }
 
         using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
-        var port      = LocalCallbackServer.FindAvailablePort();
-        var authUrl   = $"{Plugin.Config.EbsUrl}/.netlify/functions/auth?port={port}";
+        var port    = LocalCallbackServer.FindAvailablePort();
+        var authUrl = $"{Plugin.Config.EbsUrl}/.netlify/functions/auth?port={port}";
 
         Logging.Log($"Opening auth URL: {authUrl}");
         Callable.From(() => OS.ShellOpen(authUrl)).CallDeferred();
@@ -75,7 +118,7 @@ internal static class MainMenuTwitchButton
 
             if (result == null)
             {
-                FinishConnect(null, "Cancelled");
+                FinishConnect(success: false);
                 return;
             }
 
@@ -84,43 +127,48 @@ internal static class MainMenuTwitchButton
                 result.Value.ChannelId, result.Value.OwnerId,
                 result.Value.ExpiresIn);
 
-            FinishConnect(result.Value.Login, null);
+            FinishConnect(success: true);
         }
         catch (Exception ex)
         {
             Logging.Log($"Connect error: {ex.Message}");
-            FinishConnect(null, "Error");
+            FinishConnect(success: false);
         }
     }
 
-    private static void FinishConnect(string? login, string? errorLabel)
+    private static void FinishConnect(bool success)
     {
         _connecting = false;
-        var text    = login != null ? $"✓ {login}" : (errorLabel ?? "Twitch");
         Callable.From(() =>
         {
-            if (_button == null) return;
-            _button.Text = text;
-            ApplyTwitchStyle(_button, connected: login != null);
+            if (_button == null || !GodotObject.IsInstanceValid(_button)) return;
+            ApplyTwitchStyle(_button, connected: success, connecting: false);
         }).CallDeferred();
     }
 
-    private static void UpdateLabel(string text) =>
-        Callable.From(() => { if (_button != null) _button.Text = text; }).CallDeferred();
-
-    private static void ApplyTwitchStyle(Button button, bool connected)
+    private static void ApplyTwitchStyle(Button button, bool connected, bool connecting)
     {
+        var bgColor = connecting  ? new Color(0.4f,  0.4f,  0.4f)    // grey while waiting
+                    : connected   ? new Color(0.22f, 0.59f, 0.22f)   // green when authenticated
+                                  : new Color(0.569f, 0.275f, 1.0f); // Twitch purple
+
         var bg = new StyleBoxFlat
         {
-            BgColor                = connected ? new Color(0.22f, 0.59f, 0.22f) : new Color(0.569f, 0.275f, 1.0f),
-            CornerRadiusTopLeft    = 4,
-            CornerRadiusTopRight   = 4,
-            CornerRadiusBottomLeft = 4,
+            BgColor                 = bgColor,
+            CornerRadiusTopLeft     = 4,
+            CornerRadiusTopRight    = 4,
+            CornerRadiusBottomLeft  = 4,
             CornerRadiusBottomRight = 4,
-            ContentMarginLeft      = 8f,
-            ContentMarginRight     = 8f,
         };
         button.AddThemeStyleboxOverride("normal", bg);
-        button.AddThemeColorOverride("font_color", Colors.White);
+        button.AddThemeColorOverride("icon_normal_color", Colors.White);
+    }
+
+    private static Texture2D CreateTwitchIcon()
+    {
+        var bytes = System.Text.Encoding.UTF8.GetBytes(TwitchSvg);
+        var image = new Image();
+        image.LoadSvgFromBuffer(bytes, scale: 1.2f);
+        return ImageTexture.CreateFromImage(image);
     }
 }

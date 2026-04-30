@@ -1,6 +1,7 @@
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Nodes;
+using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using TwitchOverlayMod.Config;
 using TwitchOverlayMod.Scheduling;
 using TwitchOverlayMod.State;
@@ -52,16 +53,16 @@ public class Plugin
     }
 }
 
-[HarmonyPatch(typeof(NGame), "LoadMainMenu")]
+[HarmonyPatch(typeof(NMainMenu), nameof(NMainMenu._Ready))]
 public class MainMenuPatch
 {
     [HarmonyPostfix]
-    public static void Postfix()
+    public static void Postfix(NMainMenu __instance)
     {
         if (Plugin.Config == null) return;
-
-        BroadcastScheduler.Start(NGame.Instance!, Plugin.Config);
-        MainMenuTwitchButton.SetupIfNeeded(NGame.Instance!);
+        if (NGame.Instance == null) return;
+        BroadcastScheduler.Start(NGame.Instance, Plugin.Config);
+        MainMenuTwitchButton.SetupIfNeeded(__instance);
         Logging.Log("Twitch Overlay Mod initialized.");
     }
 }
