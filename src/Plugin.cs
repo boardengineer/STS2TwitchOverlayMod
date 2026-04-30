@@ -4,6 +4,8 @@ using MegaCrit.Sts2.Core.Nodes;
 using TwitchOverlayMod.Config;
 using TwitchOverlayMod.Scheduling;
 using TwitchOverlayMod.State;
+using TwitchOverlayMod.Twitch;
+using TwitchOverlayMod.UI;
 using TwitchOverlayMod.Utility;
 
 namespace TwitchOverlayMod;
@@ -42,6 +44,9 @@ public class Plugin
         PotionIdMapper.Load();
         Logging.Log("Potion ID map loaded.");
 
+        CredentialManager.LoadSaved();
+        Logging.Log("Credentials loaded.");
+
         var harmony = new Harmony("com.author.twitchoverlaymod");
         harmony.PatchAll(typeof(Plugin).Assembly);
     }
@@ -56,6 +61,7 @@ public class MainMenuPatch
         if (Plugin.Config == null) return;
 
         BroadcastScheduler.Start(NGame.Instance!, Plugin.Config);
+        MainMenuTwitchButton.SetupIfNeeded(NGame.Instance!);
         Logging.Log("Twitch Overlay Mod initialized.");
     }
 }

@@ -2,3 +2,6 @@
 /bin
 /obj
 /.idea
+
+# Local Netlify folder
+.netlify

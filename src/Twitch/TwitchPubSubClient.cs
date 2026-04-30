@@ -12,15 +12,15 @@ internal static class TwitchPubSubClient
 {
     private static readonly HttpClient HttpClient = new();
 
-    internal static async Task BroadcastAsync(string messageJson, string jwt, ModConfig config)
+    internal static async Task BroadcastAsync(string messageJson, string jwt, ModConfig config, string channelId)
     {
         try
         {
             var body = JsonSerializer.Serialize(new
             {
-                target = new[] { "broadcast" },
-                broadcaster_id = config.ChannelId,
-                message = messageJson
+                target         = new[] { "broadcast" },
+                broadcaster_id = channelId,
+                message        = messageJson
             });
 
             using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.twitch.tv/helix/extensions/pubsub");

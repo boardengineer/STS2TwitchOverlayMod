@@ -12,7 +12,7 @@ namespace TwitchOverlayMod.Scheduling;
 
 internal static class BroadcastScheduler
 {
-    private static Timer? _timer;
+    private static Timer?     _timer;
     private static ModConfig? _config;
     private static readonly string DebugJsonPath = Path.Combine(
         System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData),
@@ -37,15 +37,19 @@ internal static class BroadcastScheduler
     {
         if (_config == null) return;
 
+        var jwt       = CredentialManager.GetCurrentJwt();
+        var channelId = CredentialManager.ChannelId;
+
+        if (jwt == null || channelId == null) return;
+
         try
         {
             var payload = GameStateCollector.Collect();
-            var json = JsonSerializer.Serialize(payload);
+            var json    = JsonSerializer.Serialize(payload);
 #if DUMP_JSON
             File.WriteAllText(DebugJsonPath, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
 #endif
-            var jwt = JwtHelper.CreateToken(_config.ExtensionSecret, _config.ChannelId, _config.ChannelOwnerId);
-            Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt, _config));
+            Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt, _config, channelId));
         }
         catch (Exception ex)
         {
