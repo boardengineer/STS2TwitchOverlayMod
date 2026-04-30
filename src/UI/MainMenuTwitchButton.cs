@@ -9,9 +9,10 @@ namespace TwitchOverlayMod.UI;
 
 internal static class MainMenuTwitchButton
 {
-    private static CanvasLayer? _layer;
-    private static Button?      _button;
-    private static bool         _connecting;
+    private enum AuthState { Idle, Connecting, Connected, Error }
+
+    private static Button? _button;
+    private static bool    _connecting;
 
     // The Twitch "glitch" logo as an inline SVG (white fill, transparent bg).
     private const string TwitchSvg = """
@@ -26,14 +27,10 @@ internal static class MainMenuTwitchButton
     internal static void SetupIfNeeded(Node mainMenu)
     {
         // Already set up and the main menu scene is still alive — nothing to do.
-        if (_layer != null && GodotObject.IsInstanceValid(_layer)) return;
+        if (_button != null && GodotObject.IsInstanceValid(_button)) return;
 
-        // Layer was freed when the previous main menu scene exited — reset state.
-        _layer      = null;
         _button     = null;
         _connecting = false;
-
-        _layer = new CanvasLayer { Layer = 100 };
 
         _button = new Button
         {
@@ -41,29 +38,23 @@ internal static class MainMenuTwitchButton
             Icon              = CreateTwitchIcon(),
             ExpandIcon        = false,
             IconAlignment     = HorizontalAlignment.Center,
+            // Fallback top-left position; overwritten once layout is ready.
+            AnchorLeft   = 0f, AnchorRight  = 0f,
+            AnchorTop    = 0f, AnchorBottom = 0f,
+            OffsetLeft   = 10f, OffsetRight  = 54f,
+            OffsetTop    = 10f, OffsetBottom = 54f,
         };
 
-        // Fallback: top-left — overwritten by PositionBelowProfileButton once layout is ready.
-        _button.AnchorLeft   = 0f;
-        _button.AnchorRight  = 0f;
-        _button.AnchorTop    = 0f;
-        _button.AnchorBottom = 0f;
-        _button.OffsetLeft   = 10f;
-        _button.OffsetRight  = 54f;
-        _button.OffsetTop    = 10f;
-        _button.OffsetBottom = 54f;
-
-        ApplyTwitchStyle(_button, connected: false, connecting: false);
+        SetIconColor(CredentialManager.IsConnected ? AuthState.Connected : AuthState.Idle);
         _button.Pressed += OnPressed;
 
-        _layer.AddChild(_button);
-        mainMenu.AddChild(_layer);  // owned by the main menu scene, freed with it
+        // Add directly to the menu node — no CanvasLayer — so the transition
+        // overlay (NTransition, a ColorRect in the normal scene tree) covers us
+        // and the button fades in/out with everything else.
+        mainMenu.AddChild(_button);
 
-        // Defer so the scene layout is complete before we read the profile button's rect.
+        // Defer positioning until the layout pass has completed.
         Callable.From(() => PositionBelowProfileButton(mainMenu)).CallDeferred();
-
-        if (CredentialManager.IsConnected)
-            ApplyTwitchStyle(_button, connected: true, connecting: false);
     }
 
     private static void PositionBelowProfileButton(Node mainMenu)
@@ -74,10 +65,8 @@ internal static class MainMenuTwitchButton
         if (profileBtn == null || !GodotObject.IsInstanceValid(profileBtn)) return;
 
         var rect = profileBtn.GetGlobalRect();
-        _button.AnchorLeft   = 0f;
-        _button.AnchorRight  = 0f;
-        _button.AnchorTop    = 0f;
-        _button.AnchorBottom = 0f;
+        _button.AnchorLeft   = 0f; _button.AnchorRight  = 0f;
+        _button.AnchorTop    = 0f; _button.AnchorBottom = 0f;
         _button.OffsetLeft   = rect.Position.X;
         _button.OffsetRight  = rect.Position.X + 44f;
         _button.OffsetTop    = rect.End.Y + 5f;
@@ -91,7 +80,7 @@ internal static class MainMenuTwitchButton
         Callable.From(() =>
         {
             if (_button == null || !GodotObject.IsInstanceValid(_button)) return;
-            ApplyTwitchStyle(_button, connected: false, connecting: true);
+            SetIconColor(AuthState.Connecting);
         }).CallDeferred();
         Task.Run(ConnectAsync);
     }
@@ -101,7 +90,7 @@ internal static class MainMenuTwitchButton
         if (Plugin.Config == null || string.IsNullOrEmpty(Plugin.Config.EbsUrl))
         {
             Logging.Log("Cannot connect: EbsUrl is not configured.");
-            FinishConnect(success: false);
+            FinishConnect(AuthState.Error);
             return;
         }
 
@@ -118,7 +107,8 @@ internal static class MainMenuTwitchButton
 
             if (result == null)
             {
-                FinishConnect(success: false);
+                // User closed the browser / timed out — return to idle, not an error.
+                FinishConnect(AuthState.Idle);
                 return;
             }
 
@@ -127,41 +117,36 @@ internal static class MainMenuTwitchButton
                 result.Value.ChannelId, result.Value.OwnerId,
                 result.Value.ExpiresIn);
 
-            FinishConnect(success: true);
+            FinishConnect(AuthState.Connected);
         }
         catch (Exception ex)
         {
             Logging.Log($"Connect error: {ex.Message}");
-            FinishConnect(success: false);
+            FinishConnect(AuthState.Error);
         }
     }
 
-    private static void FinishConnect(bool success)
+    private static void FinishConnect(AuthState state)
     {
         _connecting = false;
         Callable.From(() =>
         {
             if (_button == null || !GodotObject.IsInstanceValid(_button)) return;
-            ApplyTwitchStyle(_button, connected: success, connecting: false);
+            SetIconColor(state);
         }).CallDeferred();
     }
 
-    private static void ApplyTwitchStyle(Button button, bool connected, bool connecting)
+    private static void SetIconColor(AuthState state)
     {
-        var bgColor = connecting  ? new Color(0.4f,  0.4f,  0.4f)    // grey while waiting
-                    : connected   ? new Color(0.22f, 0.59f, 0.22f)   // green when authenticated
-                                  : new Color(0.569f, 0.275f, 1.0f); // Twitch purple
-
-        var bg = new StyleBoxFlat
+        if (_button == null) return;
+        var color = state switch
         {
-            BgColor                 = bgColor,
-            CornerRadiusTopLeft     = 4,
-            CornerRadiusTopRight    = 4,
-            CornerRadiusBottomLeft  = 4,
-            CornerRadiusBottomRight = 4,
+            AuthState.Connecting => new Color(1.0f, 0.85f, 0.0f), // yellow — in progress
+            AuthState.Connected  => new Color(0.0f, 1.0f,  0.2f), // green  — authenticated
+            AuthState.Error      => new Color(1.0f, 0.1f,  0.1f), // red    — error
+            _                    => new Color(0.7f, 0.0f,  1.0f), // purple — idle
         };
-        button.AddThemeStyleboxOverride("normal", bg);
-        button.AddThemeColorOverride("icon_normal_color", Colors.White);
+        _button.AddThemeColorOverride("icon_normal_color", color);
     }
 
     private static Texture2D CreateTwitchIcon()
