@@ -14,17 +14,11 @@ namespace TwitchOverlayMod;
 [ModInitializer("Initialize")]
 public class Plugin
 {
-    internal static ModConfig? Config { get; private set; }
+    internal static ModConfig Config { get; private set; } = new();
 
     public static void Initialize()
     {
         Config = ModConfig.Load();
-        if (Config == null)
-        {
-            Logging.Log("Config not found — place TwitchOverlayMod.config.json next to the DLL.");
-            return;
-        }
-
         Logging.Log("Config loaded successfully.");
 
         CardIdMapper.Load();
@@ -59,7 +53,6 @@ public class MainMenuPatch
     [HarmonyPostfix]
     public static void Postfix(NMainMenu __instance)
     {
-        if (Plugin.Config == null) return;
         if (NGame.Instance == null) return;
         BroadcastScheduler.Start(NGame.Instance, Plugin.Config);
         MainMenuTwitchButton.SetupIfNeeded(__instance);

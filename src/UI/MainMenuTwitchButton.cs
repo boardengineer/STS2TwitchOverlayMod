@@ -87,7 +87,7 @@ internal static class MainMenuTwitchButton
 
     private static async Task ConnectAsync()
     {
-        if (Plugin.Config == null || string.IsNullOrEmpty(Plugin.Config.EbsUrl))
+        if (string.IsNullOrEmpty(Plugin.Config.EbsUrl))
         {
             Logging.Log("Cannot connect: EbsUrl is not configured.");
             FinishConnect(AuthState.Error);
