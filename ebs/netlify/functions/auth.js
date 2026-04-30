@@ -8,7 +8,7 @@ exports.handler = async (event) => {
   const state = Buffer.from(JSON.stringify({ port })).toString('base64url');
 
   const params = new URLSearchParams({
-    client_id:     process.env.EXTENSION_CLIENT_ID,
+    client_id:     process.env.CLIENT_ID,
     redirect_uri:  `${process.env.URL}/.netlify/functions/callback`,
     response_type: 'code',
     scope:         '',

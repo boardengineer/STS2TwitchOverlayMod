@@ -25,8 +25,8 @@ exports.handler = async (event) => {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
-      client_id:     process.env.EXTENSION_CLIENT_ID,
-      client_secret: process.env.OAUTH_CLIENT_SECRET,
+      client_id:     process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
       code,
       grant_type:    'authorization_code',
       redirect_uri:  `${process.env.URL}/.netlify/functions/callback`,
@@ -44,7 +44,7 @@ exports.handler = async (event) => {
   const userRes = await fetch('https://api.twitch.tv/helix/users', {
     headers: {
       Authorization: `Bearer ${twitchToken}`,
-      'Client-Id':   process.env.EXTENSION_CLIENT_ID,
+      'Client-Id':   process.env.CLIENT_ID,
     },
   });
 
@@ -60,7 +60,7 @@ exports.handler = async (event) => {
   const broadcastJwt   = createBroadcastJwt(channelId, ownerId);
   const refreshToken   = jwt.sign(
     { channel_id: channelId, owner_id: ownerId },
-    process.env.JWT_REFRESH_SECRET,
+    process.env.CLIENT_SECRET,
     { expiresIn: '30d' }
   );
 
@@ -80,7 +80,7 @@ exports.handler = async (event) => {
 };
 
 function createBroadcastJwt(channelId, ownerId) {
-  const secret = Buffer.from(process.env.EXTENSION_SECRET, 'base64');
+  const secret = Buffer.from(process.env.TWITCH_EXTENSION_SECRET, 'base64');
   const now    = Math.floor(Date.now() / 1000);
 
   const header  = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');

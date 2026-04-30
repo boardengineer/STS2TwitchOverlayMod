@@ -21,7 +21,7 @@ exports.handler = async (event) => {
 
   let decoded;
   try {
-    decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    decoded = jwt.verify(refreshToken, process.env.CLIENT_SECRET);
   } catch (err) {
     return { statusCode: 401, body: `Invalid or expired refresh token: ${err.message}` };
   }
@@ -36,7 +36,7 @@ exports.handler = async (event) => {
 };
 
 function createBroadcastJwt(channelId, ownerId) {
-  const secret = Buffer.from(process.env.EXTENSION_SECRET, 'base64');
+  const secret = Buffer.from(process.env.TWITCH_EXTENSION_SECRET, 'base64');
   const now    = Math.floor(Date.now() / 1000);
 
   const header  = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
