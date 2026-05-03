@@ -54,9 +54,8 @@ Use this section if you want to run your own EBS and register your own Twitch ex
 
 1. Go to [dev.twitch.tv](https://dev.twitch.tv) → **Extensions** → **Create Extension**
 2. Set type: **Video Overlay**
-3. Under **Capabilities** → PubSub, enable **broadcast**
-4. Note your **Client ID** and **Client Secret**
-5. Add an OAuth redirect URI:
+3. Note your **Client ID** and **Client Secret**
+4. Add an OAuth redirect URI:
    ```
    https://<your-netlify-site>.netlify.app/.netlify/functions/callback
    ```
