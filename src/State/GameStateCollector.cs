@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Potions;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves;
 using TwitchOverlayMod.Models;
 using TwitchOverlayMod.Utility;
 
@@ -350,6 +351,7 @@ internal static class GameStateCollector
         {
             WindowWidth = windowSize.X,
             WindowHeight = windowSize.Y,
+            Language = SaveManager.Instance?.SettingsSave?.Language,
             DeckButtonX = deckRect.Position.X,
             DeckButtonY = deckRect.Position.Y,
             DeckButtonWidth = deckRect.Size.X,
@@ -374,6 +376,16 @@ internal static class GameStateCollector
             info.AscensionWidgetY = portraitRect.Position.Y;
             info.AscensionWidgetWidth = portraitRect.Size.X;
             info.AscensionWidgetHeight = portraitRect.Size.Y;
+        }
+
+        var settingsButton = topBar?.Pause;
+        if (settingsButton != null)
+        {
+            var settingsRect = screenTransform * settingsButton.GetGlobalRect();
+            info.SettingsButtonX = settingsRect.Position.X;
+            info.SettingsButtonY = settingsRect.Position.Y;
+            info.SettingsButtonWidth = settingsRect.Size.X;
+            info.SettingsButtonHeight = settingsRect.Size.Y;
         }
 
         return info;

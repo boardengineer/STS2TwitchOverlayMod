@@ -45,4 +45,19 @@ internal class UiInfo
 
     [JsonPropertyName("ascensionWidgetHeight")]
     public float AscensionWidgetHeight { get; set; }
+
+    [JsonPropertyName("language")]
+    public string? Language { get; set; }
+
+    [JsonPropertyName("settingsButtonX")]
+    public float SettingsButtonX { get; set; }
+
+    [JsonPropertyName("settingsButtonY")]
+    public float SettingsButtonY { get; set; }
+
+    [JsonPropertyName("settingsButtonWidth")]
+    public float SettingsButtonWidth { get; set; }
+
+    [JsonPropertyName("settingsButtonHeight")]
+    public float SettingsButtonHeight { get; set; }
 }
