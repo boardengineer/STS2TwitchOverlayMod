@@ -24,7 +24,7 @@ internal class BackfillManager
     private const int MaxImageBase64BytesBatch = 3072;
 
     private static readonly string CachePath = Path.Combine(
-        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData),
         "SlayTheSpire2", "TwitchOverlayMod_backfill_cache.json");
 
     // ── Packaged data for diff ────────────────────────────────────────────────
