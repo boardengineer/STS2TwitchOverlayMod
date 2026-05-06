@@ -16119,7 +16119,7 @@
     "id": 301,
     "game_id": "CARD.PREPARED",
     "name": "Prepared\u002B",
-    "description": "Draw 2 cards.\nDiscard 2 cards.",
+    "description": "Draw 3 cards.\nDiscard 2 cards.",
     "type": "Skill",
     "rarity": "Common",
     "energy_cost": 0,

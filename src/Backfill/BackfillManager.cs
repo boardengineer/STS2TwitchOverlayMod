@@ -7,8 +7,10 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
+using TwitchOverlayMod.Models;
 using TwitchOverlayMod.State;
 using TwitchOverlayMod.Utility;
 
@@ -116,11 +118,16 @@ internal class BackfillManager
         if (dirty) SaveCache();
     }
 
-    internal void BuildChunks()
+    internal void BuildChunks(GameStatePayload? state = null)
     {
         _chunks.Clear();
 
-        foreach (var group in _scanned.GroupBy(i => i.Category))
+        var activeIds = state != null ? CollectActiveIds(state) : null;
+        var items     = activeIds != null
+            ? _scanned.Where(i => activeIds.Contains(i.Id))
+            : _scanned;
+
+        foreach (var group in items.GroupBy(i => i.Category))
         {
             var cat = group.Key;
             var batch = new List<string>();
@@ -153,7 +160,8 @@ internal class BackfillManager
                 EnqueueChunk(cat, batch);
         }
 
-        Logging.Log($"[Backfill] Built {_chunks.Count} chunks for {_scanned.Count} items");
+        var itemCount = activeIds != null ? _scanned.Count(i => activeIds.Contains(i.Id)) : _scanned.Count;
+        Logging.Log($"[Backfill] Built {_chunks.Count} chunks for {itemCount} items (of {_scanned.Count} scanned)");
     }
 
     private void EnqueueChunk(string cat, List<string> itemJsons)
@@ -165,6 +173,34 @@ internal class BackfillManager
         sb.Append(string.Join(",", itemJsons));
         sb.Append("]}");
         _chunks.Enqueue(sb.ToString());
+    }
+
+    private static HashSet<int> CollectActiveIds(GameStatePayload state)
+    {
+        var ids = new HashSet<int>();
+
+        if (state.Player != null)
+        {
+            foreach (var id in state.Player.Deck)    ids.Add(id);
+            foreach (var r  in state.Player.Relics)  ids.Add(r.Id);
+            foreach (var p  in state.Player.Potions) ids.Add(p.Id);
+        }
+
+        if (state.Combat != null)
+        {
+            foreach (var id in state.Combat.Hand)        ids.Add(id);
+            foreach (var id in state.Combat.DrawPile)    ids.Add(id);
+            foreach (var id in state.Combat.DiscardPile) ids.Add(id);
+            foreach (var id in state.Combat.ExhaustPile) ids.Add(id);
+            foreach (var pw in state.Combat.Powers)      ids.Add(pw.Id);
+            foreach (var en in state.Combat.Enemies)
+            {
+                ids.Add(en.Id);
+                foreach (var pw in en.Powers) ids.Add(pw.Id);
+            }
+        }
+
+        return ids;
     }
 
     // ── Packaged data loading ─────────────────────────────────────────────────
@@ -321,20 +357,34 @@ internal class BackfillManager
     {
         foreach (var card in ModelDb.AllCards)
         {
-            var gameId    = card.Id.ToString();
-            var baseTitle = SafeText(() => card.TitleLocString.GetFormattedText());
-            var desc      = SafeText(() => card.Description.GetFormattedText());
-            var type      = card.Type.ToString();
-            var rarity    = card.Rarity.ToString();
-            var pool      = card.Pool?.Title ?? "";
+            var gameId = card.Id.ToString();
+            var type   = card.Type.ToString();
+            var rarity = card.Rarity.ToString();
+            var pool   = card.Pool?.Title ?? "";
 
-            ScanCardLevel(card, gameId, 0, baseTitle, desc, type, rarity, pool);
-            for (int lv = 1; lv <= card.MaxUpgradeLevel; lv++)
+            for (int lv = 0; lv <= card.MaxUpgradeLevel; lv++)
             {
-                var upgTitle = card.MaxUpgradeLevel > 1 ? $"{baseTitle}+{lv}" : $"{baseTitle}+";
-                ScanCardLevel(card, gameId, lv, upgTitle, desc, type, rarity, pool);
+                var (title, desc) = GetTitleAndDescAtLevel(card, lv);
+                ScanCardLevel(card, gameId, lv, title, desc, type, rarity, pool);
             }
         }
+    }
+
+    private static (string title, string desc) GetTitleAndDescAtLevel(CardModel card, int level)
+    {
+        try
+        {
+            var mutable = card.ToMutable();
+            for (int i = 0; i < level && mutable.CurrentUpgradeLevel < mutable.MaxUpgradeLevel; i++)
+            {
+                mutable.UpgradeInternal();
+                mutable.FinalizeUpgradeInternal();
+            }
+            var title = SafeText(() => mutable.Title);
+            var desc  = SafeText(() => mutable.GetDescriptionForPile(PileType.None));
+            return (title, desc);
+        }
+        catch { return ("", ""); }
     }
 
     private void ScanCardLevel(CardModel card, string gameId, int lv,

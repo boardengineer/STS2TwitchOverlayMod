@@ -18,6 +18,8 @@ public class Plugin
     internal static ModConfig Config { get; private set; } = new();
     internal static BackfillManager? Backfill { get; private set; }
 
+    internal static void SetBackfill(BackfillManager backfill) => Backfill = backfill;
+
     public static void Initialize()
     {
         Config = ModConfig.Load();
@@ -41,17 +43,6 @@ public class Plugin
         PotionIdMapper.Load();
         Logging.Log("Potion ID map loaded.");
 
-        if (Config.EnableBackfill)
-        {
-            var backfill = new BackfillManager();
-            backfill.Scan();   // scan before Load so mappers only have packaged IDs
-            backfill.Load();
-            backfill.AssignIds();
-            backfill.BuildChunks();
-            Backfill = backfill;
-            Logging.Log("Backfill manager initialized.");
-        }
-
         CredentialManager.LoadSaved();
         Logging.Log("Credentials loaded.");
 
@@ -67,6 +58,18 @@ public class MainMenuPatch
     public static void Postfix(NMainMenu __instance)
     {
         if (NGame.Instance == null) return;
+
+        if (Plugin.Config.EnableBackfill && Plugin.Backfill == null)
+        {
+            var backfill = new BackfillManager();
+            backfill.Scan();
+            backfill.Load();
+            backfill.AssignIds();
+            backfill.BuildChunks();
+            Plugin.SetBackfill(backfill);
+            Logging.Log("Backfill manager initialized.");
+        }
+
         BroadcastScheduler.Start(NGame.Instance, Plugin.Config, Plugin.Backfill);
         MainMenuTwitchButton.SetupIfNeeded(__instance);
         Logging.Log("Twitch Overlay Mod initialized.");

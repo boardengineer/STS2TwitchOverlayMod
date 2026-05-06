@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Godot;
+using MegaCrit.Sts2.Core.Nodes.Debug;
 using TwitchOverlayMod.Backfill;
 using TwitchOverlayMod.Config;
 using TwitchOverlayMod.State;
@@ -52,29 +54,64 @@ internal static class BroadcastScheduler
         {
             if (_config.EnableBackfill
                 && _backfill != null
-                && _backfill.HasChunks
                 && _tickCount % _config.BackfillEveryN == 0)
             {
                 var chunk = _backfill.DequeueChunk();
                 if (chunk != null)
                 {
-                    Logging.Log($"[Backfill] Sending backfill chunk (tick {_tickCount})");
+                    ConsolePrint($"[Backfill] tick {_tickCount}: {DescribeChunk(chunk)} ({System.Text.Encoding.UTF8.GetByteCount(chunk)} bytes)");
                     Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
+                }
+                else
+                {
+                    ConsolePrint($"[Backfill] tick {_tickCount}: no chunks remaining, restarting cycle");
+                    _backfill.BuildChunks(GameStateCollector.Collect());
+                    BroadcastGameState(jwt, _config, channelId);
                 }
             }
             else
             {
-                var payload = GameStateCollector.Collect();
-                var json    = JsonSerializer.Serialize(payload);
-#if DUMP_JSON
-                File.WriteAllText(DebugJsonPath, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
-#endif
-                Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt, _config, channelId));
+                BroadcastGameState(jwt, _config, channelId);
             }
         }
         catch (Exception ex)
         {
             Logging.Log($"Broadcast error: {ex.Message}");
         }
+    }
+
+    private static string DescribeChunk(string chunk)
+    {
+        try
+        {
+            using var doc   = JsonDocument.Parse(chunk);
+            var root        = doc.RootElement;
+            var cat         = root.GetProperty("cat").GetString() ?? "?";
+            var items       = root.GetProperty("items");
+            var count       = items.GetArrayLength();
+            var names       = new List<string>(count);
+            foreach (var item in items.EnumerateArray())
+            {
+                if (item.TryGetProperty("name", out var n))
+                    names.Add(n.GetString() ?? "?");
+            }
+            return $"{cat} ×{count}: {string.Join(", ", names)}";
+        }
+        catch { return "?"; }
+    }
+
+    private static void ConsolePrint(string message)
+    {
+        NDevConsole.Instance.GetNode<RichTextLabel>("OutputContainer/OutputBuffer").Text += message + "\n";
+    }
+
+    private static void BroadcastGameState(string jwt, ModConfig config, string channelId)
+    {
+        var payload = GameStateCollector.Collect();
+        var json    = JsonSerializer.Serialize(payload);
+#if DUMP_JSON
+        File.WriteAllText(DebugJsonPath, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
+#endif
+        Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt, config, channelId));
     }
 }
