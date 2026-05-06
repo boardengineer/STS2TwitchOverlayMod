@@ -5,15 +5,53 @@
     "name": "Bygone Effigy",
     "min_hp": 127,
     "max_hp": 127,
-    "image": "BYGONE_EFFIGY.png"
+    "image": "BYGONE_EFFIGY.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "BYGONE_EFFIGY.name",
+      "translations": {
+        "eng": "Bygone Effigy",
+        "zhs": "\u65E7\u65E5\u96D5\u50CF",
+        "deu": "Vergessenes Bildnis",
+        "esp": "Efigie olvidada",
+        "fra": "Idole Oubli\u00E9e",
+        "ita": "Effigie antica",
+        "jpn": "\u53E4\u306E\u5076\u50CF",
+        "kor": "\uC61B \uC2DC\uB300\uC758 \uC6B0\uC0C1",
+        "pol": "Starodawna Figura",
+        "ptb": "Ef\u00EDgie Antigo",
+        "rus": "\u0410\u043D\u0442\u0438\u0447\u043D\u044B\u0439 \u0438\u0441\u0442\u0443\u043A\u0430\u043D",
+        "spa": "Estatua vetusta",
+        "tur": "Mazinin Heykeli"
+      }
+    }
   },
   {
     "id": 1,
     "game_id": "BYRDONIS",
     "name": "Byrdonis",
-    "min_hp": 91,
-    "max_hp": 94,
-    "image": "BYRDONIS.png"
+    "min_hp": 81,
+    "max_hp": 84,
+    "image": "BYRDONIS.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "BYRDONIS.name",
+      "translations": {
+        "eng": "Byrdonis",
+        "zhs": "\u591A\u5C3C\u65AF\u5F02\u9E1F",
+        "deu": "Foglonis",
+        "esp": "Japaronis",
+        "fra": "Oizodon",
+        "ita": "Gryfone",
+        "jpn": "\u30D3\u30E3\u30FC\u30C9\u30CB\u30B9",
+        "kor": "\uC100\uB3C4\uB2C8\uC2A4",
+        "pol": "Ptaszor",
+        "ptb": "Avestriz Alfa",
+        "rus": "\u041F\u0442\u0430\u0445\u043E\u043A\u043B\u044E\u0439",
+        "spa": "Japar\u00F3nix",
+        "tur": "Gu\u015Fdeniz"
+      }
+    }
   },
   {
     "id": 2,
@@ -21,7 +59,26 @@
     "name": "Ceremonial Beast",
     "min_hp": 252,
     "max_hp": 252,
-    "image": "CEREMONIAL_BEAST.png"
+    "image": "CEREMONIAL_BEAST.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "CEREMONIAL_BEAST.name",
+      "translations": {
+        "eng": "Ceremonial Beast",
+        "zhs": "\u4EEA\u5F0F\u517D",
+        "deu": "Zeremonienbiest",
+        "esp": "Bestia solemne",
+        "fra": "Cerf Auguste",
+        "ita": "Bestia solenne",
+        "jpn": "\u5100\u5F0F\u306E\u7363",
+        "kor": "\uC758\uC2DD\uC758 \uC2E0\uC218",
+        "pol": "Le\u015Bny Str\u00F3\u017C",
+        "ptb": "Besta Cerimonial",
+        "rus": "\u0425\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C \u043E\u0431\u0440\u044F\u0434\u0430",
+        "spa": "Bestia ceremonial",
+        "tur": "Mukaddes Yarat\u0131k"
+      }
+    }
   },
   {
     "id": 3,
@@ -29,7 +86,26 @@
     "name": "Cubex Construct",
     "min_hp": 65,
     "max_hp": 65,
-    "image": "CUBEX_CONSTRUCT.png"
+    "image": "CUBEX_CONSTRUCT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "CUBEX_CONSTRUCT.name",
+      "translations": {
+        "eng": "Cubex Construct",
+        "zhs": "\u7ACB\u67F1\u6784\u9020\u4F53",
+        "deu": "Kubex-Konstrukt",
+        "esp": "Constructo c\u00FAbico",
+        "fra": "Assemblage Cubex",
+        "ita": "Assemblaggio cubico",
+        "jpn": "\u30AD\u30E5\u30FC\u30D9\u30C3\u30AF\u30B9",
+        "kor": "\uD050\uBE0C\uD615 \uAD6C\uC870\uCCB4",
+        "pol": "Promieniotron",
+        "ptb": "Cubiconstructo",
+        "rus": "\u041A\u0443\u0431\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0430\u0433\u0440\u0435\u0433\u0430\u0442",
+        "spa": "Constructo C\u00FAbex",
+        "tur": "K\u00FCbiks Yap\u0131"
+      }
+    }
   },
   {
     "id": 4,
@@ -37,7 +113,26 @@
     "name": "Flyconid",
     "min_hp": 47,
     "max_hp": 49,
-    "image": "FLYCONID.png"
+    "image": "FLYCONID.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "FLYCONID.name",
+      "translations": {
+        "eng": "Flyconid",
+        "zhs": "\u98DE\u8747\u83CC\u5B50",
+        "deu": "Fliegonide",
+        "esp": "Mic\u00F3ptero",
+        "fra": "Mycopt\u00E8re",
+        "ita": "Fungalato",
+        "jpn": "\u30D5\u30E9\u30A4\u30B3\u30CB\u30C9",
+        "kor": "\uB0A0\uAC1C\uBC84\uC12F",
+        "pol": "Musznica",
+        "ptb": "Micod\u00EDptero",
+        "rus": "\u041C\u0443\u0445\u0430\u043C\u043E\u0440",
+        "spa": "Mic\u00F3nido volador",
+        "tur": "Sinekonyum"
+      }
+    }
   },
   {
     "id": 5,
@@ -45,7 +140,26 @@
     "name": "Leaf Slime (M)",
     "min_hp": 32,
     "max_hp": 35,
-    "image": "LEAF_SLIME_M.png"
+    "image": "LEAF_SLIME_M.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "LEAF_SLIME_M.name",
+      "translations": {
+        "eng": "Leaf Slime (M)",
+        "zhs": "\u6811\u53F6\u53F2\u83B1\u59C6\uFF08\u4E2D\uFF09",
+        "deu": "Blattschleim (mi.)",
+        "esp": "Musgobaba (grande)",
+        "fra": "Limon feuillu (M)",
+        "ita": "Melmerba (grande)",
+        "jpn": "\u30EA\u30FC\u30D5\u30B9\u30E9\u30A4\u30E0 (\u4E2D)",
+        "kor": "\uB098\uBB47\uC78E \uC2AC\uB77C\uC784 (\uC911)",
+        "pol": "\u015Aluzak Wielki",
+        "ptb": "Gosma de Folhas (M)",
+        "rus": "\u041B\u0438\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u0441\u043B\u0438\u0437\u0435\u043D\u044C (\u0441\u0440\u0435\u0434\u043D\u0438\u0439)",
+        "spa": "Herbolimo grande",
+        "tur": "Yaprak Bal\u00E7\u0131k (O)"
+      }
+    }
   },
   {
     "id": 6,
@@ -53,7 +167,26 @@
     "name": "Twig Slime (M)",
     "min_hp": 26,
     "max_hp": 28,
-    "image": "TWIG_SLIME_M.png"
+    "image": "TWIG_SLIME_M.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TWIG_SLIME_M.name",
+      "translations": {
+        "eng": "Twig Slime (M)",
+        "zhs": "\u6811\u679D\u53F2\u83B1\u59C6\uFF08\u4E2D\uFF09",
+        "deu": "Zweigschleim (mi.)",
+        "esp": "Ramababa (grande)",
+        "fra": "Limon brindille (M)",
+        "ita": "Ramomelma (grande)",
+        "jpn": "\u7D30\u679D\u30B9\u30E9\u30A4\u30E0 (\u4E2D)",
+        "kor": "\uAC00\uC9C0 \uC2AC\uB77C\uC784 (\uC911)",
+        "pol": "\u015Aluzak Wielki",
+        "ptb": "Gosma de Gravetos (M)",
+        "rus": "\u0421\u0443\u0447\u043A\u043E\u0432\u044B\u0439 \u0441\u043B\u0438\u0437\u0435\u043D\u044C (\u0441\u0440\u0435\u0434\u043D\u0438\u0439)",
+        "spa": "Ramalimo grande",
+        "tur": "Dal Bal\u00E7\u0131\u011F\u0131 (O)"
+      }
+    }
   },
   {
     "id": 7,
@@ -61,7 +194,26 @@
     "name": "Fogmog",
     "min_hp": 74,
     "max_hp": 74,
-    "image": "FOGMOG.png"
+    "image": "FOGMOG.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "FOGMOG.name",
+      "translations": {
+        "eng": "Fogmog",
+        "zhs": "\u96FE\u83C7",
+        "deu": "Schwummschwamm",
+        "esp": "Micobruma",
+        "fra": "Fongibrume",
+        "ita": "Fungonebbia",
+        "jpn": "\u30D5\u30A9\u30B0\u30E2\u30B0",
+        "kor": "\uD604\uD639\uBC84\uC12F",
+        "pol": "Grzybol",
+        "ptb": "Brumesporo",
+        "rus": "\u0413\u0440\u0438\u0431\u043E\u0434\u0443\u0439",
+        "spa": "Esporino",
+        "tur": "Gaztar"
+      }
+    }
   },
   {
     "id": 8,
@@ -69,7 +221,26 @@
     "name": "Eye With Teeth",
     "min_hp": 6,
     "max_hp": 6,
-    "image": "EYE_WITH_TEETH.png"
+    "image": "EYE_WITH_TEETH.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "EYE_WITH_TEETH.name",
+      "translations": {
+        "eng": "Eye With Teeth",
+        "zhs": "\u5229\u9F7F\u4E4B\u773C",
+        "deu": "Auge mit Z\u00E4hnen",
+        "esp": "Ojo dentado",
+        "fra": "\u0152il dent\u00E9",
+        "ita": "Occhio dentato",
+        "jpn": "\u7259\u3092\u3080\u304F\u773C",
+        "kor": "\uD1B1\uB2C8\uB208",
+        "pol": "Z\u0119bate Oko",
+        "ptb": "Olho Dentado",
+        "rus": "\u0417\u0443\u0431\u0430\u0441\u0442\u043E\u0435 \u043E\u043A\u043E",
+        "spa": "Ojo dentado",
+        "tur": "Di\u015Fli G\u00F6z"
+      }
+    }
   },
   {
     "id": 9,
@@ -77,7 +248,26 @@
     "name": "Fuzzy Wurm Crawler",
     "min_hp": 55,
     "max_hp": 57,
-    "image": "FUZZY_WURM_CRAWLER.png"
+    "image": "FUZZY_WURM_CRAWLER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "FUZZY_WURM_CRAWLER.name",
+      "translations": {
+        "eng": "Fuzzy Wurm Crawler",
+        "zhs": "\u6BDB\u7ED2\u4F0F\u5730\u866B",
+        "deu": "Flaumiger Wurmkrabbler",
+        "esp": "Pelubosa",
+        "fra": "Rampeluche",
+        "ita": "Peloverme",
+        "jpn": "\u525B\u6BDB\u306E\u30EF\u30FC\u30E0",
+        "kor": "\uBCF5\uC2AC\uC9C0\uB801\uC774",
+        "pol": "K\u0119dzierzawy Robok",
+        "ptb": "Vorme Peluginoso",
+        "rus": "\u041F\u044B\u0448\u043D\u044B\u0439 \u0447\u0435\u0440\u0432\u043E\u0433\u0440\u0438\u0432",
+        "spa": "Reptador peludo",
+        "tur": "T\u00FCyl\u00FC M\u00FCyl\u00FC S\u00FCr\u00FCngen"
+      }
+    }
   },
   {
     "id": 10,
@@ -85,7 +275,26 @@
     "name": "Inklet",
     "min_hp": 11,
     "max_hp": 17,
-    "image": "INKLET.png"
+    "image": "INKLET.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "INKLET.name",
+      "translations": {
+        "eng": "Inklet",
+        "zhs": "\u58A8\u5B9D",
+        "deu": "Tintchen",
+        "esp": "Tintamorfo",
+        "fra": "Encrelin",
+        "ita": "Inchiostrino",
+        "jpn": "\u30A4\u30F3\u30AF\u30EC\u30C3\u30C8",
+        "kor": "\uC789\uD074\uB9BF",
+        "pol": "Kropelka",
+        "ptb": "Nanqu\u00EDneo",
+        "rus": "\u0427\u0435\u0440\u043D\u0438\u043B\u044C\u043D\u0438\u043A",
+        "spa": "Tintoide",
+        "tur": "M\u00FCrekkep\u00E7ik"
+      }
+    }
   },
   {
     "id": 11,
@@ -93,7 +302,26 @@
     "name": "Mawler",
     "min_hp": 72,
     "max_hp": 72,
-    "image": "MAWLER.png"
+    "image": "MAWLER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "MAWLER.name",
+      "translations": {
+        "eng": "Mawler",
+        "zhs": "\u86EE\u517D",
+        "deu": "Schlunderer",
+        "esp": "Desollador",
+        "fra": "\u00C9charneur",
+        "ita": "Laceracarne",
+        "jpn": "\u30E2\u30FC\u30E9\u30FC",
+        "kor": "\uC7A5\uC218\uC544\uADC0",
+        "pol": "Paszczur",
+        "ptb": "Dilacerador",
+        "rus": "\u041A\u043B\u044B\u043A\u043E\u0437\u0430\u0432\u0440",
+        "spa": "Devastadonte",
+        "tur": "Y\u0131rtan\u00E7ene"
+      }
+    }
   },
   {
     "id": 12,
@@ -101,7 +329,26 @@
     "name": "Nibbit",
     "min_hp": 42,
     "max_hp": 46,
-    "image": "NIBBIT.png"
+    "image": "NIBBIT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "NIBBIT.name",
+      "translations": {
+        "eng": "Nibbit",
+        "zhs": "\u5C0F\u5543\u517D",
+        "deu": "M\u00FCmmel",
+        "esp": "Lagartisco",
+        "fra": "Grignotin",
+        "ita": "Sgranocchiatore",
+        "jpn": "\u30CB\u30D3\u30C3\u30C8",
+        "kor": "\uAE68\uC791\uC774",
+        "pol": "Kumkacz",
+        "ptb": "Lagartisco",
+        "rus": "\u041A\u0443\u0441\u0430\u043A\u0430",
+        "spa": "Vibrosaurio",
+        "tur": "Kemirba\u011Fa"
+      }
+    }
   },
   {
     "id": 13,
@@ -109,7 +356,26 @@
     "name": "Shrinker Beetle",
     "min_hp": 38,
     "max_hp": 40,
-    "image": "SHRINKER_BEETLE.png"
+    "image": "SHRINKER_BEETLE.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SHRINKER_BEETLE.name",
+      "translations": {
+        "eng": "Shrinker Beetle",
+        "zhs": "\u7F29\u5C0F\u7532\u866B",
+        "deu": "Schrumpfk\u00E4fer",
+        "esp": "Escaram\u00EDn",
+        "fra": "Scarabrideur",
+        "ita": "Scarabeo restringente",
+        "jpn": "\u30B7\u30E5\u30EA\u30F3\u30AB\u30FC\u30D3\u30FC\u30C8\u30EB",
+        "kor": "\uC555\uCD95\uBC8C\uB808",
+        "pol": "\u017Buczek Kurczyciel",
+        "ptb": "Besouro Encolhedor",
+        "rus": "\u0416\u0443\u043A-\u0443\u0436\u0438\u043C\u0430\u0442\u0435\u043B\u044C",
+        "spa": "Encogebajo",
+        "tur": "K\u00FC\u00E7\u00FClt\u00FCc\u00FC B\u00F6cek"
+      }
+    }
   },
   {
     "id": 14,
@@ -117,7 +383,26 @@
     "name": "Phrog Parasite",
     "min_hp": 61,
     "max_hp": 64,
-    "image": "PHROG_PARASITE.png"
+    "image": "PHROG_PARASITE.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "PHROG_PARASITE.name",
+      "translations": {
+        "eng": "Phrog Parasite",
+        "zhs": "\u5F02\u86D9\u5BC4\u751F\u866B",
+        "deu": "Phroschparasit",
+        "esp": "Par\u00E1sito engusanado",
+        "fra": "Parasite Krapo",
+        "ita": "Parassita fungineo",
+        "jpn": "\u5BC4\u751F\u30AB\u30A8\u30EB",
+        "kor": "\uAC8C\uAD6C\uB9AC \uAE30\uC0DD\uCCB4",
+        "pol": "Zainfekowana \u017Bapka",
+        "ptb": "Sapo Parasitado",
+        "rus": "\u041B\u044F\u0433\u0443\u0448-\u043F\u0430\u0440\u0430\u0437\u0438\u0442",
+        "spa": "Sapo agusanado",
+        "tur": "Parazitli Gurba\u011Fa"
+      }
+    }
   },
   {
     "id": 15,
@@ -125,7 +410,26 @@
     "name": "Wriggler",
     "min_hp": 17,
     "max_hp": 21,
-    "image": "WRIGGLER.png"
+    "image": "WRIGGLER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "WRIGGLER.name",
+      "translations": {
+        "eng": "Wriggler",
+        "zhs": "\u626D\u52A8\u866B",
+        "deu": "Schl\u00E4ngler",
+        "esp": "Sanguilarva",
+        "fra": "Larve",
+        "ita": "Larva",
+        "jpn": "\u30EA\u30B0\u30E9\u30FC",
+        "kor": "\uAFC8\uD2C0\uBC8C\uB808",
+        "pol": "Paso\u017Cyt",
+        "ptb": "Parasit\u00E1rio",
+        "rus": "\u0415\u0440\u0437\u0443\u043D",
+        "spa": "Alima\u00F1a retorcida",
+        "tur": "K\u0131m\u0131ldak"
+      }
+    }
   },
   {
     "id": 16,
@@ -133,7 +437,26 @@
     "name": "Axe Raider",
     "min_hp": 20,
     "max_hp": 22,
-    "image": "AXE_RUBY_RAIDER.png"
+    "image": "AXE_RUBY_RAIDER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "AXE_RUBY_RAIDER.name",
+      "translations": {
+        "eng": "Axe Raider",
+        "zhs": "\u52AB\u63A0\u8005\u65A7\u624B",
+        "deu": "Axtpl\u00FCnderer",
+        "esp": "Atacante hachero",
+        "fra": "R\u00F4deur \u00E0 la hache",
+        "ita": "Affettarazziatore",
+        "jpn": "\u30A2\u30C3\u30AF\u30B9\u30EC\u30A4\u30C0\u30FC",
+        "kor": "\uB3C4\uB07C \uC2B5\uACA9\uC790",
+        "pol": "Topornik",
+        "ptb": "Guerreiro com Machado",
+        "rus": "\u041C\u0430\u0440\u043E\u0434\u0435\u0440-\u0433\u043B\u0430\u0432\u043E\u0440\u0443\u0431",
+        "spa": "Asaltante con hacha",
+        "tur": "Baltal\u0131 Ya\u011Fmac\u0131"
+      }
+    }
   },
   {
     "id": 17,
@@ -141,7 +464,26 @@
     "name": "Assassin Raider",
     "min_hp": 18,
     "max_hp": 23,
-    "image": "ASSASSIN_RUBY_RAIDER.png"
+    "image": "ASSASSIN_RUBY_RAIDER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "ASSASSIN_RUBY_RAIDER.name",
+      "translations": {
+        "eng": "Assassin Raider",
+        "zhs": "\u52AB\u63A0\u8005\u523A\u5BA2",
+        "deu": "Meuchelpl\u00FCnderer",
+        "esp": "Atacante asesino",
+        "fra": "R\u00F4deur assassin",
+        "ita": "Assassino razziatore",
+        "jpn": "\u30A2\u30B5\u30B7\u30F3\u30EC\u30A4\u30C0\u30FC",
+        "kor": "\uC554\uC0B4 \uC2B5\uACA9\uC790",
+        "pol": "Szermierz",
+        "ptb": "Guerreira Assassina",
+        "rus": "\u041C\u0430\u0440\u043E\u0434\u0435\u0440-\u0443\u0431\u0438\u0439\u0446\u0430",
+        "spa": "Asaltante asesino",
+        "tur": "Suikast\u00E7\u0131 Ya\u011Fmac\u0131"
+      }
+    }
   },
   {
     "id": 18,
@@ -149,7 +491,26 @@
     "name": "Brute Raider",
     "min_hp": 30,
     "max_hp": 33,
-    "image": "BRUTE_RUBY_RAIDER.png"
+    "image": "BRUTE_RUBY_RAIDER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "BRUTE_RUBY_RAIDER.name",
+      "translations": {
+        "eng": "Brute Raider",
+        "zhs": "\u52AB\u63A0\u8005\u66B4\u5F92",
+        "deu": "Bestienpl\u00FCnderer",
+        "esp": "Atacante bruto",
+        "fra": "R\u00F4deur Brute",
+        "ita": "Bruto razziatore",
+        "jpn": "\u30D6\u30EB\u30FC\u30C8\u30EC\u30A4\u30C0\u30FC",
+        "kor": "\uB09C\uD3ED\uD55C \uC2B5\uACA9\uC790",
+        "pol": "Brutal",
+        "ptb": "Guerreiro Bruto",
+        "rus": "\u041C\u0430\u0440\u043E\u0434\u0435\u0440-\u0432\u0435\u0440\u0437\u0438\u043B\u0430",
+        "spa": "Asaltante bruto",
+        "tur": "Vah\u015Fi Ya\u011Fmac\u0131"
+      }
+    }
   },
   {
     "id": 19,
@@ -157,7 +518,26 @@
     "name": "Crossbow Raider",
     "min_hp": 18,
     "max_hp": 21,
-    "image": "CROSSBOW_RUBY_RAIDER.png"
+    "image": "CROSSBOW_RUBY_RAIDER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "CROSSBOW_RUBY_RAIDER.name",
+      "translations": {
+        "eng": "Crossbow Raider",
+        "zhs": "\u52AB\u63A0\u8005\u5F29\u624B",
+        "deu": "Armbrustpl\u00FCnderer",
+        "esp": "Atacante flechero",
+        "fra": "R\u00F4deur Arbal\u00E9trier",
+        "ita": "Razziatore con balestra",
+        "jpn": "\u30AF\u30ED\u30B9\u30DC\u30A6\u30EC\u30A4\u30C0\u30FC",
+        "kor": "\uD06C\uB85C\uC2A4\uBCF4\uC6B0 \uC2B5\uACA9\uC790",
+        "pol": "Kusznik",
+        "ptb": "Guerreiro Atirador",
+        "rus": "\u041C\u0430\u0440\u043E\u0434\u0435\u0440-\u0441\u0442\u0440\u0435\u043B\u043E\u043A",
+        "spa": "Asaltante ballestero",
+        "tur": "Arbaletli Ya\u011Fmac\u0131"
+      }
+    }
   },
   {
     "id": 20,
@@ -165,7 +545,26 @@
     "name": "Tracker Raider",
     "min_hp": 21,
     "max_hp": 25,
-    "image": "TRACKER_RUBY_RAIDER.png"
+    "image": "TRACKER_RUBY_RAIDER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TRACKER_RUBY_RAIDER.name",
+      "translations": {
+        "eng": "Tracker Raider",
+        "zhs": "\u52AB\u63A0\u8005\u8FFD\u8E2A\u624B",
+        "deu": "F\u00E4hrtenpl\u00FCnderer",
+        "esp": "Atacante rastreador",
+        "fra": "R\u00F4deur Traqueur",
+        "ita": "Razziatore inseguitore",
+        "jpn": "\u30C8\u30E9\u30C3\u30AB\u30FC\u30EC\u30A4\u30C0\u30FC",
+        "kor": "\uCD94\uC801 \uC2B5\uACA9\uC790",
+        "pol": "Tropiciel",
+        "ptb": "Guerreira Rastreadora",
+        "rus": "\u041C\u0430\u0440\u043E\u0434\u0435\u0440-\u0441\u043B\u0435\u0434\u043E\u043F\u044B\u0442",
+        "spa": "Asaltante rastreador",
+        "tur": "\u0130z S\u00FCren Ya\u011Fmac\u0131"
+      }
+    }
   },
   {
     "id": 21,
@@ -173,7 +572,26 @@
     "name": "Leaf Slime (S)",
     "min_hp": 11,
     "max_hp": 15,
-    "image": "LEAF_SLIME_S.png"
+    "image": "LEAF_SLIME_S.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "LEAF_SLIME_S.name",
+      "translations": {
+        "eng": "Leaf Slime (S)",
+        "zhs": "\u6811\u53F6\u53F2\u83B1\u59C6\uFF08\u5C0F\uFF09",
+        "deu": "Blattschleim (kl.)",
+        "esp": "Musgobaba (peque\u00F1a)",
+        "fra": "Limon feuillu (S)",
+        "ita": "Melmerba (piccola)",
+        "jpn": "\u30EA\u30FC\u30D5\u30B9\u30E9\u30A4\u30E0 (\u5C0F)",
+        "kor": "\uB098\uBB47\uC78E \uC2AC\uB77C\uC784 (\uC18C)",
+        "pol": "\u015Aluzak Ma\u0142y",
+        "ptb": "Gosma de Folhas (P)",
+        "rus": "\u041B\u0438\u0441\u0442\u0432\u0435\u043D\u043D\u044B\u0439 \u0441\u043B\u0438\u0437\u0435\u043D\u044C (\u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439)",
+        "spa": "Herbolimo peque\u00F1o",
+        "tur": "Yaprak Bal\u00E7\u0131k (K)"
+      }
+    }
   },
   {
     "id": 22,
@@ -181,7 +599,26 @@
     "name": "Twig Slime (S)",
     "min_hp": 7,
     "max_hp": 11,
-    "image": "TWIG_SLIME_S.png"
+    "image": "TWIG_SLIME_S.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TWIG_SLIME_S.name",
+      "translations": {
+        "eng": "Twig Slime (S)",
+        "zhs": "\u6811\u679D\u53F2\u83B1\u59C6\uFF08\u5C0F\uFF09",
+        "deu": "Zweigschleim (kl.)",
+        "esp": "Ramababa (peque\u00F1a)",
+        "fra": "Limon brindille (S)",
+        "ita": "Ramomelma (piccola)",
+        "jpn": "\u7D30\u679D\u30B9\u30E9\u30A4\u30E0 (\u5C0F)",
+        "kor": "\uAC00\uC9C0 \uC2AC\uB77C\uC784 (\uC18C)",
+        "pol": "\u015Aluzak Ma\u0142y",
+        "ptb": "Gosma de Gravetos (P)",
+        "rus": "\u0421\u0443\u0447\u043A\u043E\u0432\u044B\u0439 \u0441\u043B\u0438\u0437\u0435\u043D\u044C (\u043C\u0430\u043B\u0435\u043D\u044C\u043A\u0438\u0439)",
+        "spa": "Ramalimo peque\u00F1o",
+        "tur": "Dal Bal\u00E7\u0131\u011F\u0131 (K)"
+      }
+    }
   },
   {
     "id": 23,
@@ -189,7 +626,26 @@
     "name": "Snapping Jaxfruit",
     "min_hp": 31,
     "max_hp": 33,
-    "image": "SNAPPING_JAXFRUIT.png"
+    "image": "SNAPPING_JAXFRUIT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SNAPPING_JAXFRUIT.name",
+      "translations": {
+        "eng": "Snapping Jaxfruit",
+        "zhs": "\u95EA\u5149\u8D3E\u514B\u65AF\u679C",
+        "deu": "Schnappende Jaxfrucht",
+        "esp": "Bulbo mordedor",
+        "fra": "Jaxier \u00E0 clapet",
+        "ita": "Bulbo azzannatore",
+        "jpn": "\u66B4\u308C\u30B8\u30E3\u30C3\u30AF\u30D5\u30EB\u30FC\u30C4",
+        "kor": "\uD3EC\uC2DD\uC131 \uC7AD\uC2A4\uD504\uB8E8\uD2B8",
+        "pol": "Kwiat Energii",
+        "ptb": "Bulbo Mordiscador",
+        "rus": "\u0417\u0440\u0435\u043B\u044B\u0439 \u0434\u0436\u0430\u043A\u0441\u0444\u0440\u0443\u0442",
+        "spa": "Energicol mordedora",
+        "tur": "Is\u0131ran Meyve"
+      }
+    }
   },
   {
     "id": 24,
@@ -197,7 +653,26 @@
     "name": "Slithering Strangler",
     "min_hp": 53,
     "max_hp": 55,
-    "image": "SLITHERING_STRANGLER.png"
+    "image": "SLITHERING_STRANGLER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SLITHERING_STRANGLER.name",
+      "translations": {
+        "eng": "Slithering Strangler",
+        "zhs": "\u86C7\u884C\u627C\u6740\u8005",
+        "deu": "Kriechw\u00FCrger",
+        "esp": "Estrangulador reptante",
+        "fra": "\u00C9trangleur",
+        "ita": "Strangolatore strisciante",
+        "jpn": "\u7D5E\u86C7",
+        "kor": "\uBBF8\uB048\uAC70\uB9AC\uB294 \uAD50\uC0B4\uB9C8",
+        "pol": "\u015Alizgi Dusiciel",
+        "ptb": "Estrangulador Rastejante",
+        "rus": "\u041F\u043E\u043B\u0437\u0443\u0447\u0438\u0439 \u0433\u043E\u0440\u043B\u043E\u0434\u0430\u0432",
+        "spa": "Estrangulador reptante",
+        "tur": "Dikenli Bo\u011Fucu"
+      }
+    }
   },
   {
     "id": 25,
@@ -205,7 +680,26 @@
     "name": "Kin Follower",
     "min_hp": 58,
     "max_hp": 59,
-    "image": "KIN_FOLLOWER.png"
+    "image": "KIN_FOLLOWER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "KIN_FOLLOWER.name",
+      "translations": {
+        "eng": "Kin Follower",
+        "zhs": "\u540C\u65CF\u4FE1\u5F92",
+        "deu": "Sippen-Anh\u00E4nger",
+        "esp": "Seguidor del Familiar",
+        "fra": "Disciple de la Tribu",
+        "ita": "Discepolo della trib\u00F9",
+        "jpn": "\u8840\u65CF\u306E\u4FE1\u8005",
+        "kor": "\uD608\uC871 \uCD94\uC885\uC790",
+        "pol": "Wyznawca",
+        "ptb": "Disc\u00EDpulo Tribal",
+        "rus": "\u041F\u043E\u0441\u043B\u0443\u0436\u043D\u0438\u043A \u0441\u0442\u0430\u0438",
+        "spa": "Ac\u00F3lito de la Estirpe",
+        "tur": "Kabile \u00DCyesi"
+      }
+    }
   },
   {
     "id": 26,
@@ -213,7 +707,26 @@
     "name": "Kin Priest",
     "min_hp": 190,
     "max_hp": 190,
-    "image": "KIN_PRIEST.png"
+    "image": "KIN_PRIEST.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "KIN_PRIEST.name",
+      "translations": {
+        "eng": "Kin Priest",
+        "zhs": "\u540C\u65CF\u795E\u5B98",
+        "deu": "Sippen-Priester",
+        "esp": "Sacerdote del Familiar",
+        "fra": "Pr\u00EAtre de la Tribu",
+        "ita": "Sacerdote della trib\u00F9",
+        "jpn": "\u8840\u65CF\u306E\u53F8\u796D",
+        "kor": "\uD608\uC871 \uC0AC\uC81C",
+        "pol": "Kap\u0142an",
+        "ptb": "Sacerdote Tribal",
+        "rus": "\u041F\u0430\u0441\u0442\u044B\u0440\u044C \u0441\u0442\u0430\u0438",
+        "spa": "Sacerdote de la Estirpe",
+        "tur": "Kabile \u015Eaman\u0131"
+      }
+    }
   },
   {
     "id": 27,
@@ -221,7 +734,26 @@
     "name": "Vantom",
     "min_hp": 173,
     "max_hp": 173,
-    "image": "VANTOM.png"
+    "image": "VANTOM.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "VANTOM.name",
+      "translations": {
+        "eng": "Vantom",
+        "zhs": "\u58A8\u5F71\u5E7B\u7075",
+        "deu": "Vantom",
+        "esp": "Vantasma",
+        "fra": "Vant\u00F4me",
+        "ita": "Vantom",
+        "jpn": "\u30F4\u30A1\u30F3\u30C8\u30E0",
+        "kor": "\uBC34\uD140",
+        "pol": "Fantom",
+        "ptb": "Vantasma",
+        "rus": "\u0412\u0430\u043D\u0442\u043E\u043C",
+        "spa": "Tintasma",
+        "tur": "Vantom"
+      }
+    }
   },
   {
     "id": 28,
@@ -229,7 +761,26 @@
     "name": "Vine Shambler",
     "min_hp": 61,
     "max_hp": 61,
-    "image": "VINE_SHAMBLER.png"
+    "image": "VINE_SHAMBLER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "VINE_SHAMBLER.name",
+      "translations": {
+        "eng": "Vine Shambler",
+        "zhs": "\u85E4\u8513\u8E52\u8DDA\u8005",
+        "deu": "Ranken-Schlurfer",
+        "esp": "Enredabestia",
+        "fra": "Bourbelianes",
+        "ita": "Groviglio di liane",
+        "jpn": "\u30F4\u30A1\u30A4\u30F3\u30B7\u30E3\u30F3\u30D6\u30E9\u30FC",
+        "kor": "\uD718\uCCAD\uAC70\uB9AC\uB294 \uB369\uAD74",
+        "pol": "Pn\u0105czow\u00F3r",
+        "ptb": "Videira Tr\u00F4pega",
+        "rus": "\u0417\u0430\u0440\u043E\u0441\u0448\u0438\u0439 \u0441\u043A\u0438\u0442\u0430\u043B\u0435\u0446",
+        "spa": "Engendro de lianas",
+        "tur": "Sarma\u015F\u0131k Y\u0131\u011F\u0131n\u0131"
+      }
+    }
   },
   {
     "id": 29,
@@ -237,7 +788,26 @@
     "name": "Bowlbug (Egg)",
     "min_hp": 21,
     "max_hp": 22,
-    "image": "BOWLBUG_EGG.png"
+    "image": "BOWLBUG_EGG.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "BOWLBUG_EGG.name",
+      "translations": {
+        "eng": "Bowlbug (Egg)",
+        "zhs": "\u76DB\u7897\u866B\uFF08\u5375\uFF09",
+        "deu": "Schalenk\u00E4fer (Ei)",
+        "esp": "Bichobol (huevo)",
+        "fra": "Sph\u00E9ropode (\u0152uf)",
+        "ita": "Scaraciotola (uovo)",
+        "jpn": "\u30DC\u30A6\u30EB\u30D0\u30B0\uFF08\u5375\uFF09",
+        "kor": "\uADF8\uB987\uBC8C\uB808 (\uC54C)",
+        "pol": "Robal z jajkiem",
+        "ptb": "Besouro Coletor (Ovo)",
+        "rus": "\u041F\u043E\u043B\u044B\u0439 \u0440\u043E\u0433\u0430\u0447 (\u0441 \u044F\u0439\u0446\u043E\u043C)",
+        "spa": "Escaracuenco (Huevo)",
+        "tur": "\u00C7anakb\u00F6ce\u011Fi (Yumurta)"
+      }
+    }
   },
   {
     "id": 30,
@@ -245,7 +815,26 @@
     "name": "Bowlbug (Silk)",
     "min_hp": 40,
     "max_hp": 43,
-    "image": "BOWLBUG_SILK.png"
+    "image": "BOWLBUG_SILK.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "BOWLBUG_SILK.name",
+      "translations": {
+        "eng": "Bowlbug (Silk)",
+        "zhs": "\u76DB\u7897\u866B\uFF08\u4E1D\uFF09",
+        "deu": "Schalenk\u00E4fer (Seide)",
+        "esp": "Bichobol (seda)",
+        "fra": "Sph\u00E9ropode (Soie)",
+        "ita": "Scaraciotola (seta)",
+        "jpn": "\u30DC\u30A6\u30EB\u30D0\u30B0\uFF08\u7CF8\uFF09",
+        "kor": "\uADF8\uB987\uBC8C\uB808 (\uC2E4\uD06C)",
+        "pol": "Robal z nici\u0105",
+        "ptb": "Besouro Coletor (Seda)",
+        "rus": "\u041F\u043E\u043B\u044B\u0439 \u0440\u043E\u0433\u0430\u0447 (\u0441 \u0448\u0435\u043B\u043A\u043E\u043C)",
+        "spa": "Escaracuenco (Seda)",
+        "tur": "\u00C7anakb\u00F6ce\u011Fi (\u0130pek)"
+      }
+    }
   },
   {
     "id": 31,
@@ -253,7 +842,26 @@
     "name": "Bowlbug (Nectar)",
     "min_hp": 35,
     "max_hp": 38,
-    "image": "BOWLBUG_NECTAR.png"
+    "image": "BOWLBUG_NECTAR.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "BOWLBUG_NECTAR.name",
+      "translations": {
+        "eng": "Bowlbug (Nectar)",
+        "zhs": "\u76DB\u7897\u866B\uFF08\u871C\uFF09",
+        "deu": "Schalenk\u00E4fer (Nektar)",
+        "esp": "Bichobol (n\u00E9ctar)",
+        "fra": "Sph\u00E9ropode (Nectar)",
+        "ita": "Scaraciotola (nettare)",
+        "jpn": "\u30DC\u30A6\u30EB\u30D0\u30B0\uFF08\u307F\u3064\uFF09",
+        "kor": "\uADF8\uB987\uBC8C\uB808 (\uAFC0)",
+        "pol": "Robal z nektarem",
+        "ptb": "Besouro Coletor (N\u00E9ctar)",
+        "rus": "\u041F\u043E\u043B\u044B\u0439 \u0440\u043E\u0433\u0430\u0447 (\u0441 \u043D\u0435\u043A\u0442\u0430\u0440\u043E\u043C)",
+        "spa": "Escaracuenco (N\u00E9ctar)",
+        "tur": "\u00C7anakb\u00F6ce\u011Fi (Nektar)"
+      }
+    }
   },
   {
     "id": 32,
@@ -261,7 +869,26 @@
     "name": "Bowlbug (Rock)",
     "min_hp": 45,
     "max_hp": 48,
-    "image": "BOWLBUG_ROCK.png"
+    "image": "BOWLBUG_ROCK.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "BOWLBUG_ROCK.name",
+      "translations": {
+        "eng": "Bowlbug (Rock)",
+        "zhs": "\u76DB\u7897\u866B\uFF08\u77F3\uFF09",
+        "deu": "Schalenk\u00E4fer (Stein)",
+        "esp": "Bichobol (roca)",
+        "fra": "Sph\u00E9ropode (Pierre)",
+        "ita": "Scaraciotola (roccia)",
+        "jpn": "\u30DC\u30A6\u30EB\u30D0\u30B0\uFF08\u5CA9\uFF09",
+        "kor": "\uADF8\uB987\uBC8C\uB808 (\uBC14\uC704)",
+        "pol": "Robal z kamieniem",
+        "ptb": "Besouro Coletor (Pedra)",
+        "rus": "\u041F\u043E\u043B\u044B\u0439 \u0440\u043E\u0433\u0430\u0447 (\u0441 \u043A\u0430\u043C\u043D\u0435\u043C)",
+        "spa": "Escaracuenco (Roca)",
+        "tur": "\u00C7anakb\u00F6ce\u011Fi (Ta\u015F)"
+      }
+    }
   },
   {
     "id": 33,
@@ -269,31 +896,107 @@
     "name": "Chomper",
     "min_hp": 60,
     "max_hp": 64,
-    "image": "CHOMPER.png"
+    "image": "CHOMPER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "CHOMPER.name",
+      "translations": {
+        "eng": "Chomper",
+        "zhs": "\u5543\u54AC\u673A",
+        "deu": "Mampfer",
+        "esp": "Mordebot",
+        "fra": "Croquebot",
+        "ita": "Mordicchio",
+        "jpn": "\u30C1\u30E7\u30F3\u30D1\u30FC",
+        "kor": "\uBA39\uAE68\uBE44",
+        "pol": "Gryzak",
+        "ptb": "Mordiscador",
+        "rus": "\u0417\u0443\u0431\u0430\u0441\u0442\u0438\u043A",
+        "spa": "Bocaditos",
+        "tur": "\u00C7i\u011Fneyici"
+      }
+    }
   },
   {
     "id": 34,
     "game_id": "DECIMILLIPEDE_SEGMENT_FRONT",
     "name": "Decimillipede",
-    "min_hp": 42,
-    "max_hp": 48,
-    "image": "DECIMILLIPEDE_SEGMENT_FRONT.png"
+    "min_hp": 40,
+    "max_hp": 46,
+    "image": "DECIMILLIPEDE_SEGMENT_FRONT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "DECIMILLIPEDE_SEGMENT.name",
+      "translations": {
+        "eng": "Decimillipede",
+        "zhs": "\u6B8B\u6740\u5343\u8DB3\u866B",
+        "deu": "Zigtausendf\u00FC\u00DFer",
+        "esp": "Decimilpi\u00E9s",
+        "fra": "Dix-Mille-Pattes",
+        "ita": "Diecimilapiedi",
+        "jpn": "\u4E07\u8DB3\u30E0\u30AB\u30C7",
+        "kor": "\uB9CC\uAC01\uC9C0\uB124",
+        "pol": "Wielonoga",
+        "ptb": "Decimil\u00EDpede",
+        "rus": "\u0421\u043A\u043E\u043B\u044C\u043A\u043E\u043D\u043E\u0436\u043A\u0430",
+        "spa": "Diezmilpi\u00E9s",
+        "tur": "Ondabirayak"
+      }
+    }
   },
   {
     "id": 35,
     "game_id": "DECIMILLIPEDE_SEGMENT_MIDDLE",
     "name": "Decimillipede",
-    "min_hp": 42,
-    "max_hp": 48,
-    "image": "DECIMILLIPEDE_SEGMENT_MIDDLE.png"
+    "min_hp": 40,
+    "max_hp": 46,
+    "image": "DECIMILLIPEDE_SEGMENT_MIDDLE.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "DECIMILLIPEDE_SEGMENT.name",
+      "translations": {
+        "eng": "Decimillipede",
+        "zhs": "\u6B8B\u6740\u5343\u8DB3\u866B",
+        "deu": "Zigtausendf\u00FC\u00DFer",
+        "esp": "Decimilpi\u00E9s",
+        "fra": "Dix-Mille-Pattes",
+        "ita": "Diecimilapiedi",
+        "jpn": "\u4E07\u8DB3\u30E0\u30AB\u30C7",
+        "kor": "\uB9CC\uAC01\uC9C0\uB124",
+        "pol": "Wielonoga",
+        "ptb": "Decimil\u00EDpede",
+        "rus": "\u0421\u043A\u043E\u043B\u044C\u043A\u043E\u043D\u043E\u0436\u043A\u0430",
+        "spa": "Diezmilpi\u00E9s",
+        "tur": "Ondabirayak"
+      }
+    }
   },
   {
     "id": 36,
     "game_id": "DECIMILLIPEDE_SEGMENT_BACK",
     "name": "Decimillipede",
-    "min_hp": 42,
-    "max_hp": 48,
-    "image": "DECIMILLIPEDE_SEGMENT_BACK.png"
+    "min_hp": 40,
+    "max_hp": 46,
+    "image": "DECIMILLIPEDE_SEGMENT_BACK.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "DECIMILLIPEDE_SEGMENT.name",
+      "translations": {
+        "eng": "Decimillipede",
+        "zhs": "\u6B8B\u6740\u5343\u8DB3\u866B",
+        "deu": "Zigtausendf\u00FC\u00DFer",
+        "esp": "Decimilpi\u00E9s",
+        "fra": "Dix-Mille-Pattes",
+        "ita": "Diecimilapiedi",
+        "jpn": "\u4E07\u8DB3\u30E0\u30AB\u30C7",
+        "kor": "\uB9CC\uAC01\uC9C0\uB124",
+        "pol": "Wielonoga",
+        "ptb": "Decimil\u00EDpede",
+        "rus": "\u0421\u043A\u043E\u043B\u044C\u043A\u043E\u043D\u043E\u0436\u043A\u0430",
+        "spa": "Diezmilpi\u00E9s",
+        "tur": "Ondabirayak"
+      }
+    }
   },
   {
     "id": 37,
@@ -301,7 +1004,26 @@
     "name": "Entomancer",
     "min_hp": 145,
     "max_hp": 145,
-    "image": "ENTOMANCER.png"
+    "image": "ENTOMANCER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "ENTOMANCER.name",
+      "translations": {
+        "eng": "Entomancer",
+        "zhs": "\u8702\u7FA4\u672F\u58EB",
+        "deu": "Entomant",
+        "esp": "Entomante",
+        "fra": "Entomancien",
+        "ita": "Coleomago",
+        "jpn": "\u30A8\u30F3\u30C8\u30DE\u30F3\u30B5\u30FC",
+        "kor": "\uACE4\uCDA9\uC220\uC0AC",
+        "pol": "Pszczelarz",
+        "ptb": "Entomante",
+        "rus": "\u042D\u043D\u0442\u043E\u043C\u0430\u043D\u0442",
+        "spa": "Entomomante",
+        "tur": "B\u00F6cek B\u00FCy\u00FCc\u00FCs\u00FC"
+      }
+    }
   },
   {
     "id": 38,
@@ -309,7 +1031,26 @@
     "name": "Exoskeleton",
     "min_hp": 24,
     "max_hp": 28,
-    "image": "EXOSKELETON.png"
+    "image": "EXOSKELETON.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "EXOSKELETON.name",
+      "translations": {
+        "eng": "Exoskeleton",
+        "zhs": "\u5916\u9AA8\u9ABC\u866B",
+        "deu": "Exoskelett",
+        "esp": "Exoesquebicho",
+        "fra": "Exosquelette",
+        "ita": "Esoscheletro",
+        "jpn": "\u5916\u9AA8\u683C\u87F2",
+        "kor": "\uAC11\uAC01\uCDA9",
+        "pol": "Egzoszkielet",
+        "ptb": "Exoesqueleto",
+        "rus": "\u042D\u043A\u0437\u043E\u0441\u043A\u0435\u043B\u0435\u0442",
+        "spa": "Plac\u00F3ptero",
+        "tur": "Z\u0131rhkabuk"
+      }
+    }
   },
   {
     "id": 39,
@@ -317,23 +1058,80 @@
     "name": "Hunter Killer",
     "min_hp": 121,
     "max_hp": 121,
-    "image": "HUNTER_KILLER.png"
+    "image": "HUNTER_KILLER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "HUNTER_KILLER.name",
+      "translations": {
+        "eng": "Hunter Killer",
+        "zhs": "\u730E\u4EBA\u6740\u624B",
+        "deu": "M\u00F6rder der J\u00E4ger",
+        "esp": "Mort\u00EDvoro",
+        "fra": "Chasseur-tueur",
+        "ita": "Predatore di cacciatori",
+        "jpn": "\u30CF\u30F3\u30BF\u30FC\u30AD\u30E9\u30FC",
+        "kor": "\uC0AC\uB0E5\uAFBC \uC0B4\uD574\uC790",
+        "pol": "Zab\u00F3jczy \u0141owca",
+        "ptb": "Predador de Predadores",
+        "rus": "\u0423\u0431\u0438\u0439\u0446\u0430 \u043E\u0445\u043E\u0442\u043D\u0438\u043A\u043E\u0432",
+        "spa": "Cazador de cazadores",
+        "tur": "Avc\u0131 Katili"
+      }
+    }
   },
   {
     "id": 40,
     "game_id": "CRUSHER",
     "name": "Crusher",
-    "min_hp": 199,
-    "max_hp": 199,
-    "image": "CRUSHER.png"
+    "min_hp": 209,
+    "max_hp": 209,
+    "image": "CRUSHER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "CRUSHER.name",
+      "translations": {
+        "eng": "Crusher",
+        "zhs": "\u78BE\u788E\u722A",
+        "deu": "Quetscher",
+        "esp": "Pinzin\u00F3n",
+        "fra": "An\u00E9antisseur",
+        "ita": "Spaccaossa",
+        "jpn": "\u30AF\u30E9\u30C3\u30B7\u30E3\u30FC",
+        "kor": "\uBD84\uC1C4\uC790",
+        "pol": "Kruszyciel",
+        "ptb": "Esmagador",
+        "rus": "\u041A\u0440\u0443\u0448\u0438\u0442\u0435\u043B\u044C",
+        "spa": "Demoledora",
+        "tur": "Ezici"
+      }
+    }
   },
   {
     "id": 41,
     "game_id": "ROCKET",
     "name": "Rocket",
-    "min_hp": 189,
-    "max_hp": 189,
-    "image": "ROCKET.png"
+    "min_hp": 199,
+    "max_hp": 199,
+    "image": "ROCKET.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "ROCKET.name",
+      "translations": {
+        "eng": "Rocket",
+        "zhs": "\u706B\u7BAD",
+        "deu": "Rakete",
+        "esp": "Pinzin\u00EDn",
+        "fra": "Roquette",
+        "ita": "Razzo",
+        "jpn": "\u30ED\u30B1\u30C3\u30C8",
+        "kor": "\uB85C\uCF13",
+        "pol": "Rakietowiec",
+        "ptb": "M\u00EDssil",
+        "rus": "\u0420\u0430\u043A\u0435\u0442\u0430",
+        "spa": "Perforadora",
+        "tur": "Roket"
+      }
+    }
   },
   {
     "id": 42,
@@ -341,7 +1139,26 @@
     "name": "Infested Prism",
     "min_hp": 200,
     "max_hp": 200,
-    "image": "INFESTED_PRISM.png"
+    "image": "INFESTED_PRISM.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "INFESTED_PRISM.name",
+      "translations": {
+        "eng": "Infested Prism",
+        "zhs": "\u611F\u67D3\u68F1\u67F1",
+        "deu": "Befallenes Prisma",
+        "esp": "Prisma infestado",
+        "fra": "Prisme infest\u00E9",
+        "ita": "Prisma infestato",
+        "jpn": "\u5BC4\u751F\u3055\u308C\u305F\u30D7\u30EA\u30BA\u30E0",
+        "kor": "\uAC10\uC5FC\uB41C \uD504\uB9AC\uC998",
+        "pol": "Zainfekowany Pryzmat",
+        "ptb": "Prisma Infestado",
+        "rus": "\u0417\u0430\u0440\u0430\u0436\u0435\u043D\u043D\u0430\u044F \u043F\u0440\u0438\u0437\u043C\u0430",
+        "spa": "Prisma infestado",
+        "tur": "\u0130stila Edilmi\u015F Prizma"
+      }
+    }
   },
   {
     "id": 43,
@@ -349,7 +1166,26 @@
     "name": "Knowledge Demon",
     "min_hp": 379,
     "max_hp": 379,
-    "image": "KNOWLEDGE_DEMON.png"
+    "image": "KNOWLEDGE_DEMON.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "KNOWLEDGE_DEMON.name",
+      "translations": {
+        "eng": "Knowledge Demon",
+        "zhs": "\u77E5\u8BC6\u6076\u9B54",
+        "deu": "Wissensd\u00E4mon",
+        "esp": "Demonio del saber",
+        "fra": "D\u00E9mon de la Connaissance",
+        "ita": "Demone onnisciente",
+        "jpn": "\u77E5\u8B58\u306E\u60AA\u9B54",
+        "kor": "\uC9C0\uC2DD\uC758 \uC545\uB9C8",
+        "pol": "Demon Wiedzy",
+        "ptb": "Dem\u00F4nio do Conhecimento",
+        "rus": "\u0412\u0441\u0435\u0437\u043D\u0430\u044E\u0449\u0438\u0439 \u0434\u0435\u043C\u043E\u043D",
+        "spa": "Demonio del saber",
+        "tur": "Bilgi \u015Eeytan\u0131"
+      }
+    }
   },
   {
     "id": 44,
@@ -357,7 +1193,26 @@
     "name": "Louse Progenitor",
     "min_hp": 134,
     "max_hp": 136,
-    "image": "LOUSE_PROGENITOR.png"
+    "image": "LOUSE_PROGENITOR.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "LOUSE_PROGENITOR.name",
+      "translations": {
+        "eng": "Louse Progenitor",
+        "zhs": "\u8671\u866B\u4E4B\u7956",
+        "deu": "Laus-Stammvater",
+        "esp": "Piojo progenitor",
+        "fra": "Prog\u00E9niteur de poux",
+        "ita": "Antenato delle pulci",
+        "jpn": "\u59CB\u7956\u866B",
+        "kor": "\uD0DC\uCD08\uC758 \uACF5\uBC8C\uB808",
+        "pol": "Protowesz",
+        "ptb": "Piolho Progenitor",
+        "rus": "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u043A\u0430\u044F \u0432\u043E\u0448\u044C",
+        "spa": "Piojo progenitor",
+        "tur": "Bitlerin Atas\u0131"
+      }
+    }
   },
   {
     "id": 45,
@@ -365,7 +1220,26 @@
     "name": "Myte",
     "min_hp": 61,
     "max_hp": 67,
-    "image": "MYTE.png"
+    "image": "MYTE.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "MYTE.name",
+      "translations": {
+        "eng": "Myte",
+        "zhs": "\u5F02\u87A8",
+        "deu": "Mylbe",
+        "esp": "\u00C1caro",
+        "fra": "Sarcopte",
+        "ita": "Acaro",
+        "jpn": "\u30DE\u30A4\u30C8",
+        "kor": "\uC9C4\uB4F8\uAE30",
+        "pol": "Roztycz",
+        "ptb": "Acarino",
+        "rus": "\u041A\u0440\u043E\u0432\u043E\u0436\u043E\u0440",
+        "spa": "Asaltante ac\u00E1rido",
+        "tur": "Mayt"
+      }
+    }
   },
   {
     "id": 46,
@@ -373,7 +1247,26 @@
     "name": "Ovicopter",
     "min_hp": 124,
     "max_hp": 130,
-    "image": "OVICOPTER.png"
+    "image": "OVICOPTER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "OVICOPTER.name",
+      "translations": {
+        "eng": "Ovicopter",
+        "zhs": "\u76F4\u98DE\u4EA7\u5375\u866B",
+        "deu": "Ovikopter",
+        "esp": "Ovic\u00F3ptero",
+        "fra": "Ovicopt\u00E8re",
+        "ita": "Ovicoptero",
+        "jpn": "\u30AA\u30D3\u30B3\u30D7\u30BF\u30FC",
+        "kor": "\uC0B0\uB780\uBE44\uCDA9",
+        "pol": "Jajokopter",
+        "ptb": "Ovic\u00F3ptero",
+        "rus": "\u041E\u0432\u0438\u043A\u043E\u043F\u0442\u0435\u0440",
+        "spa": "Ovoc\u00F3ptero",
+        "tur": "Kulu\u00E7kopter"
+      }
+    }
   },
   {
     "id": 47,
@@ -381,7 +1274,26 @@
     "name": "Tough Egg",
     "min_hp": 14,
     "max_hp": 18,
-    "image": "TOUGH_EGG.png"
+    "image": "TOUGH_EGG.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TOUGH_EGG.name",
+      "translations": {
+        "eng": "Tough Egg",
+        "zhs": "\u7ED3\u5B9E\u7684\u5375",
+        "deu": "Robustes Ei",
+        "esp": "Ovoduro",
+        "fra": "\u0152uf robuste",
+        "ita": "Uovo forte",
+        "jpn": "\u56FA\u3044\u5375",
+        "kor": "\uD2BC\uD2BC\uD55C \uC54C",
+        "pol": "Twarde jajo",
+        "ptb": "Ovo Resistente",
+        "rus": "\u041A\u0440\u0435\u043F\u043A\u043E\u0435 \u044F\u0439\u0446\u043E",
+        "spa": "Huevo endurecido",
+        "tur": "Dayan\u0131kl\u0131 Yumurta"
+      }
+    }
   },
   {
     "id": 48,
@@ -389,7 +1301,26 @@
     "name": "Slumbering Beetle",
     "min_hp": 86,
     "max_hp": 86,
-    "image": "SLUMBERING_BEETLE.png"
+    "image": "SLUMBERING_BEETLE.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SLUMBERING_BEETLE.name",
+      "translations": {
+        "eng": "Slumbering Beetle",
+        "zhs": "\u719F\u7761\u7532\u866B",
+        "deu": "Schlummernder K\u00E4fer",
+        "esp": "Escaramorfeo",
+        "fra": "Scarab\u00E9e dormeur",
+        "ita": "Scarabeo dormiente",
+        "jpn": "\u7720\u308C\u308B\u30D3\u30FC\u30C8\u30EB",
+        "kor": "\uC7A0\uC790\uB294 \uB531\uC815\uBC8C\uB808",
+        "pol": "\u015Api\u0105cy \u017Buk",
+        "ptb": "Besouro Sonolento",
+        "rus": "\u0414\u0440\u0435\u043C\u0443\u0447\u0438\u0439 \u0436\u0443\u043A",
+        "spa": "Escarabajo durmiente",
+        "tur": "Uyuyan B\u00F6cek"
+      }
+    }
   },
   {
     "id": 49,
@@ -397,7 +1328,26 @@
     "name": "Spiny Toad",
     "min_hp": 116,
     "max_hp": 119,
-    "image": "SPINY_TOAD.png"
+    "image": "SPINY_TOAD.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SPINY_TOAD.name",
+      "translations": {
+        "eng": "Spiny Toad",
+        "zhs": "\u68D8\u523A\u87FE\u870D",
+        "deu": "Stachlige Kr\u00F6te",
+        "esp": "Sapo espinoso",
+        "fra": "Crapineux",
+        "ita": "Rospo spinoso",
+        "jpn": "\u30C8\u30B2\u30D2\u30AD\u30AC\u30A8\u30EB",
+        "kor": "\uAC00\uC2DC\uB450\uAEBC\uBE44",
+        "pol": "Kolczasta Ropucha",
+        "ptb": "Sapo Espinhoso",
+        "rus": "\u0415\u0436\u043E\u0432\u0430\u044F \u0436\u0430\u0431\u0430",
+        "spa": "Sapo espinoso",
+        "tur": "Dikenli Kurba\u011Fa"
+      }
+    }
   },
   {
     "id": 50,
@@ -405,7 +1355,26 @@
     "name": "The Insatiable",
     "min_hp": 321,
     "max_hp": 321,
-    "image": "THE_INSATIABLE.png"
+    "image": "THE_INSATIABLE.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "THE_INSATIABLE.name",
+      "translations": {
+        "eng": "The Insatiable",
+        "zhs": "\u65E0\u538C\u6C99\u866B",
+        "deu": "Der Nimmersatt",
+        "esp": "El Insaciable",
+        "fra": "L\u0027Insatiable",
+        "ita": "L\u0027Insaziabile",
+        "jpn": "\u8CAA\u308A\u306E\u7363",
+        "kor": "\uD0D0",
+        "pol": "Nienasycony",
+        "ptb": "O Insaci\u00E1vel",
+        "rus": "\u041F\u0440\u043E\u0433\u043B\u043E\u0442",
+        "spa": "El Insaciable",
+        "tur": "Doyumsuz"
+      }
+    }
   },
   {
     "id": 51,
@@ -413,7 +1382,26 @@
     "name": "The Obscura",
     "min_hp": 123,
     "max_hp": 123,
-    "image": "THE_OBSCURA.png"
+    "image": "THE_OBSCURA.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "THE_OBSCURA.name",
+      "translations": {
+        "eng": "The Obscura",
+        "zhs": "\u80E7\u5149\u602A",
+        "deu": "Die Obscura",
+        "esp": "La Oscura",
+        "fra": "L\u0027Obscura",
+        "ita": "Tenebra",
+        "jpn": "\u30AA\u30D6\u30B9\u30AD\u30E5\u30E9",
+        "kor": "\uC601\uC0AC\uC790",
+        "pol": "Zas\u0142ona",
+        "ptb": "A Obscura",
+        "rus": "\u041E\u0431\u0441\u043A\u0443\u0440\u0430",
+        "spa": "La Tenebrosa",
+        "tur": "Belirsiz"
+      }
+    }
   },
   {
     "id": 52,
@@ -421,7 +1409,26 @@
     "name": "Thieving Hopper",
     "min_hp": 79,
     "max_hp": 79,
-    "image": "THIEVING_HOPPER.png"
+    "image": "THIEVING_HOPPER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "THIEVING_HOPPER.name",
+      "translations": {
+        "eng": "Thieving Hopper",
+        "zhs": "\u5077\u7A83\u8349\u8722",
+        "deu": "Diebischer H\u00FCpfer",
+        "esp": "Asaltamontes",
+        "fra": "Mante chapardeuse",
+        "ita": "Mantide ladra",
+        "jpn": "\u6CE5\u68D2\u30D0\u30C3\u30BF",
+        "kor": "\uD3F4\uC9DD\uC774 \uB3C4\uC801",
+        "pol": "Z\u0142odziejski Skoczek",
+        "ptb": "Gafanhoto Lar\u00E1pio",
+        "rus": "\u0417\u0430\u0433\u0440\u0435\u0431\u0443\u0449\u0430\u044F \u0446\u0438\u043A\u0440\u0430\u0434\u0430",
+        "spa": "Asaltamontes",
+        "tur": "H\u0131rs\u0131z \u00C7ekirge"
+      }
+    }
   },
   {
     "id": 53,
@@ -429,7 +1436,26 @@
     "name": "Tunneler",
     "min_hp": 87,
     "max_hp": 87,
-    "image": "TUNNELER.png"
+    "image": "TUNNELER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TUNNELER.name",
+      "translations": {
+        "eng": "Tunneler",
+        "zhs": "\u5730\u9053\u866B",
+        "deu": "Tunnler",
+        "esp": "Excavante",
+        "fra": "Tunnelier",
+        "ita": "Scavatore",
+        "jpn": "\u30C8\u30F3\u30CD\u30E9\u30FC",
+        "kor": "\uB545\uAD74\uCDA9",
+        "pol": "Tunelowiec",
+        "ptb": "Escavador",
+        "rus": "\u0420\u0430\u0437\u0440\u044B\u0445\u043B\u0438\u0442\u0435\u043B\u044C",
+        "spa": "Tunelador",
+        "tur": "T\u00FCnelci"
+      }
+    }
   },
   {
     "id": 54,
@@ -437,7 +1463,26 @@
     "name": "Axebot",
     "min_hp": 40,
     "max_hp": 44,
-    "image": "AXEBOT.png"
+    "image": "AXEBOT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "AXEBOT.name",
+      "translations": {
+        "eng": "Axebot",
+        "zhs": "\u5DE8\u65A7\u673A\u5668\u4EBA",
+        "deu": "Axtbot",
+        "esp": "Hachabot",
+        "fra": "Hachebots",
+        "ita": "Affettabot",
+        "jpn": "\u30A2\u30C3\u30AF\u30B9\u30DE\u30B7\u30F3",
+        "kor": "\uC798\uB77C\uBD07",
+        "pol": "Siekierobot",
+        "ptb": "Rob\u00F4 de Fundi\u00E7\u00E3o",
+        "rus": "\u0420\u0443\u0431\u043E\u0442",
+        "spa": "Hachatr\u00F3n",
+        "tur": "Baltabot"
+      }
+    }
   },
   {
     "id": 55,
@@ -445,7 +1490,27 @@
     "name": "Punch Construct",
     "min_hp": 55,
     "max_hp": 55,
-    "image": "PUNCH_CONSTRUCT.png"
+    "image": "PUNCH_CONSTRUCT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "PUNCH_CONSTRUCT.name",
+      "translations": {
+        "eng": "Punch Construct",
+        "zhs": "\u62F3\u51FB\u6784\u88C5\u4F53",
+        "deu": "Boxer-Konstrukt",
+        "esp": "Constructo pugilista",
+        "fra": "Assemblage de pugilat",
+        "ita": "Assemblaggio pugile",
+        "jpn": "\u30D1\u30F3\u30C1\u30DE\u30B7\u30F3",
+        "kor": "\uAD8C\uD22C\uD615 \uAD6C\uC870\uCCB4",
+        "pol": "Robokser",
+        "ptb": "Constructo Pugilista",
+        "rus": "\u0411\u043E\u0439\u043A\u0438\u0439 \u0430\u0433\u0440\u0435\u0433\u0430\u0442",
+        "spa": "Pu\u00F1otr\u00F3n",
+        "tha": "\u0E08\u0E31\u0E01\u0E23\u0E01\u0E25\u0E0A\u0E01\u0E15\u0E48\u0E2D\u0E22",
+        "tur": "Yumruklayan Yap\u0131"
+      }
+    }
   },
   {
     "id": 56,
@@ -453,366 +1518,1216 @@
     "name": "Devoted Sculptor",
     "min_hp": 162,
     "max_hp": 162,
-    "image": "DEVOTED_SCULPTOR.png"
+    "image": "DEVOTED_SCULPTOR.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "DEVOTED_SCULPTOR.name",
+      "translations": {
+        "eng": "Devoted Sculptor",
+        "zhs": "\u8654\u8BDA\u96D5\u523B\u5E08",
+        "deu": "Eifriger Bildhauer",
+        "esp": "Escultor devoto",
+        "fra": "Sculpteur d\u00E9vou\u00E9",
+        "ita": "Scultore devoto",
+        "jpn": "\u72C2\u4FE1\u306E\u5F6B\u523B\u5BB6",
+        "kor": "\uC5F4\uC815\uC801\uC778 \uC870\uAC01\uAC00",
+        "pol": "Zagorza\u0142y Rze\u017Abiarz",
+        "ptb": "Escultor Devoto",
+        "rus": "\u041E\u0434\u0435\u0440\u0436\u0438\u043C\u044B\u0439 \u0441\u043A\u0443\u043B\u044C\u043F\u0442\u043E\u0440",
+        "spa": "Escultor devoto",
+        "tur": "Kendini Adam\u0131\u015F Heykelt\u0131ra\u015F"
+      }
+    }
   },
   {
     "id": 57,
-    "game_id": "DOOR",
+    "game_id": "DOORMAKER",
     "name": "Door",
-    "min_hp": 155,
-    "max_hp": 155,
-    "image": "DOOR.png"
+    "min_hp": 489,
+    "max_hp": 489,
+    "image": "DOORMAKER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "DOOR.name",
+      "translations": {
+        "eng": "Door",
+        "zhs": "\u95E8\u6249",
+        "deu": "T\u00FCr",
+        "esp": "Portal",
+        "fra": "Porte",
+        "ita": "Porta",
+        "jpn": "\u30C9\u30A2",
+        "kor": "\uBB38",
+        "pol": "Portal",
+        "ptb": "Porta",
+        "rus": "\u0414\u0432\u0435\u0440\u044C",
+        "spa": "Portal",
+        "tur": "Kap\u0131"
+      }
+    }
   },
   {
     "id": 58,
-    "game_id": "DOORMAKER",
-    "name": "Doormaker",
-    "min_hp": 489,
-    "max_hp": 489,
-    "image": "DOORMAKER.png"
-  },
-  {
-    "id": 59,
     "game_id": "FABRICATOR",
     "name": "Fabricator",
     "min_hp": 150,
     "max_hp": 150,
-    "image": "FABRICATOR.png"
+    "image": "FABRICATOR.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "FABRICATOR.name",
+      "translations": {
+        "eng": "Fabricator",
+        "zhs": "\u7EC4\u88C5\u5E08",
+        "deu": "Fabrikateur",
+        "esp": "Mecafabricante",
+        "fra": "Machiniste",
+        "ita": "Mechacostruttore",
+        "jpn": "\u30D5\u30A1\u30D6\u30EA\u30B1\u30FC\u30BF\u30FC",
+        "kor": "\uC870\uB9BD \uC804\uBB38\uAC00",
+        "pol": "Mechanik",
+        "ptb": "Engenheiro",
+        "rus": "\u0421\u0431\u043E\u0440\u0449\u0438\u043A",
+        "spa": "Constructor",
+        "tur": "\u0130malat\u00E7\u0131"
+      }
+    }
+  },
+  {
+    "id": 59,
+    "game_id": "GUARDBOT",
+    "name": "Guardbot",
+    "min_hp": 16,
+    "max_hp": 20,
+    "image": "GUARDBOT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "GUARDBOT.name",
+      "translations": {
+        "eng": "Guardbot",
+        "zhs": "\u5B88\u62A4\u673A\u5668\u4EBA",
+        "deu": "Schutzbot",
+        "esp": "Guardiabot",
+        "fra": "Gardebot",
+        "ita": "Guardiabot",
+        "jpn": "\u30AC\u30FC\u30C9\u30DE\u30B7\u30F3",
+        "kor": "\uB9C9\uC544\uBD07",
+        "pol": "Stra\u017Cnik",
+        "ptb": "Guarda-Rob\u00F4",
+        "rus": "\u041E\u0445\u0440\u0430\u043D\u043D\u044B\u0439 \u0431\u043E\u0442",
+        "spa": "Escudotr\u00F3n",
+        "tur": "Korubot"
+      }
+    }
   },
   {
     "id": 60,
-    "game_id": "GUARDBOT",
-    "name": "Guardbot",
-    "min_hp": 21,
-    "max_hp": 25,
-    "image": "GUARDBOT.png"
+    "game_id": "NOISEBOT",
+    "name": "Noisebot",
+    "min_hp": 18,
+    "max_hp": 23,
+    "image": "NOISEBOT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "NOISEBOT.name",
+      "translations": {
+        "eng": "Noisebot",
+        "zhs": "\u566A\u97F3\u673A\u5668\u4EBA",
+        "deu": "L\u00E4rmbot",
+        "esp": "Sonibot",
+        "fra": "Sonobot",
+        "ita": "Suonobot",
+        "jpn": "\u30CE\u30A4\u30BA\u30DE\u30B7\u30F3",
+        "kor": "\uC18C\uC74C\uBD07",
+        "pol": "Ha\u0142a\u015Bnik",
+        "ptb": "Ru\u00EDdo-Rob\u00F4",
+        "rus": "\u0428\u0443\u043C\u043E\u0432\u043E\u0439 \u0431\u043E\u0442",
+        "spa": "Ruidotr\u00F3n",
+        "tur": "G\u00FCr\u00FClt\u00FCbot"
+      }
+    }
   },
   {
     "id": 61,
-    "game_id": "NOISEBOT",
-    "name": "Noisebot",
-    "min_hp": 23,
-    "max_hp": 28,
-    "image": "NOISEBOT.png"
+    "game_id": "ZAPBOT",
+    "name": "Zapbot",
+    "min_hp": 18,
+    "max_hp": 23,
+    "image": "ZAPBOT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "ZAPBOT.name",
+      "translations": {
+        "eng": "Zapbot",
+        "zhs": "\u7535\u51FB\u673A\u5668\u4EBA",
+        "deu": "Blitzbot",
+        "esp": "Chispabot",
+        "fra": "D\u00E9chargebot",
+        "ita": "Elettrobot",
+        "jpn": "\u30B6\u30C3\u30D7\u30DE\u30B7\u30F3",
+        "kor": "\uD30C\uC9C0\uC9C1\uBD07",
+        "pol": "Bzzynator",
+        "ptb": "Eletro-Rob\u00F4",
+        "rus": "\u0428\u043E\u043A\u043E\u0432\u044B\u0439 \u0431\u043E\u0442",
+        "spa": "Chispatr\u00F3n",
+        "tur": "\u00C7arpbot"
+      }
+    }
   },
   {
     "id": 62,
-    "game_id": "ZAPBOT",
-    "name": "Zapbot",
-    "min_hp": 23,
-    "max_hp": 28,
-    "image": "ZAPBOT.png"
+    "game_id": "STABBOT",
+    "name": "Stabbot",
+    "min_hp": 18,
+    "max_hp": 23,
+    "image": "STABBOT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "STABBOT.name",
+      "translations": {
+        "eng": "Stabbot",
+        "zhs": "\u6233\u523A\u673A\u5668\u4EBA",
+        "deu": "Abstechbot",
+        "esp": "Pu\u00F1albot",
+        "fra": "Poignard-bot",
+        "ita": "Pugnalebot",
+        "jpn": "\u30B9\u30BF\u30D6\u30DE\u30B7\u30F3",
+        "kor": "\uCC14\uB7EC\uBD07",
+        "pol": "D\u017Agacz",
+        "ptb": "Perfura-Rob\u00F4",
+        "rus": "\u041A\u043E\u043B\u043A\u0438\u0439 \u0431\u043E\u0442",
+        "spa": "Pu\u00F1alatr\u00F3n",
+        "tur": "Saplabot"
+      }
+    }
   },
   {
     "id": 63,
-    "game_id": "STABBOT",
-    "name": "Stabbot",
-    "min_hp": 23,
-    "max_hp": 28,
-    "image": "STABBOT.png"
-  },
-  {
-    "id": 64,
     "game_id": "FROG_KNIGHT",
     "name": "Frog Knight",
     "min_hp": 191,
     "max_hp": 191,
-    "image": "FROG_KNIGHT.png"
+    "image": "FROG_KNIGHT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "FROG_KNIGHT.name",
+      "translations": {
+        "eng": "Frog Knight",
+        "zhs": "\u9752\u86D9\u9A91\u58EB",
+        "deu": "Froschritter",
+        "esp": "Rana caballerosa",
+        "fra": "Chevalier rainette",
+        "ita": "Rana cavaliere",
+        "jpn": "\u30AB\u30A8\u30EB\u306E\u9A0E\u58EB",
+        "kor": "\uAC1C\uAD6C\uB9AC \uAE30\uC0AC",
+        "pol": "\u017Babi Rycerz",
+        "ptb": "Sapo Cavaleiro",
+        "rus": "\u0421\u044D\u0440 \u041B\u044F\u0433\u0443\u0448\u043A\u0430",
+        "spa": "Croaballero",
+        "tur": "Kurba\u011Fa \u015E\u00F6valye"
+      }
+    }
   },
   {
-    "id": 65,
+    "id": 64,
     "game_id": "GLOBE_HEAD",
     "name": "Globe Head",
     "min_hp": 148,
     "max_hp": 148,
-    "image": "GLOBE_HEAD.png"
+    "image": "GLOBE_HEAD.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "GLOBE_HEAD.name",
+      "translations": {
+        "eng": "Globe Head",
+        "zhs": "\u7535\u7403\u5934",
+        "deu": "Kugelkopf",
+        "esp": "Globic\u00E9falo",
+        "fra": "Globoc\u00E9phale",
+        "ita": "Testaglobo",
+        "jpn": "\u30B0\u30ED\u30FC\u30D6\u30D8\u30C3\u30C9",
+        "kor": "\uAD6C\uCCB4 \uBA38\uB9AC",
+        "pol": "Plazmog\u0142owy",
+        "ptb": "Globoc\u00E9falo",
+        "rus": "\u0428\u0430\u0440\u043E\u0433\u043E\u043B\u043E\u0432\u044B\u0439",
+        "spa": "Plasmac\u00E9falo",
+        "tur": "K\u00FCre Kafa"
+      }
+    }
   },
   {
-    "id": 66,
+    "id": 65,
     "game_id": "FLAIL_KNIGHT",
     "name": "Flail Knight",
     "min_hp": 101,
     "max_hp": 101,
-    "image": "FLAIL_KNIGHT.png"
+    "image": "FLAIL_KNIGHT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "FLAIL_KNIGHT.name",
+      "translations": {
+        "eng": "Flail Knight",
+        "zhs": "\u8FDE\u67B7\u9A91\u58EB",
+        "deu": "Flegel-Ritter",
+        "esp": "Caballero flagelador",
+        "fra": "Chevalier au fl\u00E9au",
+        "ita": "Cavaliere flagellatore",
+        "jpn": "\u30D5\u30EC\u30A4\u30EB\u30CA\u30A4\u30C8",
+        "kor": "\uCCA0\uD1F4 \uAE30\uC0AC",
+        "pol": "Szeroki Rycerz",
+        "ptb": "Cavaleiro Flagelador",
+        "rus": "\u0426\u0435\u043F\u043D\u043E\u0439 \u0440\u044B\u0446\u0430\u0440\u044C",
+        "spa": "Caballero flagelador",
+        "tur": "G\u00FCrzl\u00FC \u015E\u00F6valye"
+      }
+    }
   },
   {
-    "id": 67,
+    "id": 66,
     "game_id": "SPECTRAL_KNIGHT",
     "name": "Spectral Knight",
     "min_hp": 93,
     "max_hp": 93,
-    "image": "SPECTRAL_KNIGHT.png"
+    "image": "SPECTRAL_KNIGHT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SPECTRAL_KNIGHT.name",
+      "translations": {
+        "eng": "Spectral Knight",
+        "zhs": "\u5E7D\u7075\u9A91\u58EB",
+        "deu": "Spektral-Ritter",
+        "esp": "Espectrocaballero",
+        "fra": "Chevalier spectral",
+        "ita": "Cavaliere spettrale",
+        "jpn": "\u30B9\u30DA\u30AF\u30C8\u30EB\u30CA\u30A4\u30C8",
+        "kor": "\uC720\uB839 \uAE30\uC0AC",
+        "pol": "Rycerz Widmo",
+        "ptb": "Cavaleiro Espectral",
+        "rus": "\u041F\u0440\u0438\u0437\u0440\u0430\u0447\u043D\u044B\u0439 \u0440\u044B\u0446\u0430\u0440\u044C",
+        "spa": "Caballero espectral",
+        "tur": "Hayalet \u015E\u00F6valye"
+      }
+    }
   },
   {
-    "id": 68,
+    "id": 67,
     "game_id": "MAGI_KNIGHT",
     "name": "Magi Knight",
     "min_hp": 82,
     "max_hp": 82,
-    "image": "MAGI_KNIGHT.png"
+    "image": "MAGI_KNIGHT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "MAGI_KNIGHT.name",
+      "translations": {
+        "eng": "Magi Knight",
+        "zhs": "\u9B54\u6CD5\u9A91\u58EB",
+        "deu": "Magus-Ritter",
+        "esp": "Magicaballero",
+        "fra": "Chevalier mage",
+        "ita": "Magicavaliere",
+        "jpn": "\u30DE\u30AE\u30FB\u30CA\u30A4\u30C8",
+        "kor": "\uB9C8\uBC95 \uAE30\uC0AC",
+        "pol": "Mag",
+        "ptb": "Cavaleiro Mago",
+        "rus": "\u041C\u0430\u0433-\u0440\u044B\u0446\u0430\u0440\u044C",
+        "spa": "Caballero magi",
+        "tur": "B\u00FCy\u00FCc\u00FC \u015E\u00F6valye"
+      }
+    }
   },
   {
-    "id": 69,
+    "id": 68,
     "game_id": "MECHA_KNIGHT",
     "name": "Mecha Knight",
     "min_hp": 300,
     "max_hp": 300,
-    "image": "MECHA_KNIGHT.png"
+    "image": "MECHA_KNIGHT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "MECHA_KNIGHT.name",
+      "translations": {
+        "eng": "Mecha Knight",
+        "zhs": "\u673A\u7532\u9A91\u58EB",
+        "deu": "Mecha-Ritter",
+        "esp": "Cibercaballero",
+        "fra": "M\u00E9ca-Chevalier",
+        "ita": "Cavaliere meccanico",
+        "jpn": "\u30E1\u30AB\u30CA\u30A4\u30C8",
+        "kor": "\uAE30\uACC4 \uAE30\uC0AC",
+        "pol": "Mecha-Rycerz",
+        "ptb": "Cavaleiro Mec\u00E2nico",
+        "rus": "\u041C\u0435\u0445\u0430\u043D\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u0440\u044B\u0446\u0430\u0440\u044C",
+        "spa": "Caballero mecanizado",
+        "tur": "Meka \u015E\u00F6valye"
+      }
+    }
   },
   {
-    "id": 70,
+    "id": 69,
     "game_id": "OWL_MAGISTRATE",
     "name": "Owl Magistrate",
     "min_hp": 234,
     "max_hp": 234,
-    "image": "OWL_MAGISTRATE.png"
+    "image": "OWL_MAGISTRATE.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "OWL_MAGISTRATE.name",
+      "translations": {
+        "eng": "Owl Magistrate",
+        "zhs": "\u732B\u5934\u9E70\u6CD5\u5B98",
+        "deu": "Eulenmagistratin",
+        "esp": "Juez b\u00FAho",
+        "fra": "Magistrix",
+        "ita": "Giudice gufo",
+        "jpn": "\u30D5\u30AF\u30ED\u30A6\u5224\u4E8B",
+        "kor": "\uC62C\uBE7C\uBBF8 \uD310\uAD00",
+        "pol": "S\u0119dzia",
+        "ptb": "Coruja Magistrada",
+        "rus": "\u0421\u043E\u0432\u0430-\u044E\u0441\u0442\u0438\u0446\u0438\u0430\u0440\u0438\u0439",
+        "spa": "Magistrado nocturno",
+        "tur": "Yarg\u0131\u00E7 Bayku\u015F"
+      }
+    }
   },
   {
-    "id": 71,
+    "id": 70,
     "game_id": "QUEEN",
     "name": "Queen",
     "min_hp": 400,
     "max_hp": 400,
-    "image": "QUEEN.png"
+    "image": "QUEEN.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "QUEEN.name",
+      "translations": {
+        "eng": "Queen",
+        "zhs": "\u5973\u738B",
+        "deu": "K\u00F6nigin",
+        "esp": "Reina funesta",
+        "fra": "Reine",
+        "ita": "Regina funesta",
+        "jpn": "\u30AF\u30A4\u30FC\u30F3",
+        "kor": "\uC5EC\uC655",
+        "pol": "Kr\u00F3lowa",
+        "ptb": "Rainha",
+        "rus": "\u041A\u043E\u0440\u043E\u043B\u0435\u0432\u0430",
+        "spa": "La Reina",
+        "tur": "Krali\u00E7e"
+      }
+    }
   },
   {
-    "id": 72,
+    "id": 71,
     "game_id": "TORCH_HEAD_AMALGAM",
     "name": "Torch Head Amalgam",
     "min_hp": 199,
     "max_hp": 199,
-    "image": "TORCH_HEAD_AMALGAM.png"
+    "image": "TORCH_HEAD_AMALGAM.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TORCH_HEAD_AMALGAM.name",
+      "translations": {
+        "eng": "Torch Head Amalgam",
+        "zhs": "\u706B\u70AC\u5934\u805A\u5408\u4F53",
+        "deu": "Fackelkopf-Amalgam",
+        "esp": "Piroamalgama",
+        "fra": "Amalgame Torchet\u00EAte",
+        "ita": "Torciamostro",
+        "jpn": "\u30C8\u30FC\u30C1\u30D8\u30C3\u30C9\u30FB\u30A2\u30DE\u30EB\u30AC\u30E0",
+        "kor": "\uD683\uBD88\uBA38\uB9AC \uC735\uD569\uCCB4",
+        "pol": "Amalgamat",
+        "ptb": "Am\u00E1lgama Lampar\u00EDnea",
+        "rus": "\u041E\u0433\u043D\u0435\u043D\u043D\u0430\u044F \u0444\u0430\u043B\u0430\u043D\u0433\u0430",
+        "spa": "Amalgama de antorchas",
+        "tur": "Me\u015Fale Kafal\u0131 Bile\u015Fim"
+      }
+    }
   },
   {
-    "id": 73,
+    "id": 72,
     "game_id": "SCROLL_OF_BITING",
     "name": "Scroll of Biting",
     "min_hp": 31,
     "max_hp": 38,
-    "image": "SCROLL_OF_BITING.png"
+    "image": "SCROLL_OF_BITING.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SCROLL_OF_BITING.name",
+      "translations": {
+        "eng": "Scroll of Biting",
+        "zhs": "\u54AC\u4EBA\u5377\u8F74",
+        "deu": "Pergament des Bei\u00DFens",
+        "esp": "Pergamino dentado",
+        "fra": "Parchemord",
+        "ita": "Pergamena mordente",
+        "jpn": "\u565B\u307F\u3064\u304D\u306E\u5DFB\u7269",
+        "kor": "\uBB3C\uC5B4\uB72F\uB294 \uB450\uB8E8\uB9C8\uB9AC",
+        "pol": "Zgry\u017Aliwy Zw\u00F3j",
+        "ptb": "Pergaminho Mordaz",
+        "rus": "\u0417\u0443\u0431\u0430\u0441\u0442\u044B\u0439 \u0441\u0432\u0438\u0442\u043E\u043A",
+        "spa": "Pergamino mordedor",
+        "tur": "Is\u0131rma Par\u015F\u00F6meni"
+      }
+    }
   },
   {
-    "id": 74,
+    "id": 73,
     "game_id": "SLIMED_BERSERKER",
     "name": "Slimed Berserker",
     "min_hp": 266,
     "max_hp": 266,
-    "image": "SLIMED_BERSERKER.png"
+    "image": "SLIMED_BERSERKER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SLIMED_BERSERKER.name",
+      "translations": {
+        "eng": "Slimed Berserker",
+        "zhs": "\u53F2\u83B1\u59C6\u72C2\u6218\u58EB",
+        "deu": "Schleimiger Berserker",
+        "esp": "Viscoberseker",
+        "fra": "Berserker de vase",
+        "ita": "Berserker viscido",
+        "jpn": "\u30B9\u30E9\u30A4\u30E0\u30D0\u30FC\u30B5\u30FC\u30AB\u30FC",
+        "kor": "\uC2AC\uB77C\uC784 \uAD11\uC804\uC0AC",
+        "pol": "\u015Aluzak Berserker",
+        "ptb": "Amoque Gosmento",
+        "rus": "\u041E\u0441\u043B\u0438\u0437\u043D\u0435\u043D\u043D\u044B\u0439 \u0431\u0435\u0440\u0441\u0435\u0440\u043A",
+        "spa": "Berserker viscoso",
+        "tur": "Bal\u00E7\u0131klanm\u0131\u015F Vah\u015Fi Sava\u015F\u00E7\u0131"
+      }
+    }
   },
   {
-    "id": 75,
+    "id": 74,
     "game_id": "SOUL_NEXUS",
     "name": "Soul Nexus",
     "min_hp": 234,
     "max_hp": 234,
-    "image": "SOUL_NEXUS.png"
+    "image": "SOUL_NEXUS.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SOUL_NEXUS.name",
+      "translations": {
+        "eng": "Soul Nexus",
+        "zhs": "\u7075\u9B42\u67A2\u7EBD",
+        "deu": "Seelennexus",
+        "esp": "Nexo an\u00EDmico",
+        "fra": "Amalg\u0027\u00E2mes",
+        "ita": "Nesso dell\u0027anima",
+        "jpn": "\u30BD\u30A6\u30EB\u30CD\u30AF\u30B5\u30B9",
+        "kor": "\uC601\uD63C \uACB0\uD569\uCCB4",
+        "pol": "Spojenie Dusz",
+        "ptb": "Nexo de Almas",
+        "rus": "\u0427\u0438\u0441\u0442\u0438\u043B\u0438\u0449\u0435 \u0434\u0443\u0448",
+        "spa": "Nexo de almas",
+        "tur": "Ruh Bile\u015Fi\u011Fi"
+      }
+    }
+  },
+  {
+    "id": 75,
+    "game_id": "TEST_SUBJECT",
+    "name": "Test Subject #C106",
+    "min_hp": 100,
+    "max_hp": 100,
+    "image": "TEST_SUBJECT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TEST_SUBJECT.name",
+      "translations": {
+        "eng": "Test Subject #C{Count}",
+        "zhs": "\u5B9E\u9A8C\u4F53 #C{Count}",
+        "deu": "Testsubjekt #C{Count}",
+        "esp": "Sujeto de prueba #C{Count}",
+        "fra": "Cobaye #C{Count}",
+        "ita": "Soggetto di prova #C{Count}",
+        "jpn": "\u5B9F\u9A13\u4F53 #C{Count}",
+        "kor": "\uC2E4\uD5D8\uCCB4 #C{Count}",
+        "pol": "Eksperyment #C{Count}",
+        "ptb": "Cobaia #C{Count}",
+        "rus": "\u041F\u043E\u0434\u043E\u043F\u044B\u0442\u043D\u044B\u0439 \u2116{Count}",
+        "spa": "Sujeto de pruebas #C{Count}",
+        "tur": "Denek #C{Count}"
+      }
+    }
   },
   {
     "id": 76,
-    "game_id": "TEST_SUBJECT",
-    "name": "Test Subject #C80",
-    "min_hp": 100,
-    "max_hp": 100,
-    "image": "TEST_SUBJECT.png"
-  },
-  {
-    "id": 77,
     "game_id": "THE_LOST",
     "name": "The Lost",
     "min_hp": 93,
     "max_hp": 93,
-    "image": "THE_LOST.png"
+    "image": "THE_LOST.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "THE_LOST.name",
+      "translations": {
+        "eng": "The Lost",
+        "zhs": "\u5931\u843D\u4E4B\u7269",
+        "deu": "Die Verlassene",
+        "esp": "El Perdido",
+        "fra": "L\u0027\u00C9gar\u00E9",
+        "ita": "Il Perduto",
+        "jpn": "\u8FF7\u3048\u308B\u8005",
+        "kor": "\uC0AC\uB77C\uC9C4 \uC790",
+        "pol": "Porzucony",
+        "ptb": "O Perdido",
+        "rus": "\u041F\u0440\u043E\u043F\u0430\u0449\u0438\u0439",
+        "spa": "El Perdido",
+        "tur": "Kay\u0131p Olan"
+      }
+    }
   },
   {
-    "id": 78,
+    "id": 77,
     "game_id": "THE_FORGOTTEN",
     "name": "The Forgotten",
     "min_hp": 106,
     "max_hp": 106,
-    "image": "THE_FORGOTTEN.png"
+    "image": "THE_FORGOTTEN.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "THE_FORGOTTEN.name",
+      "translations": {
+        "eng": "The Forgotten",
+        "zhs": "\u9057\u5FD8\u4E4B\u7269",
+        "deu": "Die Vergessene",
+        "esp": "El Olvidado",
+        "fra": "L\u0027Oubli\u00E9",
+        "ita": "Il Dimenticato",
+        "jpn": "\u5FD8\u308C\u3089\u308C\u3057\u8005",
+        "kor": "\uC78A\uD78C \uC790",
+        "pol": "Zapomniany",
+        "ptb": "O Esquecido",
+        "rus": "\u0417\u0430\u0431\u044B\u0442\u044B\u0439",
+        "spa": "El Olvidado",
+        "tur": "Unutulmu\u015F Olan"
+      }
+    }
   },
   {
-    "id": 79,
+    "id": 78,
     "game_id": "LIVING_SHIELD",
     "name": "Living Shield",
     "min_hp": 55,
     "max_hp": 55,
-    "image": "LIVING_SHIELD.png"
+    "image": "LIVING_SHIELD.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "LIVING_SHIELD.name",
+      "translations": {
+        "eng": "Living Shield",
+        "zhs": "\u6D3B\u4F53\u76FE",
+        "deu": "Lebender Schild",
+        "esp": "Escudo vivaz",
+        "fra": "Bouclier vivant",
+        "ita": "Scudo vivente",
+        "jpn": "\u30EA\u30D3\u30F3\u30B0\u30B7\u30FC\u30EB\u30C9",
+        "kor": "\uC0B4\uC544\uC788\uB294 \uBC29\uD328",
+        "pol": "\u017Bywa Tarcza",
+        "ptb": "Escudeiro",
+        "rus": "\u0416\u0438\u0432\u043E\u0439 \u0449\u0438\u0442",
+        "spa": "Escudero animado",
+        "tur": "Ya\u015Fayan Kalkan"
+      }
+    }
   },
   {
-    "id": 80,
+    "id": 79,
     "game_id": "TURRET_OPERATOR",
     "name": "Turret Operator",
     "min_hp": 41,
     "max_hp": 41,
-    "image": "TURRET_OPERATOR.png"
+    "image": "TURRET_OPERATOR.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TURRET_OPERATOR.name",
+      "translations": {
+        "eng": "Turret Operator",
+        "zhs": "\u9AD8\u5854\u70AE\u624B",
+        "deu": "Gesch\u00FCtz-Operateur",
+        "esp": "Operatorreta",
+        "fra": "Op\u00E9rateur de tourelle",
+        "ita": "Operatorretta",
+        "jpn": "\u30BF\u30EC\u30C3\u30C8\u30AA\u30DA\u30EC\u30FC\u30BF\u30FC",
+        "kor": "\uD3EC\uD0D1 \uC0AC\uC218",
+        "pol": "Szczur z CKM-em",
+        "ptb": "Operador de Artilharia",
+        "rus": "\u041D\u0430\u0432\u043E\u0434\u0447\u0438\u043A",
+        "spa": "Ametrallador",
+        "tur": "Taret Operat\u00F6r\u00FC"
+      }
+    }
   },
   {
-    "id": 81,
+    "id": 80,
     "game_id": "CORPSE_SLUG",
     "name": "Corpse Slug",
     "min_hp": 25,
     "max_hp": 27,
-    "image": "CORPSE_SLUG.png"
+    "image": "CORPSE_SLUG.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "CORPSE_SLUG.name",
+      "translations": {
+        "eng": "Corpse Slug",
+        "zhs": "\u566C\u5C38\u86DE\u8753",
+        "deu": "Leichenschnecke",
+        "esp": "Putribabosa",
+        "fra": "Putrilimace",
+        "ita": "Lumaca cadaverica",
+        "jpn": "\u5C4D\u30CA\u30E1\u30AF\u30B8",
+        "kor": "\uC2DC\uCCB4 \uBBFC\uB2EC\uD33D\uC774",
+        "pol": "\u015Alimak Trupojad",
+        "ptb": "Lesma Necr\u00F3faga",
+        "rus": "\u0421\u043B\u0438\u0437\u0435\u043D\u044C-\u043F\u0430\u0434\u0430\u043B\u044C\u0449\u0438\u043A",
+        "spa": "Babosa cadav\u00E9rica",
+        "tha": "\u0E17\u0E32\u0E01\u0E28\u0E1E",
+        "tur": "Ceset Yiyen S\u00FCm\u00FCkl\u00FC B\u00F6cek"
+      }
+    }
   },
   {
-    "id": 82,
+    "id": 81,
     "game_id": "CALCIFIED_CULTIST",
     "name": "Calcified Cultist",
     "min_hp": 38,
     "max_hp": 41,
-    "image": "CALCIFIED_CULTIST.png"
+    "image": "CALCIFIED_CULTIST.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "CALCIFIED_CULTIST.name",
+      "translations": {
+        "eng": "Calcified Cultist",
+        "zhs": "\u9499\u5316\u90AA\u6559\u5F92",
+        "deu": "Verkalkter Kultist",
+        "esp": "Sectario calciremojado",
+        "fra": "Adepte calcifi\u00E9",
+        "ita": "Accolito calcificato",
+        "jpn": "\u77F3\u3092\u7E8F\u3063\u305F\u72C2\u4FE1\u8005",
+        "kor": "\uC11D\uD68C\uD654\uB41C \uAD11\uC2E0\uC790",
+        "pol": "Zwapnia\u0142y Kultysta",
+        "ptb": "Cultista Calcificado",
+        "rus": "\u041E\u043A\u0430\u043C\u0435\u043D\u0435\u043B\u044B\u0439 \u043A\u0443\u043B\u044C\u0442\u0438\u0441\u0442",
+        "spa": "Sectario calcificado",
+        "tur": "Ta\u015Fla\u015Fm\u0131\u015F Tarikat\u00E7\u0131"
+      }
+    }
   },
   {
-    "id": 83,
+    "id": 82,
     "game_id": "DAMP_CULTIST",
     "name": "Damp Cultist",
     "min_hp": 51,
     "max_hp": 53,
-    "image": "DAMP_CULTIST.png"
+    "image": "DAMP_CULTIST.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "DAMP_CULTIST.name",
+      "translations": {
+        "eng": "Damp Cultist",
+        "zhs": "\u6F6E\u6E7F\u90AA\u6559\u5F92",
+        "deu": "Nasser Kultist",
+        "esp": "Sectario empapado",
+        "fra": "Adepte moisi",
+        "ita": "Accolito zuppo",
+        "jpn": "\u6E7F\u3063\u305F\u72C2\u4FE1\u8005",
+        "kor": "\uD760\uBED1 \uC816\uC740 \uAD11\uC2E0\uC790",
+        "pol": "Zwilgotnia\u0142y Kultysta",
+        "ptb": "Cultista Encharcado",
+        "rus": "\u041F\u0440\u043E\u043C\u043E\u043A\u0448\u0438\u0439 \u043A\u0443\u043B\u044C\u0442\u0438\u0441\u0442",
+        "spa": "Sectario empapado",
+        "tur": "Islak Tarikat\u00E7i"
+      }
+    }
   },
   {
-    "id": 84,
-    "game_id": "LIVING_FOG",
-    "name": "Living Fog",
-    "min_hp": 80,
-    "max_hp": 80,
-    "image": "LIVING_FOG.png"
-  },
-  {
-    "id": 85,
-    "game_id": "GAS_BOMB",
-    "name": "Gas Bomb",
-    "min_hp": 10,
-    "max_hp": 10,
-    "image": "GAS_BOMB.png"
-  },
-  {
-    "id": 86,
+    "id": 83,
     "game_id": "FOSSIL_STALKER",
     "name": "Fossil Stalker",
     "min_hp": 51,
     "max_hp": 53,
-    "image": "FOSSIL_STALKER.png"
+    "image": "FOSSIL_STALKER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "FOSSIL_STALKER.name",
+      "translations": {
+        "eng": "Fossil Stalker",
+        "zhs": "\u5316\u77F3\u8FFD\u8E2A\u8005",
+        "deu": "Fossil-Pirscher",
+        "esp": "Acechaf\u00F3sil",
+        "fra": "Traqueur fossilis\u00E9",
+        "ita": "Cacciatore di fossili",
+        "jpn": "\u5316\u77F3\u306E\u30B9\u30C8\u30FC\u30AB\u30FC",
+        "kor": "\uD654\uC11D \uB9E4\uBCF5\uC790",
+        "pol": "Skamieliniak",
+        "ptb": "F\u00F3ssil Espreitador",
+        "rus": "\u0425\u0432\u043E\u0441\u0442\u043E\u043B\u043E\u0432-\u043E\u0442\u0448\u0435\u043B\u044C\u043D\u0438\u043A",
+        "spa": "F\u00F3sil acosador",
+        "tur": "Pusan Fosil"
+      }
+    }
   },
   {
-    "id": 87,
+    "id": 84,
     "game_id": "GREMLIN_MERC",
     "name": "Gremlin Merc",
     "min_hp": 47,
     "max_hp": 49,
-    "image": "GREMLIN_MERC.png"
+    "image": "GREMLIN_MERC.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "GREMLIN_MERC.name",
+      "translations": {
+        "eng": "Gremlin Merc",
+        "zhs": "\u5730\u7CBE\u4F63\u5175",
+        "deu": "Gremlin-S\u00F6ldner",
+        "esp": "Gremlin mercenario",
+        "fra": "Diablotin mercenaire",
+        "ita": "Gremlin mercenario",
+        "jpn": "\u50AD\u5175\u30B0\u30EC\u30E0\u30EA\u30F3",
+        "kor": "\uADF8\uB818\uB9B0 \uC6A9\uBCD1",
+        "pol": "Gremlin Rabu\u015B",
+        "ptb": "Gremlin Mercen\u00E1rio",
+        "rus": "\u0413\u0440\u0435\u043C\u043B\u0438\u043D-\u043D\u0430\u0435\u043C\u043D\u0438\u043A",
+        "spa": "Gremlin mercenario",
+        "tur": "Gremlin Paral\u0131 Asker"
+      }
+    }
   },
   {
-    "id": 88,
+    "id": 85,
     "game_id": "FAT_GREMLIN",
     "name": "Fat Gremlin",
     "min_hp": 13,
     "max_hp": 17,
-    "image": "FAT_GREMLIN.png"
+    "image": "FAT_GREMLIN.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "FAT_GREMLIN.name",
+      "translations": {
+        "eng": "Fat Gremlin",
+        "zhs": "\u80D6\u5730\u7CBE",
+        "deu": "Fetter Gremlin",
+        "esp": "Gremlin \u00E1varo",
+        "fra": "Gros diablotin",
+        "ita": "Gremlin grasso",
+        "jpn": "\u30D5\u30A1\u30C3\u30C8\u30B0\u30EC\u30E0\u30EA\u30F3",
+        "kor": "\uB6B1\uB6B1\uD55C \uADF8\uB818\uB9B0",
+        "pol": "Du\u017Cy gremlin",
+        "ptb": "Gremlin Avarento",
+        "rus": "\u0422\u043E\u043B\u0441\u0442\u044B\u0439 \u0433\u0440\u0435\u043C\u043B\u0438\u043D",
+        "spa": "Gremlin regordete",
+        "tur": "\u015Ei\u015Fko Gremlin"
+      }
+    }
   },
   {
-    "id": 89,
+    "id": 86,
     "game_id": "SNEAKY_GREMLIN",
     "name": "Sneaky Gremlin",
     "min_hp": 10,
     "max_hp": 14,
-    "image": "SNEAKY_GREMLIN.png"
+    "image": "SNEAKY_GREMLIN.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SNEAKY_GREMLIN.name",
+      "translations": {
+        "eng": "Sneaky Gremlin",
+        "zhs": "\u5351\u9119\u5730\u7CBE",
+        "deu": "Schleichender Gremlin",
+        "esp": "Gremlin aturdido",
+        "fra": "Diablotin sournois",
+        "ita": "Gremlin furtivo",
+        "jpn": "\u30B9\u30CB\u30FC\u30AD\u30FC\u30B0\u30EC\u30E0\u30EA\u30F3",
+        "kor": "\uAD50\uD65C\uD55C \uADF8\uB818\uB9B0",
+        "pol": "Podst\u0119pny Gremlin",
+        "ptb": "Gremlin Trapaceiro",
+        "rus": "\u041A\u043E\u0432\u0430\u0440\u043D\u044B\u0439 \u0433\u0440\u0435\u043C\u043B\u0438\u043D",
+        "spa": "Gremlin sigiloso",
+        "tur": "Sinsi Gremlin"
+      }
+    }
   },
   {
-    "id": 90,
+    "id": 87,
     "game_id": "HAUNTED_SHIP",
     "name": "Haunted Ship",
     "min_hp": 63,
     "max_hp": 63,
-    "image": "HAUNTED_SHIP.png"
+    "image": "HAUNTED_SHIP.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "HAUNTED_SHIP.name",
+      "translations": {
+        "eng": "Haunted Ship",
+        "zhs": "\u5E7D\u7075\u8239",
+        "deu": "Spukschiff",
+        "esp": "Barco embrujado",
+        "fra": "Navire hant\u00E9",
+        "ita": "Nave infestata",
+        "jpn": "\u5E7D\u970A\u8239",
+        "kor": "\uC720\uB839\uC120",
+        "pol": "Nawiedzony Statek",
+        "ptb": "Embarca\u00E7\u00E3o Assombrada",
+        "rus": "\u041F\u0440\u043E\u043A\u043B\u044F\u0442\u043E\u0435 \u0441\u0443\u0434\u043D\u043E",
+        "spa": "Barco embrujado",
+        "tur": "Lanetli Gemi"
+      }
+    }
   },
   {
-    "id": 91,
+    "id": 88,
     "game_id": "LAGAVULIN_MATRIARCH",
     "name": "Lagavulin Matriarch",
     "min_hp": 222,
     "max_hp": 222,
-    "image": "LAGAVULIN_MATRIARCH.png"
+    "image": "LAGAVULIN_MATRIARCH.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "LAGAVULIN_MATRIARCH.name",
+      "translations": {
+        "eng": "Lagavulin Matriarch",
+        "zhs": "\u4E50\u52A0\u7EF4\u6797\u65CF\u6BCD",
+        "deu": "Lagavulin-Matriarchin",
+        "esp": "Matriarca lagavul\u00EDn",
+        "fra": "Matriarche Lagavulin",
+        "ita": "Matriarca Lagavulin",
+        "jpn": "\u30E9\u30AC\u30F4\u30FC\u30EA\u30F3\u30FB\u30E1\u30A4\u30C8\u30EA\u30A2\u30FC\u30AF",
+        "kor": "\uB77C\uAC00\uBD88\uB9B0 \uB300\uBAA8",
+        "pol": "Matka Lagavulin\u00F3w",
+        "ptb": "Matriarca Lagavulin",
+        "rus": "\u041F\u0440\u0430\u043C\u0430\u0442\u0435\u0440\u044C \u043B\u0430\u0433\u0430\u0432\u0443\u043B\u0438\u043D\u043E\u0432",
+        "spa": "Matriarca lagavulin",
+        "tur": "Anne Lagavulin"
+      }
+    }
+  },
+  {
+    "id": 89,
+    "game_id": "LIVING_FOG",
+    "name": "Living Fog",
+    "min_hp": 80,
+    "max_hp": 80,
+    "image": "LIVING_FOG.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "LIVING_FOG.name",
+      "translations": {
+        "eng": "Living Fog",
+        "zhs": "\u6D3B\u96FE",
+        "deu": "Lebender Nebel",
+        "esp": "Niebla viviente",
+        "fra": "Brouillard vivant",
+        "ita": "Nebbia vivente",
+        "jpn": "\u751F\u304D\u305F\u9727",
+        "kor": "\uC0B4\uC544\uC788\uB294 \uC548\uAC1C",
+        "pol": "\u017Bywa Mg\u0142a",
+        "ptb": "N\u00E9voa Viva",
+        "rus": "\u0416\u0438\u0432\u043E\u0439 \u0442\u0443\u043C\u0430\u043D",
+        "spa": "Nieblamprea",
+        "tur": "Ya\u015Fayan Sis"
+      }
+    }
+  },
+  {
+    "id": 90,
+    "game_id": "GAS_BOMB",
+    "name": "Gas Bomb",
+    "min_hp": 7,
+    "max_hp": 7,
+    "image": "GAS_BOMB.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "GAS_BOMB.name",
+      "translations": {
+        "eng": "Gas Bomb",
+        "zhs": "\u6C14\u6001\u70B8\u5F39",
+        "deu": "Gasbombe",
+        "esp": "N\u00FAcleo gaseoso",
+        "fra": "Bombe \u00E0 gaz",
+        "ita": "Gasbomba",
+        "jpn": "\u30AC\u30B9\u7206\u5F3E",
+        "kor": "\uAC00\uC2A4 \uD3ED\uD0C4",
+        "pol": "Bomba Gazowa",
+        "ptb": "Bomba Gasosa",
+        "rus": "\u0413\u0430\u0437\u043E\u0432\u0430\u044F \u0431\u043E\u043C\u0431\u0430",
+        "spa": "Bomba de gas",
+        "tur": "Gaz Bombas\u0131"
+      }
+    }
+  },
+  {
+    "id": 91,
+    "game_id": "PHANTASMAL_GARDENER",
+    "name": "Phantasmal Gardener",
+    "min_hp": 26,
+    "max_hp": 31,
+    "image": "PHANTASMAL_GARDENER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "PHANTASMAL_GARDENER.name",
+      "translations": {
+        "eng": "Phantasmal Gardener",
+        "zhs": "\u82B1\u56ED\u5E7D\u7075\u9CD7",
+        "deu": "Tr\u00FCgerischer G\u00E4rtner",
+        "esp": "Anguila espectral",
+        "fra": "Jardinier spectral",
+        "ita": "Giardiniere spettrale",
+        "jpn": "\u5E7B\u5F71\u87F2",
+        "kor": "\uD5C8\uAE68\uBE44 \uC815\uC6D0\uC0AC",
+        "pol": "W\u0119gorz\u00F3wka",
+        "ptb": "Enguia Espectral",
+        "rus": "\u0424\u0430\u043D\u0442\u043E\u043C\u043D\u044B\u0439 \u0430\u043B\u044C\u0433\u043E\u0447\u0438\u0441\u0442",
+        "spa": "Acechamareas",
+        "tur": "Bah\u00E7e Y\u0131lan Bal\u0131\u011F\u0131"
+      }
+    }
   },
   {
     "id": 92,
-    "game_id": "SKULKING_COLONY",
-    "name": "Skulking Colony",
-    "min_hp": 79,
-    "max_hp": 79,
-    "image": "SKULKING_COLONY.png"
-  },
-  {
-    "id": 93,
-    "game_id": "PHANTASMAL_GARDENER",
-    "name": "Phantasmal Gardener",
-    "min_hp": 28,
-    "max_hp": 32,
-    "image": "PHANTASMAL_GARDENER.png"
-  },
-  {
-    "id": 94,
     "game_id": "SEAPUNK",
     "name": "Seapunk",
     "min_hp": 44,
     "max_hp": 46,
-    "image": "SEAPUNK.png"
+    "image": "SEAPUNK.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SEAPUNK.name",
+      "translations": {
+        "eng": "Seapunk",
+        "zhs": "\u6D77\u6D0B\u6DF7\u6DF7",
+        "deu": "Meerespunk",
+        "esp": "Rufi\u00E1n marino",
+        "fra": "Voyou marin",
+        "ita": "Teppista marino",
+        "jpn": "\u30B7\u30FC\u30D1\u30F3\u30AF",
+        "kor": "\uBD88\uB7C9 \uD574\uCD08",
+        "pol": "Gloniarz",
+        "ptb": "Arruaceiro Marinho",
+        "rus": "\u0417\u043B\u0430\u043C\u0438\u043D\u0430\u0440\u0438\u044F",
+        "spa": "Canalla marino",
+        "tha": "\u0E2B\u0E23\u0E48\u0E32\u0E22\u0E40\u0E25",
+        "tur": "Deniz Haydutu"
+      }
+    }
   },
   {
-    "id": 95,
+    "id": 93,
     "game_id": "SEWER_CLAM",
     "name": "Sewer Clam",
     "min_hp": 56,
     "max_hp": 56,
-    "image": "SEWER_CLAM.png"
+    "image": "SEWER_CLAM.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SEWER_CLAM.name",
+      "translations": {
+        "eng": "Sewer Clam",
+        "zhs": "\u4E0B\u6C34\u9053\u868C",
+        "deu": "Kloakenmuschel",
+        "esp": "Cloacalmeja",
+        "fra": "Palourde d\u0027\u00E9gout",
+        "ita": "Vongola di fogna",
+        "jpn": "\u4E0B\u6C34\u8C9D",
+        "kor": "\uC2DC\uAD81\uCC3D \uC870\uAC1C",
+        "pol": "Ma\u0142\u017Ca \u015Aciekowa",
+        "ptb": "Bivalve de Esgoto",
+        "rus": "\u0421\u0442\u043E\u0447\u043D\u044B\u0439 \u043C\u043E\u043B\u043B\u044E\u0441\u043A",
+        "spa": "Almejarilla",
+        "tur": "Kanalizasyon \u0130stiridyesi"
+      }
+    }
   },
   {
-    "id": 96,
+    "id": 94,
+    "game_id": "SKULKING_COLONY",
+    "name": "Skulking Colony",
+    "min_hp": 70,
+    "max_hp": 70,
+    "image": "SKULKING_COLONY.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SKULKING_COLONY.name",
+      "translations": {
+        "eng": "Skulking Colony",
+        "zhs": "\u9B3C\u795F\u73CA\u745A\u7FA4",
+        "deu": "Versteckte Kolonie",
+        "esp": "Colonia furtiva",
+        "fra": "Colonie de r\u00F4deurs",
+        "ita": "Colonia furtiva",
+        "jpn": "\u8822\u304F\u7FA4\u751F\u4F53",
+        "kor": "\uC7A0\uD589 \uAD70\uCCB4",
+        "pol": "\u017Bywa Rafa Koralowa",
+        "ptb": "Col\u00F4nia Furtiva",
+        "rus": "\u041A\u043E\u043F\u043E\u0442\u043B\u0438\u0432\u0430\u044F \u043A\u043E\u043B\u043E\u043D\u0438\u044F",
+        "spa": "Colonia acechadora",
+        "tur": "Saklanan Koloni"
+      }
+    }
+  },
+  {
+    "id": 95,
     "game_id": "SLUDGE_SPINNER",
     "name": "Sludge Spinner",
     "min_hp": 37,
     "max_hp": 39,
-    "image": "SLUDGE_SPINNER.png"
+    "image": "SLUDGE_SPINNER.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SLUDGE_SPINNER.name",
+      "translations": {
+        "eng": "Sludge Spinner",
+        "zhs": "\u6DE4\u6CE5\u65CB\u87BA",
+        "deu": "Schlickschleuder",
+        "esp": "Caracofango",
+        "fra": "Tisse-boue",
+        "ita": "Poltiglia rotante",
+        "jpn": "\u30B9\u30E9\u30C3\u30B8\u30B9\u30D4\u30CA\u30FC",
+        "kor": "\uC624\uBB3C\uD33D\uC774",
+        "pol": "Wir\u00F3wka",
+        "ptb": "N\u00E1utilo Oleoso",
+        "rus": "\u0413\u0440\u044F\u0437\u0435\u0432\u043E\u0439 \u0432\u0435\u0440\u0442\u043E\u043F\u043B\u044E\u0439",
+        "spa": "Girador cenagoso",
+        "tur": "\u00C7amurd\u00F6ner"
+      }
+    }
   },
   {
-    "id": 97,
+    "id": 96,
     "game_id": "SOUL_FYSH",
     "name": "Soul Fysh",
     "min_hp": 211,
     "max_hp": 211,
-    "image": "SOUL_FYSH.png"
+    "image": "SOUL_FYSH.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "SOUL_FYSH.name",
+      "translations": {
+        "eng": "Soul Fysh",
+        "zhs": "\u7075\u9B42\u5F02\u9C7C",
+        "deu": "Seelenfysch",
+        "esp": "Phez\u00E1nima",
+        "fra": "Poiss\u00E2me",
+        "ita": "Pesce anima",
+        "jpn": "\u30BD\u30A6\u30EB\u30D5\u30A3\u30C3\u30B7\u30E5",
+        "kor": "\uC601\uD63C \uBB3C\uAD50\uAE30",
+        "pol": "Dusza Rypki",
+        "ptb": "Peyxe Espectral",
+        "rus": "\u041F\u0440\u0438\u0437\u0440\u0430\u0447\u043D\u044B\u0439 \u0440\u044B\u0431",
+        "spa": "Peth alma",
+        "tur": "Ruh Balu\u011Fu"
+      }
+    }
   },
   {
-    "id": 98,
+    "id": 97,
     "game_id": "TERROR_EEL",
     "name": "Terror Eel",
     "min_hp": 140,
     "max_hp": 140,
-    "image": "TERROR_EEL.png"
+    "image": "TERROR_EEL.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TERROR_EEL.name",
+      "translations": {
+        "eng": "Terror Eel",
+        "zhs": "\u9A87\u9CD7",
+        "deu": "Furcht-Aal",
+        "esp": "Anguila ominosa",
+        "fra": "Mur\u00E8ne de l\u0027effroi",
+        "ita": "Anguilla nefasta",
+        "jpn": "\u30C6\u30E9\u30FC\u30A6\u30C4\u30DC",
+        "kor": "\uACF5\uD3EC \uC7A5\uC5B4",
+        "pol": "W\u0119gorzor",
+        "ptb": "Enguia Abissal",
+        "rus": "\u0418\u0441\u043F\u0443\u0433\u043E\u0440\u044C",
+        "spa": "Aberraci\u00F3n abisal",
+        "tur": "Korkun\u00E7 Y\u0131lan Bal\u0131\u011F\u0131"
+      }
+    }
   },
   {
-    "id": 99,
+    "id": 98,
     "game_id": "TOADPOLE",
     "name": "Toadpole",
     "min_hp": 21,
     "max_hp": 25,
-    "image": "TOADPOLE.png"
+    "image": "TOADPOLE.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TOADPOLE.name",
+      "translations": {
+        "eng": "Toadpole",
+        "zhs": "\u87FE\u870D\u874C\u86AA",
+        "deu": "Kr\u00F6tling",
+        "esp": "Ranacuajo",
+        "fra": "Crapautard",
+        "ita": "Girino",
+        "jpn": "\u30D2\u30AD\u30B8\u30E3\u30AF\u30B7",
+        "kor": "\uC62C\uCC59\uC774",
+        "pol": "Kijanka",
+        "ptb": "Girino",
+        "rus": "\u0413\u043E\u043B\u043E\u0432\u0430\u0441\u0442\u0438\u043A",
+        "spa": "Ranicuajo",
+        "tur": "\u0130riba\u015F"
+      }
+    }
   },
   {
-    "id": 100,
+    "id": 99,
     "game_id": "TWO_TAILED_RAT",
     "name": "Two-Tailed Rat",
     "min_hp": 17,
     "max_hp": 21,
-    "image": "TWO_TAILED_RAT.png"
+    "image": "TWO_TAILED_RAT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "TWO_TAILED_RAT.name",
+      "translations": {
+        "eng": "Two-Tailed Rat",
+        "zhs": "\u53CC\u5C3E\u9F20",
+        "deu": "Zweischw\u00E4nzige Ratte",
+        "esp": "Rata bicola",
+        "fra": "Rat bicaud\u00E9",
+        "ita": "Topo bicoda",
+        "jpn": "\u53CC\u5C3E\u306E\u30CD\u30BA\u30DF",
+        "kor": "\uB450\uAF2C\uB9AC\uC950",
+        "pol": "Zmutowany Szczur",
+        "ptb": "Rato Duas-Caudas",
+        "rus": "\u0414\u0432\u0443\u0445\u0432\u043E\u0441\u0442\u0430\u044F \u043A\u0440\u044B\u0441\u0430",
+        "spa": "Rata de cola b\u00EDfida",
+        "tur": "\u0130ki Kuyruklu Fare"
+      }
+    }
   },
   {
-    "id": 101,
+    "id": 100,
     "game_id": "WATERFALL_GIANT",
     "name": "Waterfall Giant",
-    "min_hp": 250,
-    "max_hp": 250,
-    "image": "WATERFALL_GIANT.png"
+    "min_hp": 240,
+    "max_hp": 240,
+    "image": "WATERFALL_GIANT.png",
+    "loc_name": {
+      "table": "monsters",
+      "key": "WATERFALL_GIANT.name",
+      "translations": {
+        "eng": "Waterfall Giant",
+        "zhs": "\u7011\u5E03\u5DE8\u517D",
+        "deu": "Wasserfall-Riese",
+        "esp": "Tit\u00E1n cascadoso",
+        "fra": "G\u00E9ant de la Cascade",
+        "ita": "Gigante della cascata",
+        "jpn": "\u6EDD\u306E\u5DE8\u4EBA",
+        "kor": "\uD3ED\uD3EC \uAC70\uC778",
+        "pol": "Kaskadowy Olbrzym",
+        "ptb": "Cachoeira Tit\u00E2nica",
+        "rus": "\u0420\u0438\u0444\u043E\u0432\u044B\u0439 \u0432\u0435\u043B\u0438\u043A\u0430\u043D",
+        "spa": "Cataronte",
+        "tha": "\u0E22\u0E31\u0E01\u0E29\u0E4C\u0E19\u0E49\u0E33\u0E15\u0E01",
+        "tur": "Akarsu Devi"
+      }
+    }
   }
 ]
