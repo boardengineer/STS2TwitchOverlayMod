@@ -106,6 +106,7 @@ internal static class GameStateCollector
 
         var info = new PlayerInfo
         {
+            CharacterId = player.Character.Id.Entry.ToLowerInvariant(),
             CurrentHp = player.Creature.CurrentHp,
             MaxHp = player.Creature.MaxHp,
             Gold = player.Gold,
@@ -117,6 +118,7 @@ internal static class GameStateCollector
         var act = runState.Act;
         if (act != null)
         {
+            try { info.ActId = act.Id.Entry.ToLowerInvariant(); } catch { }
             try { info.BossId = act.BossEncounter?.Id.Entry; } catch { }
             try { info.AncientId = act.Ancient?.Id.Entry; } catch { }
         }
@@ -263,6 +265,18 @@ internal static class GameStateCollector
             {
                 var animation = intent.GetAnimation(targets, enemy);
                 enemyInfo.Intent = IntentIdMapper.GetSequentialId(animation);
+                try { enemyInfo.IntentLabel = intent.GetIntentLabel(targets, enemy).GetFormattedText(); } catch { }
+            }
+
+            var creatureNode = combatRoom?.GetCreatureNode(enemy);
+            var intentNode = creatureNode?.IntentContainer?.GetChildOrNull<NIntent>(0);
+            if (intentNode != null)
+            {
+                var r = screenTransform * intentNode.GetGlobalRect();
+                enemyInfo.IntentX = r.Position.X;
+                enemyInfo.IntentY = r.Position.Y;
+                enemyInfo.IntentW = r.Size.X;
+                enemyInfo.IntentH = r.Size.Y;
             }
 
             foreach (var power in enemy.Powers)

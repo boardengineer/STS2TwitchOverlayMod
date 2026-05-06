@@ -4,6 +4,9 @@ namespace TwitchOverlayMod.Models;
 
 internal class GameStatePayload
 {
+    [JsonPropertyName("t")]
+    public string Type { get; } = "s";
+
     [JsonPropertyName("player")]
     public PlayerInfo? Player { get; set; }
 

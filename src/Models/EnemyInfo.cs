@@ -20,6 +20,21 @@ internal class EnemyInfo
     [JsonPropertyName("intent")]
     public int? Intent { get; set; }
 
+    [JsonPropertyName("intentX")]
+    public float? IntentX { get; set; }
+
+    [JsonPropertyName("intentY")]
+    public float? IntentY { get; set; }
+
+    [JsonPropertyName("intentW")]
+    public float? IntentW { get; set; }
+
+    [JsonPropertyName("intentH")]
+    public float? IntentH { get; set; }
+
+    [JsonPropertyName("intentLabel")]
+    public string? IntentLabel { get; set; }
+
     [JsonPropertyName("powers")]
     public List<PowerInfo> Powers { get; set; } = [];
 

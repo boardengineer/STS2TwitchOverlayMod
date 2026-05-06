@@ -32,6 +32,12 @@ internal static class RelicIdMapper
         return _map.TryGetValue(gameId, out var id) ? id : null;
     }
 
+    internal static void Register(string gameId, int id)
+    {
+        _map ??= new Dictionary<string, int>();
+        _map.TryAdd(gameId, id);
+    }
+
     private class RelicEntry
     {
         [JsonPropertyName("id")]

@@ -32,6 +32,12 @@ internal static class EnemyIdMapper
         return _map.TryGetValue(name, out var id) ? id : null;
     }
 
+    internal static void Register(string name, int id)
+    {
+        _map ??= new Dictionary<string, int>();
+        _map.TryAdd(name, id);
+    }
+
     private class EnemyEntry
     {
         [JsonPropertyName("id")]

@@ -36,6 +36,12 @@ internal static class CardIdMapper
         return _map.TryGetValue(key, out var id) ? id : null;
     }
 
+    internal static void Register(string gameId, int upgradeLevel, int id)
+    {
+        _map ??= new Dictionary<string, int>();
+        _map.TryAdd($"{gameId}:{upgradeLevel}", id);
+    }
+
     private class CardEntry
     {
         [JsonPropertyName("id")]

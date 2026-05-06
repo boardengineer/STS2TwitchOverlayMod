@@ -5,6 +5,9 @@ namespace TwitchOverlayMod.Models;
 
 internal class PlayerInfo
 {
+    [JsonPropertyName("characterId")]
+    public string? CharacterId { get; set; }
+
     [JsonPropertyName("currentHp")]
     public int CurrentHp { get; set; }
 
@@ -16,6 +19,9 @@ internal class PlayerInfo
 
     [JsonPropertyName("currentAct")]
     public int CurrentAct { get; set; }
+
+    [JsonPropertyName("actId")]
+    public string? ActId { get; set; }
 
     [JsonPropertyName("actFloor")]
     public int ActFloor { get; set; }

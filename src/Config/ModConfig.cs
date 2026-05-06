@@ -15,6 +15,12 @@ internal class ModConfig
     [JsonPropertyName("broadcastIntervalSeconds")]
     public double BroadcastIntervalSeconds { get; set; } = 2.0;
 
+    [JsonPropertyName("enableBackfill")]
+    public bool EnableBackfill { get; set; } = true;
+
+    [JsonPropertyName("backfillEveryN")]
+    public int BackfillEveryN { get; set; } = 4;
+
     internal static ModConfig Load()
     {
         var appData    = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);

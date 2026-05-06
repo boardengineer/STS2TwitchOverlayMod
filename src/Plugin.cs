@@ -2,6 +2,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
+using TwitchOverlayMod.Backfill;
 using TwitchOverlayMod.Config;
 using TwitchOverlayMod.Scheduling;
 using TwitchOverlayMod.State;
@@ -15,6 +16,7 @@ namespace TwitchOverlayMod;
 public class Plugin
 {
     internal static ModConfig Config { get; private set; } = new();
+    internal static BackfillManager? Backfill { get; private set; }
 
     public static void Initialize()
     {
@@ -39,6 +41,17 @@ public class Plugin
         PotionIdMapper.Load();
         Logging.Log("Potion ID map loaded.");
 
+        if (Config.EnableBackfill)
+        {
+            var backfill = new BackfillManager();
+            backfill.Scan();   // scan before Load so mappers only have packaged IDs
+            backfill.Load();
+            backfill.AssignIds();
+            backfill.BuildChunks();
+            Backfill = backfill;
+            Logging.Log("Backfill manager initialized.");
+        }
+
         CredentialManager.LoadSaved();
         Logging.Log("Credentials loaded.");
 
@@ -54,7 +67,7 @@ public class MainMenuPatch
     public static void Postfix(NMainMenu __instance)
     {
         if (NGame.Instance == null) return;
-        BroadcastScheduler.Start(NGame.Instance, Plugin.Config);
+        BroadcastScheduler.Start(NGame.Instance, Plugin.Config, Plugin.Backfill);
         MainMenuTwitchButton.SetupIfNeeded(__instance);
         Logging.Log("Twitch Overlay Mod initialized.");
     }

@@ -32,6 +32,12 @@ internal static class IntentIdMapper
         return _map.TryGetValue(intentType, out var id) ? id : null;
     }
 
+    internal static void Register(string intentType, int id)
+    {
+        _map ??= new Dictionary<string, int>();
+        _map.TryAdd(intentType, id);
+    }
+
     private class IntentEntry
     {
         [JsonPropertyName("id")]
