@@ -65,7 +65,6 @@ public class MainMenuPatch
             backfill.Scan();
             backfill.Load();
             backfill.AssignIds();
-            backfill.BuildChunks();
             Plugin.SetBackfill(backfill);
             Logging.Log("Backfill manager initialized.");
         }
