@@ -57,10 +57,14 @@ internal static class BroadcastScheduler
 
         try
         {
-            // 4-tick cycle: 1=state, 2=metadata, 3=state, 4=art
-            var pos = ((_tickCount - 1) % 4) + 1;
+            // 6-tick cycle: 1=state, 2=metadata, 3=state, 4=art, 5=state, 6=large-images
+            // Art  (tick 4): small img chunks — relics, powers, potions, card art.
+            //                Rebuilds independently whenever its queue drains.
+            // Large (tick 6): frame and map-pointer chunks.
+            //                 Rebuilds independently whenever its queue drains.
+            var pos = ((_tickCount - 1) % 6) + 1;
 
-            if (!_config.EnableBackfill || _backfill == null || pos == 1 || pos == 3)
+            if (!_config.EnableBackfill || _backfill == null || pos == 1 || pos == 3 || pos == 5)
             {
                 BroadcastGameState(jwt, channelId, _config, hasTwitch);
                 return;
@@ -73,30 +77,46 @@ internal static class BroadcastScheduler
 
                 if (!_backfill.HasMetadata)
                 {
-                    ConsolePrint("↺ rebuild metadata");
+                    ConsolePrint("rebuild metadata");
                     _backfill.BuildMetadataChunks(state);
                 }
 
-                var (chunk, _) = _backfill.DequeueMetadata();
+                var (chunk, _, label) = _backfill.DequeueMetadata();
                 if (chunk != null)
                 {
-                    ConsolePrint($"→ meta chunk ({chunk.Length}b, {_backfill.MetadataCount} remaining)");
+                    ConsolePrint($"-> meta [{label}] ({chunk.Length}b, {_backfill.MetadataCount} remaining)");
                     if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(chunk);
                     if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt!, _config, channelId!));
                 }
             }
-            else // pos == 4
+            else if (pos == 4)
             {
                 if (!_backfill.HasArt)
                 {
-                    ConsolePrint("↺ rebuild art");
+                    ConsolePrint("rebuild art");
                     _backfill.BuildArtChunks(GameStateCollector.Collect());
                 }
 
-                var chunk = _backfill.DequeueArt();
+                var (chunk, label) = _backfill.DequeueArt();
                 if (chunk != null)
                 {
-                    ConsolePrint($"→ art chunk ({chunk.Length}b, {_backfill.ArtCount} remaining)");
+                    ConsolePrint($"-> art [{label}] ({chunk.Length}b, {_backfill.ArtCount} remaining)");
+                    if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(chunk);
+                    if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt!, _config, channelId!));
+                }
+            }
+            else // pos == 6
+            {
+                if (!_backfill.HasLarge)
+                {
+                    ConsolePrint("rebuild large");
+                    _backfill.BuildLargeChunks(GameStateCollector.Collect());
+                }
+
+                var (chunk, label) = _backfill.DequeueLarge();
+                if (chunk != null)
+                {
+                    ConsolePrint($"-> large [{label}] ({chunk.Length}b, {_backfill.LargeCount} remaining)");
                     if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(chunk);
                     if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt!, _config, channelId!));
                 }
@@ -115,7 +135,7 @@ internal static class BroadcastScheduler
 #if DUMP_JSON
         File.WriteAllText(DebugJsonPath, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
 #endif
-        ConsolePrint($"→ state ({json.Length}b)");
+        ConsolePrint($"-> state ({json.Length}b)");
         if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(json);
         if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt!, config, channelId!));
     }
