@@ -56,10 +56,10 @@ internal static class BroadcastScheduler
                 && _backfill != null
                 && _tickCount % _config.BackfillEveryN == 0)
             {
-                var chunk = _backfill.DequeueChunk();
+                var (chunk, notes) = _backfill.Dequeue();
                 if (chunk != null)
                 {
-                    ConsolePrint($"[Backfill] tick {_tickCount}: {DescribeChunk(chunk)} ({System.Text.Encoding.UTF8.GetByteCount(chunk)} bytes)");
+                    ConsolePrint($"[Backfill] tick {_tickCount}: {DescribeChunk(chunk, notes)} ({System.Text.Encoding.UTF8.GetByteCount(chunk)} bytes)");
                     Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
                 }
                 else
@@ -80,20 +80,40 @@ internal static class BroadcastScheduler
         }
     }
 
-    private static string DescribeChunk(string chunk)
+    private static string DescribeChunk(string chunk, Dictionary<int, string>? notes)
     {
         try
         {
-            using var doc   = JsonDocument.Parse(chunk);
-            var root        = doc.RootElement;
-            var cat         = root.GetProperty("cat").GetString() ?? "?";
-            var items       = root.GetProperty("items");
-            var count       = items.GetArrayLength();
-            var names       = new List<string>(count);
+            using var doc = JsonDocument.Parse(chunk);
+            var root      = doc.RootElement;
+
+            if (root.TryGetProperty("t", out var tProp) && tProp.GetString() == "img")
+            {
+                var id   = root.TryGetProperty("id",   out var idP)   ? idP.GetInt32()              : 0;
+                var part = root.TryGetProperty("part", out var partP) ? partP.GetInt32()             : 0;
+                var of   = root.TryGetProperty("of",   out var ofP)   ? ofP.GetInt32()               : 0;
+                var dLen = root.TryGetProperty("data", out var dP)    ? dP.GetString()?.Length ?? 0  : 0;
+                return $"img id={id} part {part}/{of} ({dLen}b)";
+            }
+
+            var cat   = root.GetProperty("cat").GetString() ?? "?";
+            var items = root.GetProperty("items");
+            var count = items.GetArrayLength();
+            var names = new List<string>(count);
             foreach (var item in items.EnumerateArray())
             {
-                if (item.TryGetProperty("name", out var n))
-                    names.Add(n.GetString() ?? "?");
+                var name     = item.TryGetProperty("name", out var n) ? (n.GetString() ?? "?") : "?";
+                var hasImage = item.TryGetProperty("imageData", out _);
+                string suffix;
+                if (hasImage)
+                    suffix = " [img]";
+                else if (notes != null
+                      && item.TryGetProperty("id", out var idProp)
+                      && notes.TryGetValue(idProp.GetInt32(), out var reason))
+                    suffix = $" [no img: {reason}]";
+                else
+                    suffix = "";
+                names.Add(name + suffix);
             }
             return $"{cat} ×{count}: {string.Join(", ", names)}";
         }

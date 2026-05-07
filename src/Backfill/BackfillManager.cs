@@ -8,8 +8,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Cards;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Debug;
 using TwitchOverlayMod.Models;
 using TwitchOverlayMod.State;
 using TwitchOverlayMod.Utility;
@@ -43,12 +44,17 @@ internal class BackfillManager
 
     private Dictionary<string, Dictionary<string, int>> _cache = new();
     private readonly List<BackfillItem> _scanned = new();
-    private readonly Queue<string> _chunks = new();
+    private readonly Queue<string>                    _chunks     = new();
+    private readonly Queue<Dictionary<int, string>>   _chunkNotes = new();
 
     internal bool HasChunks => _chunks.Count > 0;
 
-    internal string? DequeueChunk()
-        => _chunks.Count > 0 ? _chunks.Dequeue() : null;
+    internal (string? chunk, Dictionary<int, string>? notes) Dequeue()
+    {
+        var chunk = _chunks.Count > 0 ? _chunks.Dequeue() : null;
+        var notes = _chunkNotes.Count > 0 ? _chunkNotes.Dequeue() : null;
+        return (chunk, notes);
+    }
 
     // Call BEFORE Load() so mappers only reflect packaged data at scan time.
     internal void Scan()
@@ -121,16 +127,18 @@ internal class BackfillManager
     internal void BuildChunks(GameStatePayload? state = null)
     {
         _chunks.Clear();
+        _chunkNotes.Clear();
 
         var activeIds = state != null ? CollectActiveIds(state) : null;
         var items     = activeIds != null
-            ? _scanned.Where(i => activeIds.Contains(i.Id))
+            ? _scanned.Where(i => activeIds.TryGetValue(i.Category, out var catIds) && catIds.Contains(i.Id))
             : _scanned;
 
         foreach (var group in items.GroupBy(i => i.Category))
         {
-            var cat = group.Key;
-            var batch = new List<string>();
+            var cat        = group.Key;
+            var batch      = new List<string>();
+            var batchNotes = new Dictionary<int, string>();
             var batchBytes = 0;
 
             foreach (var item in group)
@@ -147,24 +155,49 @@ internal class BackfillManager
 
                 if (batch.Count > 0 && batchBytes + itemBytes + 20 > MaxChunkBytes)
                 {
-                    EnqueueChunk(cat, batch);
-                    batch = new List<string>();
+                    EnqueueChunk(cat, batch, batchNotes);
+                    batch      = new List<string>();
+                    batchNotes = new Dictionary<int, string>();
                     batchBytes = 0;
                 }
 
                 batch.Add(itemJson);
+                if (item.ImageNote != null) batchNotes[item.Id] = item.ImageNote;
                 batchBytes += itemBytes;
             }
 
             if (batch.Count > 0)
-                EnqueueChunk(cat, batch);
+                EnqueueChunk(cat, batch, batchNotes);
         }
 
-        var itemCount = activeIds != null ? _scanned.Count(i => activeIds.Contains(i.Id)) : _scanned.Count;
+        // Items whose imageData was too large to inline are sent as separate image chunks.
+        foreach (var item in _scanned.Where(i => i.ImageNote == "split"))
+            EnqueueImageChunks(item);
+
+        var itemCount = activeIds != null
+            ? _scanned.Count(i => activeIds.TryGetValue(i.Category, out var catIds) && catIds.Contains(i.Id))
+            : _scanned.Count;
         Logging.Log($"[Backfill] Built {_chunks.Count} chunks for {itemCount} items (of {_scanned.Count} scanned)");
     }
 
-    private void EnqueueChunk(string cat, List<string> itemJsons)
+    private void EnqueueImageChunks(BackfillItem item)
+    {
+        if (item.CapturedWebP == null) return;
+        var b64       = Convert.ToBase64String(item.CapturedWebP);
+        const int SliceSize = 4700;
+        var total     = (b64.Length + SliceSize - 1) / SliceSize;
+        for (int part = 1; part <= total; part++)
+        {
+            var start = (part - 1) * SliceSize;
+            var len   = Math.Min(SliceSize, b64.Length - start);
+            var json  = $"{{\"t\":\"img\",\"id\":{item.Id},\"part\":{part},\"of\":{total},\"data\":\"{b64.Substring(start, len)}\"}}";
+            _chunks.Enqueue(json);
+            _chunkNotes.Enqueue(new Dictionary<int, string>());
+        }
+        Logging.Log($"[Backfill] Queued {total} image chunks for {item.Name} (id={item.Id})");
+    }
+
+    private void EnqueueChunk(string cat, List<string> itemJsons, Dictionary<int, string> notes)
     {
         var sb = new StringBuilder();
         sb.Append("{\"t\":\"b\",\"cat\":\"");
@@ -173,34 +206,46 @@ internal class BackfillManager
         sb.Append(string.Join(",", itemJsons));
         sb.Append("]}");
         _chunks.Enqueue(sb.ToString());
+        _chunkNotes.Enqueue(notes);
     }
 
-    private static HashSet<int> CollectActiveIds(GameStatePayload state)
+    private static Dictionary<string, HashSet<int>> CollectActiveIds(GameStatePayload state)
     {
-        var ids = new HashSet<int>();
+        var cards   = new HashSet<int>();
+        var relics  = new HashSet<int>();
+        var potions = new HashSet<int>();
+        var powers  = new HashSet<int>();
+        var enemies = new HashSet<int>();
 
         if (state.Player != null)
         {
-            foreach (var id in state.Player.Deck)    ids.Add(id);
-            foreach (var r  in state.Player.Relics)  ids.Add(r.Id);
-            foreach (var p  in state.Player.Potions) ids.Add(p.Id);
+            foreach (var id in state.Player.Deck)    cards.Add(id);
+            foreach (var r  in state.Player.Relics)  relics.Add(r.Id);
+            foreach (var p  in state.Player.Potions) potions.Add(p.Id);
         }
 
         if (state.Combat != null)
         {
-            foreach (var id in state.Combat.Hand)        ids.Add(id);
-            foreach (var id in state.Combat.DrawPile)    ids.Add(id);
-            foreach (var id in state.Combat.DiscardPile) ids.Add(id);
-            foreach (var id in state.Combat.ExhaustPile) ids.Add(id);
-            foreach (var pw in state.Combat.Powers)      ids.Add(pw.Id);
+            foreach (var id in state.Combat.Hand)        cards.Add(id);
+            foreach (var id in state.Combat.DrawPile)    cards.Add(id);
+            foreach (var id in state.Combat.DiscardPile) cards.Add(id);
+            foreach (var id in state.Combat.ExhaustPile) cards.Add(id);
+            foreach (var pw in state.Combat.Powers)      powers.Add(pw.Id);
             foreach (var en in state.Combat.Enemies)
             {
-                ids.Add(en.Id);
-                foreach (var pw in en.Powers) ids.Add(pw.Id);
+                enemies.Add(en.Id);
+                foreach (var pw in en.Powers) powers.Add(pw.Id);
             }
         }
 
-        return ids;
+        return new Dictionary<string, HashSet<int>>
+        {
+            ["cards"]   = cards,
+            ["relics"]  = relics,
+            ["potions"] = potions,
+            ["powers"]  = powers,
+            ["enemies"] = enemies
+        };
     }
 
     // ── Packaged data loading ─────────────────────────────────────────────────
@@ -405,7 +450,6 @@ internal class BackfillManager
                     ["type"] = type, ["rarity"] = rarity, ["pool"] = pool,
                     ["image"] = (object?)null
                 },
-                TextureGetter = MakeCardPortraitGetter(card)
             });
         }
         else if (_pkgCards.TryGetValue(cardKey, out var pkg) && ContentChanged(pkg, liveName, liveDesc))
@@ -475,25 +519,6 @@ internal class BackfillManager
         return pkgName != liveName || pkgDesc != liveDesc;
     }
 
-    // Returns a getter for the card's packed PNG portrait, or null if unavailable.
-    private static Func<Texture2D?>? MakeCardPortraitGetter(CardModel card)
-    {
-        try
-        {
-            var pool  = card.Pool?.Title.ToLowerInvariant() ?? "";
-            var entry = card.Id.Entry.ToLowerInvariant();
-            var rel   = $"packed/card_portraits/{pool}/{entry}.png";
-            var path  = ImageHelper.GetImagePath(rel);
-            if (!ResourceLoader.Exists(path)) return null;
-            return () =>
-            {
-                try { return ResourceLoader.Load<Texture2D>(path, null, ResourceLoader.CacheMode.Reuse); }
-                catch { return null; }
-            };
-        }
-        catch { return null; }
-    }
-
     private int NextId(string category)
     {
         var floor = PackagedMaxId(category);
@@ -545,39 +570,373 @@ internal class BackfillManager
 
         // Include imageData only for brand-new items (missing from packaged data).
         // Changed items keep their existing packaged image path — no re-encoding needed.
-        if (item.IsNew && item.TextureGetter != null)
+        if (item.IsNew)
         {
-            try
+            if (item.Category == "cards")
             {
-                var texture = item.TextureGetter();
-                if (texture != null)
+                if (item.CapturedWebP != null)
                 {
-                    var image = texture.GetImage();
-                    if (image != null)
-                    {
-                        var bytes    = image.SaveWebpToBuffer(false);
-                        var b64      = Convert.ToBase64String(bytes);
-                        var b64Bytes = Encoding.UTF8.GetByteCount(b64);
-
-                        // For a solo chunk the encoded image may be larger; accept up to the
-                        // PubSub ceiling minus wrapper overhead. For batched items keep it tight.
-                        var limit = MaxImageBase64BytesBatch;
-                        if (b64Bytes > limit)
-                        {
-                            // Re-check: will this item be the only one in its chunk?
-                            // We can't know for certain at serialize time, so use the solo limit.
-                            limit = MaxImageBase64BytesSolo;
-                        }
-
-                        if (b64Bytes <= limit)
-                            dict["imageData"] = b64;
-                    }
+                    var b64      = Convert.ToBase64String(item.CapturedWebP);
+                    var b64Bytes = b64.Length;
+                    var limit    = b64Bytes > MaxImageBase64BytesBatch ? MaxImageBase64BytesSolo : MaxImageBase64BytesBatch;
+                    if (b64Bytes <= limit)
+                        dict["imageData"] = b64;
+                    else
+                        item.ImageNote = "split";
+                }
+                else
+                {
+                    item.ImageNote = "no capture";
                 }
             }
-            catch { }
+            else if (item.TextureGetter != null)
+            {
+                try
+                {
+                    var texture = item.TextureGetter();
+                    if (texture == null) { item.ImageNote = "load failed"; }
+                    else
+                    {
+                        var image = texture.GetImage();
+                        if (image == null) { item.ImageNote = "no image data"; }
+                        else
+                        {
+                            var bytes    = image.SaveWebpToBuffer(false);
+                            var b64      = Convert.ToBase64String(bytes);
+                            var b64Bytes = Encoding.UTF8.GetByteCount(b64);
+                            var limit    = b64Bytes > MaxImageBase64BytesBatch ? MaxImageBase64BytesSolo : MaxImageBase64BytesBatch;
+                            if (b64Bytes <= limit)
+                                dict["imageData"] = b64;
+                            else
+                                item.ImageNote = $"too large ({b64Bytes}B)";
+                        }
+                    }
+                }
+                catch (Exception ex) { item.ImageNote = $"error: {ex.Message}"; }
+            }
+            else
+            {
+                item.ImageNote = "no image";
+            }
         }
 
         return JsonSerializer.Serialize(dict);
+    }
+
+    // ── Art capture ───────────────────────────────────────────────────────────
+
+    internal void CaptureArtAsync(Node parent, Action onComplete)
+    {
+        var items = _scanned.Where(i => i.IsNew && i.Category == "cards" && i.Key.EndsWith(":0")).ToList();
+        if (items.Count == 0) { onComplete(); return; }
+
+        SubViewport? viewport = null;
+        NCard?       card     = null;
+
+        try
+        {
+            var size = new Vector2I(
+                (int)(NCard.defaultSize.X + 26),
+                (int)(NCard.defaultSize.Y + 26));
+
+            viewport = new SubViewport
+            {
+                Size                    = size,
+                TransparentBg           = true,
+                RenderTargetUpdateMode  = SubViewport.UpdateMode.Always,
+                RenderTargetClearMode   = SubViewport.ClearMode.Always
+            };
+            parent.AddChild(viewport);
+
+            var cardScene = ResourceLoader.Load<PackedScene>("res://scenes/cards/card.tscn");
+            if (cardScene == null)
+            {
+                viewport.QueueFree();
+                onComplete();
+                return;
+            }
+
+            card          = cardScene.Instantiate<NCard>();
+            card.Scale    = Vector2.One;
+            card.Position = new Vector2(size.X / 2f, size.Y / 2f);
+            viewport.AddChild(card);
+        }
+        catch (Exception ex)
+        {
+            Logging.Log($"[Backfill] CaptureArtAsync setup error: {ex.Message}");
+            viewport?.QueueFree();
+            onComplete();
+            return;
+        }
+
+        var queue       = new Queue<BackfillItem>(items);
+        BackfillItem?   current      = null;
+        int             framesToWait = 0;
+        bool            initialDone  = false;
+        TextureRect?    artNode      = null;
+        Rect2I          artRect      = default;
+        var             hiddenItems  = new List<CanvasItem>();
+        Timer?          timer        = null;
+        int             done         = 0;
+        int             captured     = 0;
+        int             currentLv    = 0;
+
+        void SetupNext()
+        {
+            foreach (var ci in hiddenItems) ci.Visible = true;
+            hiddenItems.Clear();
+            artNode     = null;
+            artRect     = default;
+            initialDone = false;
+
+            if (queue.Count == 0)
+            {
+                timer?.QueueFree();
+                viewport!.QueueFree();
+                var msg = $"[Backfill] Art capture done: {captured}/{items.Count} captured";
+                Logging.Log(msg);
+                ConsolePrint(msg);
+                onComplete();
+                return;
+            }
+
+            current = queue.Dequeue();
+
+            var parts = current.Key.Split(':');
+            if (parts.Length != 2 || !int.TryParse(parts[1], out var lv))
+            {
+                current.ImageNote = "bad key";
+                done++;
+                ConsolePrint($"[Backfill] ({done}/{items.Count}) {current.Name}: no img — bad key");
+                SetupNext();
+                return;
+            }
+
+            currentLv = lv;
+            var gameId    = parts[0];
+            var cardModel = ModelDb.AllCards.FirstOrDefault(c => c.Id.ToString() == gameId);
+            if (cardModel == null)
+            {
+                current.ImageNote = "model not found";
+                done++;
+                ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, lv)}: no img — model not found");
+                SetupNext();
+                return;
+            }
+
+            try
+            {
+                var mutable = cardModel.ToMutable();
+                for (int i = 0; i < lv && mutable.CurrentUpgradeLevel < mutable.MaxUpgradeLevel; i++)
+                {
+                    mutable.UpgradeInternal();
+                    mutable.FinalizeUpgradeInternal();
+                }
+                card!.Model = mutable;
+                card.UpdateVisuals(PileType.None, CardPreviewMode.Normal);
+            }
+            catch (Exception ex)
+            {
+                current.ImageNote = $"setup error: {ex.Message}";
+                done++;
+                ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, lv)}: no img — setup error");
+                SetupNext();
+                return;
+            }
+
+            framesToWait = 2;
+        }
+
+        void OnTick()
+        {
+            try
+            {
+                if (framesToWait > 0) { framesToWait--; return; }
+                if (current == null) { SetupNext(); return; }
+
+                if (!initialDone)
+                {
+                    // Measure art rect before hiding anything.
+                    artNode = FindArtNode(card!);
+                    artRect = artNode != null ? GetGlobalRectI(artNode) : default;
+
+                    // Hide all CanvasItem descendants except the art node and its ancestors.
+                    var keepVisible = new HashSet<Node>();
+                    if (artNode != null)
+                    {
+                        Node? n = artNode;
+                        while (n != null) { keepVisible.Add(n); if (n == card) break; n = n.GetParent(); }
+                    }
+                    foreach (var ci in FindDescendants<CanvasItem>(card!))
+                    {
+                        if (!keepVisible.Contains(ci) && ci.Visible)
+                        { ci.Visible = false; hiddenItems.Add(ci); }
+                    }
+                    if (artNode != null) artNode.Visible = true;
+
+                    initialDone  = true;
+                    framesToWait = 2;
+                }
+                else
+                {
+                    // Capture the art-only render.
+                    try
+                    {
+                        if (artRect.Size.X > 0 && artRect.Size.Y > 0)
+                        {
+                            var full  = viewport!.GetTexture().GetImage();
+                            var iw    = full.GetWidth();
+                            var ih    = full.GetHeight();
+                            var rx    = Math.Clamp(artRect.Position.X, 0, iw - 1);
+                            var ry    = Math.Clamp(artRect.Position.Y, 0, ih - 1);
+                            var rw    = Math.Clamp(artRect.Size.X,     1, iw - rx);
+                            var rh    = Math.Clamp(artRect.Size.Y,     1, ih - ry);
+                            var img   = full.GetRegion(new Rect2I(rx, ry, rw, rh));
+                            const int MaxDim = 120;
+                            if (img.GetWidth() > MaxDim || img.GetHeight() > MaxDim)
+                            {
+                                var scale = Math.Min((float)MaxDim / img.GetWidth(), (float)MaxDim / img.GetHeight());
+                                img.Resize((int)(img.GetWidth() * scale), (int)(img.GetHeight() * scale), Image.Interpolation.Bilinear);
+                            }
+                            current!.CapturedWebP = img.SaveWebpToBuffer(true);
+                        }
+                        else
+                        {
+                            current!.ImageNote = "art rect not found";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        current!.ImageNote = $"capture error: {ex.Message}";
+                    }
+
+                    done++;
+                    if (current!.CapturedWebP != null)
+                    {
+                        captured++;
+                        ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, currentLv)}: img {current.CapturedWebP.Length}b WebP");
+                    }
+                    else
+                    {
+                        ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, currentLv)}: no img — {current!.ImageNote ?? "unknown"}");
+                    }
+
+                    SetupNext();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Log($"[Backfill] Capture tick error: {ex.Message}");
+                if (current != null)
+                {
+                    current.ImageNote = $"tick error: {ex.Message}";
+                    done++;
+                    ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, currentLv)}: no img — tick error");
+                }
+                SetupNext();
+            }
+        }
+
+        timer = new Timer { WaitTime = 0.1, Autostart = true };
+        timer.Connect(Timer.SignalName.Timeout, Callable.From(OnTick));
+        parent.AddChild(timer);
+        ConsolePrint($"[Backfill] Capturing art for {items.Count} new cards...");
+        SetupNext();
+    }
+
+    private static string CardLabel(BackfillItem item, int lv) =>
+        lv > 0 ? $"{item.Name} +{lv}" : item.Name;
+
+    private static void ConsolePrint(string message)
+    {
+        try
+        {
+            NDevConsole.Instance.GetNode<RichTextLabel>("OutputContainer/OutputBuffer").Text += message + "\n";
+        }
+        catch { /* dev console may not be open */ }
+    }
+
+    // ── Node-finding helpers (mirrored from CardExporter) ─────────────────────
+
+    private static TextureRect? FindArtNode(Node root)
+    {
+        var names = new[] {
+            "Art", "CardArt", "ArtRect", "Portrait", "Artwork",
+            "ArtArea", "ArtImage", "CardImage", "Illustration", "ArtContainer"
+        };
+        foreach (var name in names)
+        {
+            if (FindDescendantByName<TextureRect>(root, name) is { } found && found.Texture != null)
+                return found;
+        }
+        if (FindDescendantWhere<TextureRect>(root,
+            n => n.Name.ToString().IndexOf("art", StringComparison.OrdinalIgnoreCase) >= 0
+              && n.Texture != null) is { } match)
+            return match;
+        return FindLargestTextureRect(root);
+    }
+
+    private static Rect2I GetGlobalRectI(Control node)
+    {
+        try
+        {
+            var r = node.GetGlobalRect();
+            return new Rect2I((int)r.Position.X, (int)r.Position.Y, (int)r.Size.X, (int)r.Size.Y);
+        }
+        catch { return default; }
+    }
+
+    private static T? FindDescendantByName<T>(Node root, string name) where T : Node
+    {
+        var q = new Queue<Node>();
+        q.Enqueue(root);
+        while (q.Count > 0)
+        {
+            var n = q.Dequeue();
+            if (n != root && n.Name == name && n is T m) return m;
+            foreach (var c in n.GetChildren()) q.Enqueue(c);
+        }
+        return null;
+    }
+
+    private static T? FindDescendantWhere<T>(Node root, Func<T, bool> pred) where T : Node
+    {
+        var q = new Queue<Node>();
+        q.Enqueue(root);
+        while (q.Count > 0)
+        {
+            var n = q.Dequeue();
+            if (n != root && n is T m && pred(m)) return m;
+            foreach (var c in n.GetChildren()) q.Enqueue(c);
+        }
+        return null;
+    }
+
+    private static List<T> FindDescendants<T>(Node root) where T : Node
+    {
+        var result = new List<T>();
+        var q      = new Queue<Node>();
+        q.Enqueue(root);
+        while (q.Count > 0)
+        {
+            var n = q.Dequeue();
+            if (n != root && n is T m) result.Add(m);
+            foreach (var c in n.GetChildren()) q.Enqueue(c);
+        }
+        return result;
+    }
+
+    private static TextureRect? FindLargestTextureRect(Node root)
+    {
+        TextureRect? best     = null;
+        float        bestArea = 0;
+        foreach (var tr in FindDescendants<TextureRect>(root))
+        {
+            if (tr.Texture == null) continue;
+            var area = tr.Size.X * tr.Size.Y;
+            if (area > bestArea) { bestArea = area; best = tr; }
+        }
+        return best;
     }
 
     private void SaveCache()
@@ -662,4 +1021,8 @@ internal class BackfillItem
     public Dictionary<string, object?> ExtraFields { get; set; } = new();
     // Null for changed items (image unchanged) or categories without extractable images.
     public Func<Texture2D?>? TextureGetter { get; set; }
+    // Raw WebP bytes captured via SubViewport; cards only, set by CaptureArtAsync.
+    public byte[]? CapturedWebP { get; set; }
+    // Set by SerializeItem for new items: null = image included, otherwise the skip reason.
+    public string? ImageNote { get; set; }
 }
