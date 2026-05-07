@@ -411,14 +411,16 @@ internal class BackfillManager
 
             for (int lv = 0; lv <= card.MaxUpgradeLevel; lv++)
             {
-                var (title, desc) = GetTitleAndDescAtLevel(card, lv);
-                ScanCardLevel(card, gameId, lv, title, desc, type, rarity, pool);
+                var (title, desc, energyCost, costsX) = GetCardDataAtLevel(card, lv);
+                ScanCardLevel(card, gameId, lv, title, desc, type, rarity, pool, energyCost, costsX);
             }
         }
     }
 
-    private static (string title, string desc) GetTitleAndDescAtLevel(CardModel card, int level)
+    private static (string title, string desc, int energyCost, bool costsX) GetCardDataAtLevel(CardModel card, int level)
     {
+        var energyCost = -1;
+        var costsX     = false;
         try
         {
             var mutable = card.ToMutable();
@@ -429,13 +431,15 @@ internal class BackfillManager
             }
             var title = SafeText(() => mutable.Title);
             var desc  = SafeText(() => mutable.GetDescriptionForPile(PileType.None));
-            return (title, desc);
+            try { var ec = mutable.EnergyCost; energyCost = ec.Canonical; costsX = ec.CostsX; } catch { }
+            return (title, desc, energyCost, costsX);
         }
-        catch { return ("", ""); }
+        catch { return ("", "", energyCost, costsX); }
     }
 
     private void ScanCardLevel(CardModel card, string gameId, int lv,
-        string liveName, string liveDesc, string type, string rarity, string pool)
+        string liveName, string liveDesc, string type, string rarity, string pool,
+        int energyCost, bool costsX)
     {
         var cardKey = $"{gameId}:{lv}";
         var pkgId   = CardIdMapper.GetSequentialId(gameId, lv);
@@ -450,6 +454,7 @@ internal class BackfillManager
                 {
                     ["game_id"] = gameId, ["upgrade_level"] = lv,
                     ["type"] = type, ["rarity"] = rarity, ["pool"] = pool,
+                    ["energy_cost"] = energyCost, ["costs_x"] = costsX,
                     ["image"] = (object?)null
                 },
             });
