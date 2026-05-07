@@ -89,11 +89,12 @@ internal static class BroadcastScheduler
 
             if (root.TryGetProperty("t", out var tProp) && tProp.GetString() == "img")
             {
-                var id   = root.TryGetProperty("id",   out var idP)   ? idP.GetInt32()              : 0;
-                var part = root.TryGetProperty("part", out var partP) ? partP.GetInt32()             : 0;
-                var of   = root.TryGetProperty("of",   out var ofP)   ? ofP.GetInt32()               : 0;
-                var dLen = root.TryGetProperty("data", out var dP)    ? dP.GetString()?.Length ?? 0  : 0;
-                return $"img id={id} part {part}/{of} ({dLen}b)";
+                var id   = root.TryGetProperty("id",   out var idP)   ? idP.GetInt32()             : 0;
+                var cat  = root.TryGetProperty("cat",  out var catP)  ? catP.GetString() ?? "?"    : "?";
+                var part = root.TryGetProperty("part", out var partP) ? partP.GetInt32()            : 0;
+                var of   = root.TryGetProperty("of",   out var ofP)   ? ofP.GetInt32()              : 0;
+                var dLen = root.TryGetProperty("data", out var dP)    ? dP.GetString()?.Length ?? 0 : 0;
+                return $"img {cat} id={id} part {part}/{of} ({dLen}b)";
             }
 
             var cat   = root.GetProperty("cat").GetString() ?? "?";

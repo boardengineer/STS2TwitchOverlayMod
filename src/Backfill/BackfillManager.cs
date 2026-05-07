@@ -171,7 +171,9 @@ internal class BackfillManager
         }
 
         // Items whose imageData was too large to inline are sent as separate image chunks.
-        foreach (var item in _scanned.Where(i => i.ImageNote == "split"))
+        // Use `items` (already filtered to active IDs) so we don't send img chunks for cards
+        // that haven't had their metadata sent yet.
+        foreach (var item in items.Where(i => i.ImageNote == "split"))
             EnqueueImageChunks(item);
 
         var itemCount = activeIds != null
@@ -190,7 +192,7 @@ internal class BackfillManager
         {
             var start = (part - 1) * SliceSize;
             var len   = Math.Min(SliceSize, b64.Length - start);
-            var json  = $"{{\"t\":\"img\",\"id\":{item.Id},\"part\":{part},\"of\":{total},\"data\":\"{b64.Substring(start, len)}\"}}";
+            var json  = $"{{\"t\":\"img\",\"id\":{item.Id},\"cat\":\"{item.Category}\",\"part\":{part},\"of\":{total},\"data\":\"{b64.Substring(start, len)}\"}}";
             _chunks.Enqueue(json);
             _chunkNotes.Enqueue(new Dictionary<int, string>());
         }
@@ -799,6 +801,17 @@ internal class BackfillManager
                                 img.Resize((int)(img.GetWidth() * scale), (int)(img.GetHeight() * scale), Image.Interpolation.Bilinear);
                             }
                             current!.CapturedWebP = img.SaveWebpToBuffer(true);
+
+                            // Share the same art bytes with every upgrade level of this card.
+                            var baseGameId = current.Key.Substring(0, current.Key.LastIndexOf(':'));
+                            foreach (var sibling in _scanned)
+                            {
+                                if (sibling != current &&
+                                    sibling.IsNew &&
+                                    sibling.Category == "cards" &&
+                                    sibling.Key.StartsWith(baseGameId + ":"))
+                                    sibling.CapturedWebP = current.CapturedWebP;
+                            }
                         }
                         else
                         {
