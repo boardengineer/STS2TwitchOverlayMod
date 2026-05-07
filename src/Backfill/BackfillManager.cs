@@ -43,17 +43,22 @@ internal class BackfillManager
 
     private Dictionary<string, Dictionary<string, int>> _cache = new();
     private readonly List<BackfillItem> _scanned = new();
-    private readonly Queue<string>                    _chunks     = new();
+    private readonly Queue<string>                    _metaChunks = new();
     private readonly Queue<Dictionary<int, string>>   _chunkNotes = new();
+    private readonly Queue<string>                    _artChunks  = new();
 
-    internal bool HasChunks => _chunks.Count > 0;
+    internal bool HasMetadata => _metaChunks.Count > 0;
+    internal bool HasArt      => _artChunks.Count  > 0;
 
-    internal (string? chunk, Dictionary<int, string>? notes) Dequeue()
+    internal (string? chunk, Dictionary<int, string>? notes) DequeueMetadata()
     {
-        var chunk = _chunks.Count > 0 ? _chunks.Dequeue() : null;
-        var notes = _chunkNotes.Count > 0 ? _chunkNotes.Dequeue() : null;
+        var chunk = _metaChunks.Count > 0 ? _metaChunks.Dequeue() : null;
+        var notes = _chunkNotes.Count  > 0 ? _chunkNotes.Dequeue() : null;
         return (chunk, notes);
     }
+
+    internal string? DequeueArt() =>
+        _artChunks.Count > 0 ? _artChunks.Dequeue() : null;
 
     // Call BEFORE Load() so mappers only reflect packaged data at scan time.
     internal void Scan()
@@ -125,8 +130,9 @@ internal class BackfillManager
 
     internal void BuildChunks(GameStatePayload? state = null)
     {
-        _chunks.Clear();
+        _metaChunks.Clear();
         _chunkNotes.Clear();
+        _artChunks.Clear();
 
         var activeIds = state != null ? CollectActiveIds(state) : null;
         var items     = activeIds != null
@@ -178,7 +184,7 @@ internal class BackfillManager
         var itemCount = activeIds != null
             ? _scanned.Count(i => activeIds.TryGetValue(i.Category, out var catIds) && catIds.Contains(i.Id))
             : _scanned.Count;
-        Logging.Log($"[Backfill] Built {_chunks.Count} chunks for {itemCount} items (of {_scanned.Count} scanned)");
+        Logging.Log($"[Backfill] Built {_metaChunks.Count} meta + {_artChunks.Count} art chunks for {itemCount} items (of {_scanned.Count} scanned)");
     }
 
     private void EnqueueImageChunks(BackfillItem item)
@@ -192,10 +198,9 @@ internal class BackfillManager
             var start = (part - 1) * SliceSize;
             var len   = Math.Min(SliceSize, b64.Length - start);
             var json  = $"{{\"t\":\"img\",\"id\":{item.Id},\"cat\":\"{item.Category}\",\"part\":{part},\"of\":{total},\"data\":\"{b64.Substring(start, len)}\"}}";
-            _chunks.Enqueue(json);
-            _chunkNotes.Enqueue(new Dictionary<int, string>());
+            _artChunks.Enqueue(json);
         }
-        Logging.Log($"[Backfill] Queued {total} image chunks for {item.Name} (id={item.Id})");
+        Logging.Log($"[Backfill] Queued {total} art chunks for {item.Name} (id={item.Id})");
     }
 
     private void EnqueueChunk(string cat, List<string> itemJsons, Dictionary<int, string> notes)
@@ -206,7 +211,7 @@ internal class BackfillManager
         sb.Append("\",\"items\":[");
         sb.Append(string.Join(",", itemJsons));
         sb.Append("]}");
-        _chunks.Enqueue(sb.ToString());
+        _metaChunks.Enqueue(sb.ToString());
         _chunkNotes.Enqueue(notes);
     }
 
@@ -580,20 +585,9 @@ internal class BackfillManager
         {
             if (item.Category == "cards")
             {
-                if (item.CapturedWebP != null)
-                {
-                    var b64      = Convert.ToBase64String(item.CapturedWebP);
-                    var b64Bytes = b64.Length;
-                    var limit    = b64Bytes > MaxImageBase64BytesBatch ? MaxImageBase64BytesSolo : MaxImageBase64BytesBatch;
-                    if (b64Bytes <= limit)
-                        dict["imageData"] = b64;
-                    else
-                        item.ImageNote = "split";
-                }
-                else
-                {
-                    item.ImageNote = "no capture";
-                }
+                // Art is always sent as a separate img chunk so metadata arrives first
+                // and the card can render with a placeholder while art is in transit.
+                item.ImageNote = item.CapturedWebP != null ? "split" : "no capture";
             }
             else if (item.TextureGetter != null)
             {

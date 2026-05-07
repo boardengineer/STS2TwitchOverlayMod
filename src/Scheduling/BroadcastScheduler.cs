@@ -50,24 +50,34 @@ internal static class BroadcastScheduler
 
         try
         {
-            if (_config.EnableBackfill
-                && _backfill != null
-                && _tickCount % _config.BackfillEveryN == 0)
-            {
-                var (chunk, notes) = _backfill.Dequeue();
-                if (chunk != null)
-                {
-                    Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
-                }
-                else
-                {
-                    _backfill.BuildChunks(GameStateCollector.Collect());
-                    BroadcastGameState(jwt, _config, channelId);
-                }
-            }
-            else
+            // 4-tick cycle: 1=state, 2=metadata, 3=state, 4=art
+            var pos = ((_tickCount - 1) % 4) + 1;
+
+            if (!_config.EnableBackfill || _backfill == null || pos == 1 || pos == 3)
             {
                 BroadcastGameState(jwt, _config, channelId);
+                return;
+            }
+
+            if (pos == 2)
+            {
+                // Rebuild when both queues are exhausted.
+                if (!_backfill.HasMetadata && !_backfill.HasArt)
+                    _backfill.BuildChunks(GameStateCollector.Collect());
+
+                var (chunk, _) = _backfill.DequeueMetadata();
+                if (chunk != null)
+                    Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
+                else
+                    BroadcastGameState(jwt, _config, channelId);
+            }
+            else // pos == 4
+            {
+                var chunk = _backfill.DequeueArt();
+                if (chunk != null)
+                    Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
+                else
+                    BroadcastGameState(jwt, _config, channelId);
             }
         }
         catch (Exception ex)
