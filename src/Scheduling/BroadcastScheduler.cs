@@ -97,8 +97,8 @@ internal static class BroadcastScheduler
                 return $"img {cat} id={id} part {part}/{of} ({dLen}b)";
             }
 
-            var cat   = root.GetProperty("cat").GetString() ?? "?";
-            var items = root.GetProperty("items");
+            var category = root.GetProperty("cat").GetString() ?? "?";
+            var items    = root.GetProperty("items");
             var count = items.GetArrayLength();
             var names = new List<string>(count);
             foreach (var item in items.EnumerateArray())
@@ -116,7 +116,7 @@ internal static class BroadcastScheduler
                     suffix = "";
                 names.Add(name + suffix);
             }
-            return $"{cat} ×{count}: {string.Join(", ", names)}";
+            return $"{category} ×{count}: {string.Join(", ", names)}";
         }
         catch { return "?"; }
     }
