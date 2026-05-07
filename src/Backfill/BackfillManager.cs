@@ -10,7 +10,6 @@ using Godot;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
-using MegaCrit.Sts2.Core.Nodes.Debug;
 using TwitchOverlayMod.Models;
 using TwitchOverlayMod.State;
 using TwitchOverlayMod.Utility;
@@ -700,9 +699,7 @@ internal class BackfillManager
             {
                 timer?.QueueFree();
                 viewport!.QueueFree();
-                var msg = $"[Backfill] Art capture done: {captured}/{items.Count} captured";
-                Logging.Log(msg);
-                ConsolePrint(msg);
+                Logging.Log($"[Backfill] Art capture done: {captured}/{items.Count} captured");
                 onComplete();
                 return;
             }
@@ -714,7 +711,6 @@ internal class BackfillManager
             {
                 current.ImageNote = "bad key";
                 done++;
-                ConsolePrint($"[Backfill] ({done}/{items.Count}) {current.Name}: no img — bad key");
                 SetupNext();
                 return;
             }
@@ -726,7 +722,6 @@ internal class BackfillManager
             {
                 current.ImageNote = "model not found";
                 done++;
-                ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, lv)}: no img — model not found");
                 SetupNext();
                 return;
             }
@@ -746,7 +741,6 @@ internal class BackfillManager
             {
                 current.ImageNote = $"setup error: {ex.Message}";
                 done++;
-                ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, lv)}: no img — setup error");
                 SetupNext();
                 return;
             }
@@ -829,16 +823,7 @@ internal class BackfillManager
                     }
 
                     done++;
-                    if (current!.CapturedWebP != null)
-                    {
-                        captured++;
-                        ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, currentLv)}: img {current.CapturedWebP.Length}b WebP");
-                    }
-                    else
-                    {
-                        ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, currentLv)}: no img — {current!.ImageNote ?? "unknown"}");
-                    }
-
+                    if (current!.CapturedWebP != null) captured++;
                     SetupNext();
                 }
             }
@@ -849,7 +834,6 @@ internal class BackfillManager
                 {
                     current.ImageNote = $"tick error: {ex.Message}";
                     done++;
-                    ConsolePrint($"[Backfill] ({done}/{items.Count}) {CardLabel(current, currentLv)}: no img — tick error");
                 }
                 SetupNext();
             }
@@ -858,20 +842,7 @@ internal class BackfillManager
         timer = new Timer { WaitTime = 0.1, Autostart = true };
         timer.Connect(Timer.SignalName.Timeout, Callable.From(OnTick));
         parent.AddChild(timer);
-        ConsolePrint($"[Backfill] Capturing art for {items.Count} new cards...");
         SetupNext();
-    }
-
-    private static string CardLabel(BackfillItem item, int lv) =>
-        lv > 0 ? $"{item.Name} +{lv}" : item.Name;
-
-    private static void ConsolePrint(string message)
-    {
-        try
-        {
-            NDevConsole.Instance.GetNode<RichTextLabel>("OutputContainer/OutputBuffer").Text += message + "\n";
-        }
-        catch { /* dev console may not be open */ }
     }
 
     // ── Node-finding helpers (mirrored from CardExporter) ─────────────────────

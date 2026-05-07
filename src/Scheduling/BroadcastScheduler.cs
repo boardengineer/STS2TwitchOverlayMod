@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Godot;
-using MegaCrit.Sts2.Core.Nodes.Debug;
 using TwitchOverlayMod.Backfill;
 using TwitchOverlayMod.Config;
 using TwitchOverlayMod.State;
@@ -59,12 +57,10 @@ internal static class BroadcastScheduler
                 var (chunk, notes) = _backfill.Dequeue();
                 if (chunk != null)
                 {
-                    ConsolePrint($"[Backfill] tick {_tickCount}: {DescribeChunk(chunk, notes)} ({System.Text.Encoding.UTF8.GetByteCount(chunk)} bytes)");
                     Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
                 }
                 else
                 {
-                    ConsolePrint($"[Backfill] tick {_tickCount}: no chunks remaining, restarting cycle");
                     _backfill.BuildChunks(GameStateCollector.Collect());
                     BroadcastGameState(jwt, _config, channelId);
                 }
@@ -78,52 +74,6 @@ internal static class BroadcastScheduler
         {
             Logging.Log($"Broadcast error: {ex.Message}");
         }
-    }
-
-    private static string DescribeChunk(string chunk, Dictionary<int, string>? notes)
-    {
-        try
-        {
-            using var doc = JsonDocument.Parse(chunk);
-            var root      = doc.RootElement;
-
-            if (root.TryGetProperty("t", out var tProp) && tProp.GetString() == "img")
-            {
-                var id   = root.TryGetProperty("id",   out var idP)   ? idP.GetInt32()             : 0;
-                var cat  = root.TryGetProperty("cat",  out var catP)  ? catP.GetString() ?? "?"    : "?";
-                var part = root.TryGetProperty("part", out var partP) ? partP.GetInt32()            : 0;
-                var of   = root.TryGetProperty("of",   out var ofP)   ? ofP.GetInt32()              : 0;
-                var dLen = root.TryGetProperty("data", out var dP)    ? dP.GetString()?.Length ?? 0 : 0;
-                return $"img {cat} id={id} part {part}/{of} ({dLen}b)";
-            }
-
-            var category = root.GetProperty("cat").GetString() ?? "?";
-            var items    = root.GetProperty("items");
-            var count = items.GetArrayLength();
-            var names = new List<string>(count);
-            foreach (var item in items.EnumerateArray())
-            {
-                var name     = item.TryGetProperty("name", out var n) ? (n.GetString() ?? "?") : "?";
-                var hasImage = item.TryGetProperty("imageData", out _);
-                string suffix;
-                if (hasImage)
-                    suffix = " [img]";
-                else if (notes != null
-                      && item.TryGetProperty("id", out var idProp)
-                      && notes.TryGetValue(idProp.GetInt32(), out var reason))
-                    suffix = $" [no img: {reason}]";
-                else
-                    suffix = "";
-                names.Add(name + suffix);
-            }
-            return $"{category} ×{count}: {string.Join(", ", names)}";
-        }
-        catch { return "?"; }
-    }
-
-    private static void ConsolePrint(string message)
-    {
-        NDevConsole.Instance.GetNode<RichTextLabel>("OutputContainer/OutputBuffer").Text += message + "\n";
     }
 
     private static void BroadcastGameState(string jwt, ModConfig config, string channelId)
