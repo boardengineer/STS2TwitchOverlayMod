@@ -67,7 +67,10 @@ internal static class BroadcastScheduler
 
                 var (chunk, _) = _backfill.DequeueMetadata();
                 if (chunk != null)
+                {
+                    if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(chunk);
                     Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
+                }
                 else
                     BroadcastGameState(jwt, _config, channelId);
             }
@@ -75,7 +78,10 @@ internal static class BroadcastScheduler
             {
                 var chunk = _backfill.DequeueArt();
                 if (chunk != null)
+                {
+                    if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(chunk);
                     Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
+                }
                 else
                     BroadcastGameState(jwt, _config, channelId);
             }
@@ -93,6 +99,7 @@ internal static class BroadcastScheduler
 #if DUMP_JSON
         File.WriteAllText(DebugJsonPath, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
 #endif
+        if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(json);
         Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt, config, channelId));
     }
 }

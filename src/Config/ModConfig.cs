@@ -21,6 +21,12 @@ internal class ModConfig
     [JsonPropertyName("backfillEveryN")]
     public int BackfillEveryN { get; set; } = 4;
 
+    [JsonPropertyName("enableLocalServer")]
+    public bool EnableLocalServer { get; set; } = false;
+
+    [JsonPropertyName("localServerPort")]
+    public int LocalServerPort { get; set; } = 9001;
+
     internal static ModConfig Load()
     {
         var appData    = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);

@@ -59,6 +59,9 @@ public class MainMenuPatch
     {
         if (NGame.Instance == null) return;
 
+        if (Plugin.Config.EnableLocalServer)
+            LocalBroadcastServer.Start(Plugin.Config.LocalServerPort);
+
         if (Plugin.Config.EnableBackfill && Plugin.Backfill == null)
         {
             var backfill = new BackfillManager();
