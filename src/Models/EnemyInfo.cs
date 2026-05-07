@@ -35,6 +35,12 @@ internal class EnemyInfo
     [JsonPropertyName("intentLabel")]
     public string? IntentLabel { get; set; }
 
+    [JsonPropertyName("intentDamage")]
+    public int? IntentDamage { get; set; }
+
+    [JsonPropertyName("intentRepeat")]
+    public int? IntentRepeat { get; set; }
+
     [JsonPropertyName("powers")]
     public List<PowerInfo> Powers { get; set; } = [];
 

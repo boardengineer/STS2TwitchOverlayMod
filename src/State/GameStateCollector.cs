@@ -266,6 +266,11 @@ internal static class GameStateCollector
                 var animation = intent.GetAnimation(targets, enemy);
                 enemyInfo.Intent = IntentIdMapper.GetSequentialId(animation);
                 try { enemyInfo.IntentLabel = intent.GetIntentLabel(targets, enemy).GetFormattedText(); } catch { }
+                if (intent is MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent atk)
+                {
+                    try { enemyInfo.IntentDamage = atk.GetSingleDamage(targets, enemy); } catch { }
+                    try { enemyInfo.IntentRepeat = atk.Repeats; } catch { }
+                }
             }
 
             var creatureNode = combatRoom?.GetCreatureNode(enemy);
