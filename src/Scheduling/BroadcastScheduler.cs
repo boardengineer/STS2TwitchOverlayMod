@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Godot;
+using MegaCrit.Sts2.Core.Nodes.Debug;
 using TwitchOverlayMod.Backfill;
 using TwitchOverlayMod.Config;
 using TwitchOverlayMod.State;
@@ -14,6 +15,7 @@ namespace TwitchOverlayMod.Scheduling;
 internal static class BroadcastScheduler
 {
     private static Timer?           _timer;
+    private static Node?            _parent;
     private static ModConfig?       _config;
     private static BackfillManager? _backfill;
     private static int              _tickCount;
@@ -25,6 +27,7 @@ internal static class BroadcastScheduler
     {
         if (_timer != null) return;
 
+        _parent   = parent;
         _config   = config;
         _backfill = backfill;
 
@@ -37,14 +40,18 @@ internal static class BroadcastScheduler
         Logging.Log($"Broadcast scheduler started (interval: {config.BroadcastIntervalSeconds}s)");
     }
 
+    internal static void SetBackfill(BackfillManager backfill) => _backfill = backfill;
+
     private static void OnTimeout()
     {
         if (_config == null) return;
 
         var jwt       = CredentialManager.GetCurrentJwt();
         var channelId = CredentialManager.ChannelId;
+        var hasTwitch = jwt != null && channelId != null;
 
-        if (jwt == null || channelId == null) return;
+        // Skip the tick entirely when neither local server nor Twitch is active.
+        if (!hasTwitch && !LocalBroadcastServer.IsRunning) return;
 
         _tickCount++;
 
@@ -55,35 +62,44 @@ internal static class BroadcastScheduler
 
             if (!_config.EnableBackfill || _backfill == null || pos == 1 || pos == 3)
             {
-                BroadcastGameState(jwt, _config, channelId);
+                BroadcastGameState(jwt, channelId, _config, hasTwitch);
                 return;
             }
 
             if (pos == 2)
             {
-                // Rebuild when both queues are exhausted.
-                if (!_backfill.HasMetadata && !_backfill.HasArt)
-                    _backfill.BuildChunks(GameStateCollector.Collect());
+                var state = GameStateCollector.Collect();
+                _backfill.TriggerCaptureForActive(_parent!, state);
+
+                if (!_backfill.HasMetadata)
+                {
+                    ConsolePrint("↺ rebuild metadata");
+                    _backfill.BuildMetadataChunks(state);
+                }
 
                 var (chunk, _) = _backfill.DequeueMetadata();
                 if (chunk != null)
                 {
+                    ConsolePrint($"→ meta chunk ({chunk.Length}b, {_backfill.MetadataCount} remaining)");
                     if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(chunk);
-                    Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
+                    if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt!, _config, channelId!));
                 }
-                else
-                    BroadcastGameState(jwt, _config, channelId);
             }
             else // pos == 4
             {
+                if (!_backfill.HasArt)
+                {
+                    ConsolePrint("↺ rebuild art");
+                    _backfill.BuildArtChunks(GameStateCollector.Collect());
+                }
+
                 var chunk = _backfill.DequeueArt();
                 if (chunk != null)
                 {
+                    ConsolePrint($"→ art chunk ({chunk.Length}b, {_backfill.ArtCount} remaining)");
                     if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(chunk);
-                    Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt, _config, channelId));
+                    if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt!, _config, channelId!));
                 }
-                else
-                    BroadcastGameState(jwt, _config, channelId);
             }
         }
         catch (Exception ex)
@@ -92,14 +108,25 @@ internal static class BroadcastScheduler
         }
     }
 
-    private static void BroadcastGameState(string jwt, ModConfig config, string channelId)
+    private static void BroadcastGameState(string? jwt, string? channelId, ModConfig config, bool hasTwitch)
     {
         var payload = GameStateCollector.Collect();
         var json    = JsonSerializer.Serialize(payload);
 #if DUMP_JSON
         File.WriteAllText(DebugJsonPath, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
 #endif
+        ConsolePrint($"→ state ({json.Length}b)");
         if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(json);
-        Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt, config, channelId));
+        if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt!, config, channelId!));
+    }
+
+    private static void ConsolePrint(string message)
+    {
+        try
+        {
+            var buf = NDevConsole.Instance.GetNode<RichTextLabel>("OutputContainer/OutputBuffer");
+            buf.Text += $"[TwitchOverlay] {message}\n";
+        }
+        catch { }
     }
 }

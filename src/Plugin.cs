@@ -62,27 +62,19 @@ public class MainMenuPatch
         if (Plugin.Config.EnableLocalServer)
             LocalBroadcastServer.Start(Plugin.Config.LocalServerPort);
 
+        BroadcastScheduler.Start(NGame.Instance, Plugin.Config);
+        MainMenuTwitchButton.SetupIfNeeded(__instance);
+        Logging.Log("Twitch Overlay Mod initialized.");
+
         if (Plugin.Config.EnableBackfill && Plugin.Backfill == null)
         {
             var backfill = new BackfillManager();
             backfill.Scan();
             backfill.Load();
             backfill.AssignIds();
+            Plugin.SetBackfill(backfill);
+            BroadcastScheduler.SetBackfill(backfill);
             Logging.Log("Backfill manager initialized.");
-
-            backfill.CaptureArtAsync(NGame.Instance, () =>
-            {
-                Plugin.SetBackfill(backfill);
-                BroadcastScheduler.Start(NGame.Instance, Plugin.Config, Plugin.Backfill);
-                MainMenuTwitchButton.SetupIfNeeded(__instance);
-                Logging.Log("Twitch Overlay Mod initialized.");
-            });
-        }
-        else
-        {
-            BroadcastScheduler.Start(NGame.Instance, Plugin.Config, Plugin.Backfill);
-            MainMenuTwitchButton.SetupIfNeeded(__instance);
-            Logging.Log("Twitch Overlay Mod initialized.");
         }
     }
 }

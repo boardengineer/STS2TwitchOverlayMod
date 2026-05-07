@@ -8,8 +8,11 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Godot;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
+using MegaCrit.Sts2.Core.Nodes.Debug;
 using TwitchOverlayMod.Models;
 using TwitchOverlayMod.State;
 using TwitchOverlayMod.Utility;
@@ -43,12 +46,17 @@ internal class BackfillManager
 
     private Dictionary<string, Dictionary<string, int>> _cache = new();
     private readonly List<BackfillItem> _scanned = new();
+    private readonly List<(BackfillItem item, LocString? nameLoc, LocString? descLoc)> _pendingLoc = new();
     private readonly Queue<string>                    _metaChunks = new();
     private readonly Queue<Dictionary<int, string>>   _chunkNotes = new();
     private readonly Queue<string>                    _artChunks  = new();
 
-    internal bool HasMetadata => _metaChunks.Count > 0;
-    internal bool HasArt      => _artChunks.Count  > 0;
+    internal bool HasMetadata    => _metaChunks.Count > 0;
+    internal bool HasArt         => _artChunks.Count  > 0;
+    internal int  MetadataCount  => _metaChunks.Count;
+    internal int  ArtCount       => _artChunks.Count;
+
+    private bool _captureInProgress;
 
     internal (string? chunk, Dictionary<int, string>? notes) DequeueMetadata()
     {
@@ -64,12 +72,14 @@ internal class BackfillManager
     internal void Scan()
     {
         _scanned.Clear();
+        _pendingLoc.Clear();
         LoadPackagedContent();
         try { ScanRelics();  } catch (Exception ex) { Logging.Log($"[Backfill] Scan relics error: {ex.Message}"); }
         try { ScanPowers();  } catch (Exception ex) { Logging.Log($"[Backfill] Scan powers error: {ex.Message}"); }
         try { ScanPotions(); } catch (Exception ex) { Logging.Log($"[Backfill] Scan potions error: {ex.Message}"); }
         try { ScanCards();   } catch (Exception ex) { Logging.Log($"[Backfill] Scan cards error: {ex.Message}"); }
         try { ScanEnemies(); } catch (Exception ex) { Logging.Log($"[Backfill] Scan enemies error: {ex.Message}"); }
+        try { CollectAllTranslations(); } catch (Exception ex) { Logging.Log($"[Backfill] Loc collection error: {ex.Message}"); }
         var newCount     = _scanned.Count(i => i.IsNew);
         var changedCount = _scanned.Count(i => !i.IsNew);
         Logging.Log($"[Backfill] Scan: {newCount} new, {changedCount} changed");
@@ -128,16 +138,12 @@ internal class BackfillManager
         if (dirty) SaveCache();
     }
 
-    internal void BuildChunks(GameStatePayload? state = null)
+    internal void BuildMetadataChunks(GameStatePayload? state = null)
     {
         _metaChunks.Clear();
         _chunkNotes.Clear();
-        _artChunks.Clear();
 
-        var activeIds = state != null ? CollectActiveIds(state) : null;
-        var items     = activeIds != null
-            ? _scanned.Where(i => activeIds.TryGetValue(i.Category, out var catIds) && catIds.Contains(i.Id))
-            : _scanned;
+        var items = FilterActive(state);
 
         foreach (var group in items.GroupBy(i => i.Category))
         {
@@ -175,16 +181,27 @@ internal class BackfillManager
                 EnqueueChunk(cat, batch, batchNotes);
         }
 
-        // Items whose imageData was too large to inline are sent as separate image chunks.
-        // Use `items` (already filtered to active IDs) so we don't send img chunks for cards
-        // that haven't had their metadata sent yet.
-        foreach (var item in items.Where(i => i.ImageNote == "split"))
+        Logging.Log($"[Backfill] Built {_metaChunks.Count} meta chunks");
+    }
+
+    internal void BuildArtChunks(GameStatePayload? state = null)
+    {
+        _artChunks.Clear();
+
+        var items = FilterActive(state);
+
+        foreach (var item in items.Where(i => i.CapturedWebP != null))
             EnqueueImageChunks(item);
 
-        var itemCount = activeIds != null
-            ? _scanned.Count(i => activeIds.TryGetValue(i.Category, out var catIds) && catIds.Contains(i.Id))
-            : _scanned.Count;
-        Logging.Log($"[Backfill] Built {_metaChunks.Count} meta + {_artChunks.Count} art chunks for {itemCount} items (of {_scanned.Count} scanned)");
+        Logging.Log($"[Backfill] Built {_artChunks.Count} art chunks");
+    }
+
+    private IEnumerable<BackfillItem> FilterActive(GameStatePayload? state)
+    {
+        var activeIds = state != null ? CollectActiveIds(state) : null;
+        return activeIds != null
+            ? _scanned.Where(i => activeIds.TryGetValue(i.Category, out var catIds) && catIds.Contains(i.Id))
+            : _scanned;
     }
 
     private void EnqueueImageChunks(BackfillItem item)
@@ -314,13 +331,15 @@ internal class BackfillManager
             if (pkgId == null)
             {
                 // New item
-                _scanned.Add(new BackfillItem
+                var item = new BackfillItem
                 {
                     Category = "relics", Key = gameId, IsNew = true,
                     Name = liveName, Description = liveDesc,
                     ExtraFields = new() { ["game_id"] = gameId, ["rarity"] = rarity, ["pool"] = pool, ["image"] = (object?)null },
                     TextureGetter = () => relic.BigIcon
-                });
+                };
+                _pendingLoc.Add((item, relic.Title, relic.DynamicDescription));
+                _scanned.Add(item);
             }
             else if (_pkgRelics.TryGetValue(gameId, out var pkg) && ContentChanged(pkg, liveName, liveDesc))
             {
@@ -349,13 +368,15 @@ internal class BackfillManager
             var pkgId = PowerIdMapper.GetSequentialId(gameId);
             if (pkgId == null)
             {
-                _scanned.Add(new BackfillItem
+                var item = new BackfillItem
                 {
                     Category = "powers", Key = gameId, IsNew = true,
                     Name = liveName, Description = liveDesc,
                     ExtraFields = new() { ["game_id"] = gameId, ["type"] = type, ["stack_type"] = stack, ["image"] = (object?)null },
                     TextureGetter = () => power.BigIcon
-                });
+                };
+                _pendingLoc.Add((item, power.Title, power.SmartDescription));
+                _scanned.Add(item);
             }
             else if (_pkgPowers.TryGetValue(gameId, out var pkg) && ContentChanged(pkg, liveName, liveDesc))
             {
@@ -383,13 +404,15 @@ internal class BackfillManager
             var pkgId = PotionIdMapper.GetSequentialId(gameId);
             if (pkgId == null)
             {
-                _scanned.Add(new BackfillItem
+                var item = new BackfillItem
                 {
                     Category = "potions", Key = gameId, IsNew = true,
                     Name = liveName, Description = liveDesc,
                     ExtraFields = new() { ["game_id"] = gameId, ["rarity"] = rarity, ["pool"] = pool, ["image"] = (object?)null },
                     TextureGetter = () => potion.Image
-                });
+                };
+                _pendingLoc.Add((item, potion.Title, potion.DynamicDescription));
+                _scanned.Add(item);
             }
             else if (_pkgPotions.TryGetValue(gameId, out var pkg) && ContentChanged(pkg, liveName, liveDesc))
             {
@@ -415,13 +438,14 @@ internal class BackfillManager
 
             for (int lv = 0; lv <= card.MaxUpgradeLevel; lv++)
             {
-                var (title, desc, energyCost, costsX) = GetCardDataAtLevel(card, lv);
-                ScanCardLevel(card, gameId, lv, title, desc, type, rarity, pool, energyCost, costsX);
+                var (title, desc, energyCost, costsX, titleLoc, descLoc) = GetCardDataAtLevel(card, lv);
+                ScanCardLevel(card, gameId, lv, title, desc, type, rarity, pool, energyCost, costsX, titleLoc, descLoc);
             }
         }
     }
 
-    private static (string title, string desc, int energyCost, bool costsX) GetCardDataAtLevel(CardModel card, int level)
+    private static (string title, string desc, int energyCost, bool costsX, LocString? titleLoc, LocString? descLoc)
+        GetCardDataAtLevel(CardModel card, int level)
     {
         var energyCost = -1;
         var costsX     = false;
@@ -436,21 +460,25 @@ internal class BackfillManager
             var title = SafeText(() => mutable.Title);
             var desc  = SafeText(() => mutable.GetDescriptionForPile(PileType.None));
             try { var ec = mutable.EnergyCost; energyCost = ec.Canonical; costsX = ec.CostsX; } catch { }
-            return (title, desc, energyCost, costsX);
+            LocString? titleLoc = null;
+            LocString? descLoc  = null;
+            try { titleLoc = mutable.TitleLocString; } catch { }
+            try { descLoc  = card.Description; } catch { }
+            return (title, desc, energyCost, costsX, titleLoc, descLoc);
         }
-        catch { return ("", "", energyCost, costsX); }
+        catch { return ("", "", energyCost, costsX, null, null); }
     }
 
     private void ScanCardLevel(CardModel card, string gameId, int lv,
         string liveName, string liveDesc, string type, string rarity, string pool,
-        int energyCost, bool costsX)
+        int energyCost, bool costsX, LocString? titleLoc, LocString? descLoc)
     {
         var cardKey = $"{gameId}:{lv}";
         var pkgId   = CardIdMapper.GetSequentialId(gameId, lv);
 
         if (pkgId == null)
         {
-            _scanned.Add(new BackfillItem
+            var item = new BackfillItem
             {
                 Category = "cards", Key = cardKey, IsNew = true,
                 Name = liveName, Description = liveDesc,
@@ -461,7 +489,9 @@ internal class BackfillManager
                     ["energy_cost"] = energyCost, ["costs_x"] = costsX,
                     ["image"] = (object?)null
                 },
-            });
+            };
+            _pendingLoc.Add((item, titleLoc, descLoc));
+            _scanned.Add(item);
         }
         else if (_pkgCards.TryGetValue(cardKey, out var pkg) && ContentChanged(pkg, liveName, liveDesc))
         {
@@ -620,15 +650,41 @@ internal class BackfillManager
             }
         }
 
+        if (item.NameTranslations != null)
+            dict["loc_name"] = new { table = item.NameLocTable, key = item.NameLocKey, translations = item.NameTranslations };
+        if (item.DescriptionTranslations != null)
+            dict["loc_description"] = new { table = item.DescriptionLocTable, key = item.DescriptionLocKey, translations = item.DescriptionTranslations };
+
         return JsonSerializer.Serialize(dict);
     }
 
     // ── Art capture ───────────────────────────────────────────────────────────
 
-    internal void CaptureArtAsync(Node parent, Action onComplete)
+    internal void TriggerCaptureForActive(Node parent, GameStatePayload? state)
     {
-        var items = _scanned.Where(i => i.IsNew && i.Category == "cards" && i.Key.EndsWith(":0")).ToList();
+        if (_captureInProgress) return;
+
+        var activeIds = state != null ? CollectActiveIds(state) : null;
+        var items = _scanned
+            .Where(i => i.IsNew
+                     && i.Category == "cards"
+                     && i.Key.EndsWith(":0")
+                     && i.CapturedWebP == null
+                     && (activeIds == null
+                         || (activeIds.TryGetValue(i.Category, out var catIds) && catIds.Contains(i.Id))))
+            .ToList();
+
+        if (items.Count == 0) return;
+
+        _captureInProgress = true;
+        CaptureArtAsync(parent, items, () => _captureInProgress = false);
+    }
+
+    private void CaptureArtAsync(Node parent, List<BackfillItem> items, Action onComplete)
+    {
         if (items.Count == 0) { onComplete(); return; }
+
+        ConsolePrint($"Art capture starting: {items.Count} card(s)");
 
         SubViewport? viewport = null;
         NCard?       card     = null;
@@ -694,6 +750,7 @@ internal class BackfillManager
                 timer?.QueueFree();
                 viewport!.QueueFree();
                 Logging.Log($"[Backfill] Art capture done: {captured}/{items.Count} captured");
+                ConsolePrint($"Art capture done: {captured}/{items.Count} captured");
                 onComplete();
                 return;
             }
@@ -704,6 +761,7 @@ internal class BackfillManager
             if (parts.Length != 2 || !int.TryParse(parts[1], out var lv))
             {
                 current.ImageNote = "bad key";
+                ConsolePrint($"Skip {done + 1}/{items.Count}: {current.Key} (bad key)");
                 done++;
                 SetupNext();
                 return;
@@ -715,10 +773,13 @@ internal class BackfillManager
             if (cardModel == null)
             {
                 current.ImageNote = "model not found";
+                ConsolePrint($"Skip {done + 1}/{items.Count}: {gameId} (model not found)");
                 done++;
                 SetupNext();
                 return;
             }
+
+            ConsolePrint($"Capturing {done + 1}/{items.Count}: {cardModel.Title} ({gameId})");
 
             try
             {
@@ -976,6 +1037,97 @@ internal class BackfillManager
             _                        => entry
         };
     }
+
+    // Sweeps all languages once, blocking LocManager signals during the loop so no
+    // deferred language-change events queue up. Signals are re-enabled before the final
+    // restore call, so exactly one language-change signal fires (for the original lang).
+    private void CollectAllTranslations()
+    {
+        if (_pendingLoc.Count == 0) return;
+
+        var nameMap = new Dictionary<(string table, string key), List<BackfillItem>>();
+        var descMap = new Dictionary<(string table, string key), List<BackfillItem>>();
+
+        foreach (var (item, nameLoc, descLoc) in _pendingLoc)
+        {
+            if (nameLoc != null)
+            {
+                item.NameLocTable = nameLoc.LocTable;
+                item.NameLocKey   = nameLoc.LocEntryKey;
+                var k = (nameLoc.LocTable, nameLoc.LocEntryKey);
+                if (!nameMap.ContainsKey(k)) nameMap[k] = new();
+                nameMap[k].Add(item);
+            }
+            if (descLoc != null)
+            {
+                item.DescriptionLocTable = descLoc.LocTable;
+                item.DescriptionLocKey   = descLoc.LocEntryKey;
+                var k = (descLoc.LocTable, descLoc.LocEntryKey);
+                if (!descMap.ContainsKey(k)) descMap[k] = new();
+                descMap[k].Add(item);
+            }
+        }
+
+        var originalLang = "eng";
+        try { originalLang = SaveManager.Instance?.SettingsSave?.Language ?? "eng"; } catch { }
+        try
+        {
+            foreach (var lang in LocManager.Languages)
+            {
+                try
+                {
+                    LocManager.Instance.SetLanguage(lang);
+
+                    foreach (var ((table, key), items) in nameMap)
+                    {
+                        try
+                        {
+                            var t = LocManager.Instance.GetTable(table);
+                            if (!t.HasEntry(key)) continue;
+                            var text = t.GetRawText(key);
+                            foreach (var item in items)
+                            {
+                                item.NameTranslations ??= new();
+                                item.NameTranslations[lang] = text;
+                            }
+                        }
+                        catch { }
+                    }
+
+                    foreach (var ((table, key), items) in descMap)
+                    {
+                        try
+                        {
+                            var t = LocManager.Instance.GetTable(table);
+                            if (!t.HasEntry(key)) continue;
+                            var text = t.GetRawText(key);
+                            foreach (var item in items)
+                            {
+                                item.DescriptionTranslations ??= new();
+                                item.DescriptionTranslations[lang] = text;
+                            }
+                        }
+                        catch { }
+                    }
+                }
+                catch { }
+            }
+        }
+        finally
+        {
+            try { LocManager.Instance.SetLanguage(originalLang); } catch { }
+        }
+    }
+
+    private static void ConsolePrint(string message)
+    {
+        try
+        {
+            var buf = NDevConsole.Instance.GetNode<RichTextLabel>("OutputContainer/OutputBuffer");
+            buf.Text += $"[TwitchOverlay] {message}\n";
+        }
+        catch { }
+    }
 }
 
 // Minimal projection of a packaged JSON entry used for content diffing.
@@ -1008,4 +1160,11 @@ internal class BackfillItem
     public byte[]? CapturedWebP { get; set; }
     // Set by SerializeItem for new items: null = image included, otherwise the skip reason.
     public string? ImageNote { get; set; }
+    // Localization data collected at scan time for new (modded) items.
+    public string? NameLocTable               { get; set; }
+    public string? NameLocKey                 { get; set; }
+    public Dictionary<string, string>? NameTranslations        { get; set; }
+    public string? DescriptionLocTable        { get; set; }
+    public string? DescriptionLocKey          { get; set; }
+    public Dictionary<string, string>? DescriptionTranslations { get; set; }
 }
