@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Debug;
+using MegaCrit.Sts2.Core.Runs;
 using TwitchOverlayMod.Models;
 using TwitchOverlayMod.State;
 using TwitchOverlayMod.Utility;
@@ -217,9 +218,12 @@ internal class BackfillManager
         }
 
         foreach (var (charId, webp) in _capturedPointers)
+        {
+            Logging.Log($"[Backfill] Enqueueing pointer for {charId} ({webp.Length}b)");
             EnqueuePointerChunk(charId, webp);
+        }
 
-        Logging.Log($"[Backfill] Built {_largeChunks.Count} large chunks ({neededFrames.Count} frame key(s) active)");
+        Logging.Log($"[Backfill] Built {_largeChunks.Count} large chunks ({neededFrames.Count} frame key(s), {_capturedPointers.Count} pointer(s))");
     }
 
     // Returns the set of frame keys used by cards that are currently active in the
@@ -685,6 +689,7 @@ internal class BackfillManager
 
     internal void TriggerCaptureForActive(Node parent, GameStatePayload? state)
     {
+        TryCaptureLiveCharacterPointer();
         if (_captureInProgress) return;
 
         var activeIds = state != null ? CollectActiveIds(state) : null;
@@ -1153,6 +1158,47 @@ internal class BackfillManager
         }
     }
 
+    // Called every tick-2 when a run is active. The player's Character instance is
+    // available directly here — no singleton detection or pool-title guessing needed.
+    // charId matches player.CharacterId in the game-state payload so the viewer lookup
+    // is guaranteed to resolve.
+    private void TryCaptureLiveCharacterPointer()
+    {
+        try
+        {
+            var runState = RunManager.Instance?.DebugOnlyGetState();
+            var player   = runState?.Players.FirstOrDefault();
+            if (player == null) return;
+
+            var character = player.Character;
+            var charId    = character.Id.Entry.ToLowerInvariant();
+
+            if (_capturedPointers.ContainsKey(charId)) return; // already have it
+
+            var tex = GetMarkerFromCharInstance(character.GetType(), character);
+            if (tex == null)
+            {
+                Logging.Log($"[Backfill] Live pointer: no marker found for {charId}");
+                return;
+            }
+
+            var img = tex.GetImage();
+            if (img == null) return;
+            const int MaxDim = 64;
+            if (img.GetWidth() > MaxDim || img.GetHeight() > MaxDim)
+            {
+                var s = Math.Min((float)MaxDim / img.GetWidth(), (float)MaxDim / img.GetHeight());
+                img.Resize((int)(img.GetWidth() * s), (int)(img.GetHeight() * s), Image.Interpolation.Bilinear);
+            }
+            _capturedPointers[charId] = img.SaveWebpToBuffer(true);
+            Logging.Log($"[Backfill] Live pointer captured for {charId} ({img.GetWidth()}x{img.GetHeight()})");
+        }
+        catch (Exception ex)
+        {
+            Logging.Log($"[Backfill] Live pointer capture error: {ex.Message}");
+        }
+    }
+
     private void CapturePoolPointers()
     {
         var seen = new HashSet<string>();
@@ -1161,10 +1207,10 @@ internal class BackfillManager
             var poolName = (item.ExtraFields.TryGetValue("pool", out var p) ? p?.ToString() : null) ?? "";
             var charId   = poolName.ToLowerInvariant();
             if (!seen.Add(charId)) continue;
+
             var gameId = item.Key.Split(':')[0];
             var card   = ModelDb.AllCards.FirstOrDefault(c => c.Id.ToString() == gameId);
-            if (card?.Pool == null) continue;
-            var tex = GetPoolPortrait(card.Pool);
+            var tex    = GetCharacterMapMarker(charId, card?.Pool);
             if (tex == null) continue;
             try
             {
@@ -1183,19 +1229,127 @@ internal class BackfillManager
         }
     }
 
-    private static Texture2D? GetPoolPortrait(object pool)
+    // Multi-strategy lookup for a character's map marker texture.
+    // Never calls unknown constructors — safe to run at scan time.
+    private static Texture2D? GetCharacterMapMarker(string charId, object? pool)
     {
-        var type = pool.GetType();
+        // 1. Base-game characters (fast path, hard-coded AllCharacters array).
+        try
+        {
+            var m = ModelDb.AllCharacters.FirstOrDefault(c => c.Id.Entry.ToLowerInvariant() == charId);
+            if (m != null) return m.MapMarker;
+        }
+        catch { }
+
+        if (pool == null) return null;
+        var poolType = pool.GetType();
+
+        // 2. Texture2D-named properties directly on the pool object.
         foreach (var name in new[] { "MapMarker", "MapPointer", "MapIcon", "SmallPortrait", "Portrait",
                                      "PortraitTexture", "CharacterIcon", "Icon", "Thumbnail" })
         {
             try
             {
-                var prop = type.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+                var prop = poolType.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
                 if (prop?.GetValue(pool) is Texture2D tex) return tex;
             }
             catch { }
         }
+
+        // 3. String path properties on the pool → ResourceLoader (e.g. CustomMapMarkerPath on a pool).
+        foreach (var name in new[] { "CustomMapMarkerPath", "MapMarkerPath", "MarkerPath" })
+        {
+            try
+            {
+                var prop = poolType.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+                var path = prop?.GetValue(pool) as string;
+                if (!string.IsNullOrEmpty(path))
+                {
+                    var tex = ResourceLoader.Load<Texture2D>(path);
+                    if (tex != null) return tex;
+                }
+            }
+            catch { }
+        }
+
+        // 4. CharacterModel-typed property on the pool (back-reference from pool → character).
+        var charModelType = typeof(CharacterModel);
+        foreach (var prop in poolType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+        {
+            try
+            {
+                if (!charModelType.IsAssignableFrom(prop.PropertyType)) continue;
+                if (prop.GetValue(pool) is not CharacterModel inst) continue;
+                var tex = GetMarkerFromCharInstance(inst.GetType(), inst);
+                if (tex != null) return tex;
+            }
+            catch { }
+        }
+
+        // 5. Scan the pool's own assembly for CharacterModel subclasses; use static Instance
+        //    singleton if available (no allocation). Handles BaseLib-style mods (e.g. Watcher)
+        //    where the character class is separate from the pool class.
+        Type[] asmTypes;
+        try { asmTypes = poolType.Assembly.GetTypes(); }
+        catch { asmTypes = []; }
+
+        foreach (var type in asmTypes)
+        {
+            if (!type.IsClass || type.IsAbstract || !charModelType.IsAssignableFrom(type) || type == charModelType)
+                continue;
+            try
+            {
+                var instanceProp = type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static);
+                if (instanceProp?.GetValue(null) is not CharacterModel inst) continue;
+                if (inst.Id.Entry.ToLowerInvariant() != charId) continue;
+                var tex = GetMarkerFromCharInstance(type, inst);
+                if (tex != null) return tex;
+            }
+            catch { }
+
+            // 6. ModelDb.Character<T>() — standard registration path for mods that use it.
+            try
+            {
+                var method = typeof(ModelDb).GetMethod("Character", BindingFlags.Public | BindingFlags.Static);
+                if (method == null) continue;
+                var generic = method.MakeGenericMethod(type);
+                if (generic.Invoke(null, null) is not CharacterModel inst2) continue;
+                if (inst2.Id.Entry.ToLowerInvariant() != charId) continue;
+                var tex = GetMarkerFromCharInstance(type, inst2);
+                if (tex != null) return tex;
+            }
+            catch { }
+        }
+
+        return null;
+    }
+
+    private static Texture2D? GetMarkerFromCharInstance(Type type, CharacterModel inst)
+    {
+        // Standard base-class property.
+        try
+        {
+            var tex = inst.MapMarker;
+            if (tex != null) { Logging.Log($"[Backfill] Pointer via MapMarker ({type.Name})"); return tex; }
+        }
+        catch (Exception ex) { Logging.Log($"[Backfill] MapMarker failed ({type.Name}): {ex.Message}"); }
+
+        // CustomMapMarkerPath: a string-path convention used by BaseLib mods.
+        try
+        {
+            var pathProp = type.GetProperty("CustomMapMarkerPath",
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+            var path = pathProp?.GetValue(inst) as string;
+            Logging.Log($"[Backfill] CustomMapMarkerPath ({type.Name}) = {path ?? "(null)"}");
+            if (!string.IsNullOrEmpty(path))
+            {
+                var tex = ResourceLoader.Load<Texture2D>(path);
+                if (tex != null) { Logging.Log($"[Backfill] Pointer via CustomMapMarkerPath ({type.Name})"); return tex; }
+                Logging.Log($"[Backfill] ResourceLoader returned null for path: {path}");
+            }
+        }
+        catch (Exception ex) { Logging.Log($"[Backfill] CustomMapMarkerPath failed ({type.Name}): {ex.Message}"); }
+
         return null;
     }
 
