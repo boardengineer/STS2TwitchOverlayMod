@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Events;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -22,6 +25,42 @@ internal static class GameStateCollector
     private static readonly FieldInfo? PotionHoldersField =
         typeof(NPotionContainer).GetField("_holders", BindingFlags.Instance | BindingFlags.NonPublic);
 
+    private static readonly FieldInfo? EventRoomEventField =
+        typeof(NEventRoom).GetField("_event", BindingFlags.Instance | BindingFlags.NonPublic);
+
+    private static Dictionary<string, CardKeyword>? _kwIdMap;
+    private static Dictionary<string, CardKeyword> KeywordIdMap
+    {
+        get
+        {
+            if (_kwIdMap != null) return _kwIdMap;
+            _kwIdMap = new Dictionary<string, CardKeyword>();
+            foreach (var kw in Enum.GetValues<CardKeyword>())
+            {
+                if (kw == CardKeyword.None) continue;
+                try { var id = HoverTipFactory.FromKeyword(kw).Id; if (!string.IsNullOrEmpty(id)) _kwIdMap[id] = kw; }
+                catch { }
+            }
+            return _kwIdMap;
+        }
+    }
+
+    private static Models.HoverTipRef? TryBuildHoverTipRef(IHoverTip tip)
+    {
+        if (tip.CanonicalModel is PowerModel pm)
+            return new Models.HoverTipRef { Type = "power",   Id = pm.Id.Entry };
+        if (tip.CanonicalModel is RelicModel rm)
+            return new Models.HoverTipRef { Type = "relic",   Id = rm.Id.ToString() };
+        if (tip.CanonicalModel is PotionModel pot)
+            return new Models.HoverTipRef { Type = "potion",  Id = pot.Id.Entry };
+        // CardModel: skip — the card's own keyword tips are already in the same HoverTips list
+        if (tip.CanonicalModel is CardModel) return null;
+        if (!string.IsNullOrEmpty(tip.Id) && KeywordIdMap.TryGetValue(tip.Id, out var kw))
+            return new Models.HoverTipRef { Type = "keyword", Id = kw.ToString() };
+        if (tip is HoverTip ht && (!string.IsNullOrEmpty(ht.Title) || !string.IsNullOrEmpty(ht.Description)))
+            return new Models.HoverTipRef { Type = "inline", Title = ht.Title, Description = ht.Description, IsDebuff = tip.IsDebuff };
+        return null;
+    }
 
     internal static GameStatePayload Collect()
     {
@@ -64,6 +103,15 @@ internal static class GameStateCollector
         catch (Exception ex)
         {
             Logging.Log($"Error collecting map info: {ex.Message}");
+        }
+
+        try
+        {
+            payload.Event = CollectEventInfo();
+        }
+        catch (Exception ex)
+        {
+            Logging.Log($"Error collecting event info: {ex.Message}");
         }
 
         return payload;
@@ -406,6 +454,69 @@ internal static class GameStateCollector
             info.SettingsButtonWidth = settingsRect.Size.X;
             info.SettingsButtonHeight = settingsRect.Size.Y;
         }
+
+        return info;
+    }
+
+    private static Models.EventInfo? CollectEventInfo()
+    {
+        var eventRoom = NEventRoom.Instance;
+        if (eventRoom == null) return null;
+
+        var eventModel = EventRoomEventField?.GetValue(eventRoom) as EventModel;
+        if (eventModel?.Owner == null) return null;
+
+        var info = new Models.EventInfo();
+        try { info.Title = eventModel.Title.GetFormattedText(); } catch { }
+
+        try
+        {
+            var desc = eventModel.Description;
+            if (desc != null) info.Description = desc.GetFormattedText();
+        }
+        catch { }
+
+        try
+        {
+            var layout = eventRoom.Layout;
+            var buttons = layout?.OptionButtons?.ToList();
+            var screenTransform = eventRoom.GetViewport().GetScreenTransform();
+            var idx = 0;
+            foreach (var option in eventModel.CurrentOptions)
+            {
+                var opt = new EventOptionInfo
+                {
+                    IsLocked  = option.IsLocked,
+                    IsProceed = option.IsProceed,
+                };
+                try { opt.Title       = option.Title?.GetFormattedText(); }       catch { }
+                try { opt.Description = option.Description?.GetFormattedText(); } catch { }
+                try
+                {
+                    foreach (var tip in option.HoverTips)
+                    {
+                        var entry = TryBuildHoverTipRef(tip);
+                        if (entry != null) opt.HoverTips.Add(entry);
+                    }
+                }
+                catch { }
+                if (buttons != null && idx < buttons.Count)
+                {
+                    try
+                    {
+                        var rect = screenTransform * buttons[idx].GetGlobalRect();
+                        opt.X      = rect.Position.X;
+                        opt.Y      = rect.Position.Y;
+                        opt.Width  = rect.Size.X;
+                        opt.Height = rect.Size.Y;
+                    }
+                    catch { }
+                }
+                info.Options.Add(opt);
+                idx++;
+            }
+        }
+        catch { }
 
         return info;
     }

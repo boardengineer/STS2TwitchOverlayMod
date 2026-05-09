@@ -19,6 +19,9 @@ internal class GameStatePayload
     [JsonPropertyName("map")]
     public MapInfo? Map { get; set; }
 
+    [JsonPropertyName("event")]
+    public EventInfo? Event { get; set; }
+
     [JsonPropertyName("timestamp")]
     public long Timestamp { get; set; }
 }
