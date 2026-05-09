@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="data\cards.json" />
+    <EmbeddedResource Include="data\enchantments.json" />
     <EmbeddedResource Include="data\enemies.json" />
     <EmbeddedResource Include="data\intents.json" />
     <EmbeddedResource Include="data\potions.json" />

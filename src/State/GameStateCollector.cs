@@ -45,6 +45,40 @@ internal static class GameStateCollector
         }
     }
 
+    // Maps HoverTip.Id (LocString key) → enchantment game_id (e.g. "Spiral")
+    private static Dictionary<string, string>? _enchTipIdMap;
+    private static Dictionary<string, string> EnchantmentTipIdMap
+    {
+        get
+        {
+            if (_enchTipIdMap != null) return _enchTipIdMap;
+            _enchTipIdMap = new Dictionary<string, string>();
+            try
+            {
+                var allProp = typeof(ModelDb).GetProperty("DebugEnchantments", BindingFlags.Public | BindingFlags.Static);
+                if (allProp?.GetValue(null) is not System.Collections.IEnumerable all) return _enchTipIdMap;
+                foreach (var enc in all)
+                {
+                    try
+                    {
+                        var encType = enc.GetType();
+                        var idVal   = encType.GetProperty("Id")?.GetValue(enc);
+                        var gameId  = idVal?.GetType().GetProperty("Entry")?.GetValue(idVal)?.ToString();
+                        if (string.IsNullOrEmpty(gameId)) continue;
+
+                        var htProp  = encType.GetProperty("HoverTip", BindingFlags.Public | BindingFlags.Instance);
+                        var ht      = htProp?.GetValue(enc);
+                        var tipId   = ht?.GetType().GetProperty("Id", BindingFlags.Public | BindingFlags.Instance)?.GetValue(ht)?.ToString();
+                        if (!string.IsNullOrEmpty(tipId)) _enchTipIdMap.TryAdd(tipId, gameId);
+                    }
+                    catch { }
+                }
+            }
+            catch { }
+            return _enchTipIdMap;
+        }
+    }
+
     private static Models.HoverTipRef? TryBuildHoverTipRef(IHoverTip tip)
     {
         if (tip.CanonicalModel is PowerModel pm)
@@ -57,6 +91,8 @@ internal static class GameStateCollector
         if (tip.CanonicalModel is CardModel) return null;
         if (!string.IsNullOrEmpty(tip.Id) && KeywordIdMap.TryGetValue(tip.Id, out var kw))
             return new Models.HoverTipRef { Type = "keyword", Id = kw.ToString() };
+        if (!string.IsNullOrEmpty(tip.Id) && EnchantmentTipIdMap.TryGetValue(tip.Id, out var enchGameId))
+            return new Models.HoverTipRef { Type = "enchantment", Id = enchGameId };
         if (tip is HoverTip ht && (!string.IsNullOrEmpty(ht.Title) || !string.IsNullOrEmpty(ht.Description)))
             return new Models.HoverTipRef { Type = "inline", Title = ht.Title, Description = ht.Description, IsDebuff = tip.IsDebuff };
         return null;

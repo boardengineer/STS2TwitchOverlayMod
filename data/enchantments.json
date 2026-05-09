@@ -1,0 +1,673 @@
+[
+  {
+    "id": 0,
+    "game_id": "ADROIT",
+    "name": "Adroit",
+    "plain_description": "Gain [blue]0[/blue] [gold]Block[/gold].",
+    "is_enchantment": true,
+    "image": "ADROIT.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "ADROIT.title",
+      "translations": {
+        "eng": "Adroit",
+        "zhs": "伶俐",
+        "deu": "Gewandt",
+        "esp": "Aptitud",
+        "fra": "Adroit",
+        "ita": "Abile",
+        "jpn": "巧妙",
+        "kor": "숙련",
+        "pol": "Spryt",
+        "ptb": "Hábil",
+        "rus": "Смекалка",
+        "spa": "Hábil",
+        "tha": "มนตร์คล่องแคล่ว",
+        "tur": "Becerikli"
+      }
+    }
+  },
+  {
+    "id": 1,
+    "game_id": "CLONE",
+    "name": "Clone",
+    "plain_description": "This card can be duplicated at [gold]Rest Sites[/gold].",
+    "is_enchantment": true,
+    "image": "CLONE.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "CLONE.title",
+      "translations": {
+        "eng": "Clone",
+        "zhs": "克隆",
+        "deu": "Klon",
+        "esp": "Clonación",
+        "fra": "Clonage",
+        "ita": "Clonazione",
+        "jpn": "クローン",
+        "kor": "복제",
+        "pol": "Duplikacja",
+        "ptb": "Clone",
+        "rus": "Удвоение",
+        "spa": "Clonable",
+        "tha": "มนตร์โคลนนิ่ง",
+        "tur": "Klonla"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "game_id": "CORRUPTED",
+    "name": "Corrupted",
+    "plain_description": "Deal [blue]50%[/blue] more damage, but lose [blue]2[/blue] HP.",
+    "is_enchantment": true,
+    "image": "CORRUPTED.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "CORRUPTED.title",
+      "translations": {
+        "eng": "Corrupted",
+        "zhs": "腐化",
+        "deu": "Korrumpiert",
+        "esp": "Corrupción",
+        "fra": "Corruption",
+        "ita": "Corruzione",
+        "jpn": "蝕み",
+        "kor": "오염",
+        "pol": "Korupcja",
+        "ptb": "Corrompida",
+        "rus": "Чудовищная",
+        "spa": "Corrupción",
+        "tha": "มนตร์ผุพัง",
+        "tur": "Yozlaşmış"
+      }
+    }
+  },
+  {
+    "id": 3,
+    "game_id": "DEPRECATED_ENCHANTMENT",
+    "name": "Deprecated",
+    "plain_description": "This enchantment has been removed from the game.",
+    "is_enchantment": true,
+    "image": "DEPRECATED_ENCHANTMENT.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "DEPRECATED_ENCHANTMENT.title",
+      "translations": {
+        "eng": "Deprecated",
+        "zhs": "弃用",
+        "deu": "Veraltet",
+        "esp": "Obsolescencia",
+        "fra": "Obsolète",
+        "ita": "Obsoleto",
+        "jpn": "削除済み",
+        "kor": "구식",
+        "pol": "Deprecated",
+        "ptb": "Descontinuada",
+        "rus": "Устаревшая",
+        "spa": "Eliminado",
+        "tha": "มนตร์ที่หายไป",
+        "tur": "Kaldırılmış"
+      }
+    }
+  },
+  {
+    "id": 4,
+    "game_id": "GLAM",
+    "name": "Glam",
+    "plain_description": "This card has [gold]Replay[/gold] once per combat.",
+    "is_enchantment": true,
+    "image": "GLAM.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "GLAM.title",
+      "translations": {
+        "eng": "Glam",
+        "zhs": "华彩",
+        "deu": "Schick",
+        "esp": "Glamur",
+        "fra": "Glamour",
+        "ita": "Glamour",
+        "jpn": "魅惑",
+        "kor": "호화",
+        "pol": "Dwakroć",
+        "ptb": "Elegante",
+        "rus": "Шик",
+        "spa": "Glamour",
+        "tha": "มนตร์สวยหรู",
+        "tur": "Cazibeli"
+      }
+    }
+  },
+  {
+    "id": 5,
+    "game_id": "GOOPY",
+    "name": "Goopy",
+    "plain_description": "This card gains [gold]Exhaust[/gold]. When played, permanently increase this card's [gold]Block[/gold] by [blue]1[/blue].",
+    "is_enchantment": true,
+    "image": "GOOPY.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "GOOPY.title",
+      "translations": {
+        "eng": "Goopy",
+        "zhs": "黏糊",
+        "deu": "Klebrig",
+        "esp": "Viscosidad",
+        "fra": "Viscosité",
+        "ita": "Viscidume",
+        "jpn": "べとべと",
+        "kor": "점착",
+        "pol": "Maź",
+        "ptb": "Viscosidade",
+        "rus": "Вязкая",
+        "spa": "Viscosidad",
+        "tha": "มนตร์หนังเหนียว",
+        "tur": "Vıcık Vıcık"
+      }
+    }
+  },
+  {
+    "id": 6,
+    "game_id": "IMBUED",
+    "name": "Imbued",
+    "plain_description": "This card is played automatically at the start of each combat.",
+    "is_enchantment": true,
+    "image": "IMBUED.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "IMBUED.title",
+      "translations": {
+        "eng": "Imbued",
+        "zhs": "注能",
+        "deu": "Durchdrungen",
+        "esp": "Impregnación",
+        "fra": "Imprégnation",
+        "ita": "Infusione",
+        "jpn": "刻印",
+        "kor": "주입",
+        "pol": "Przeszczep",
+        "ptb": "Imbuída",
+        "rus": "Знаковая",
+        "spa": "Infusión",
+        "tha": "มนตร์อัดฉีด",
+        "tur": "İşlenmiş"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "game_id": "INKY",
+    "name": "Inky",
+    "plain_description": "This card deals [blue]2[/blue] additional damage and applies [blue]1[/blue] [gold]Weak[/gold].",
+    "is_enchantment": true,
+    "image": "INKY.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "INKY.title",
+      "translations": {
+        "eng": "Inky",
+        "zhs": "墨影",
+        "deu": "Tintenbeschmiert",
+        "esp": "Entintado",
+        "fra": "Encrée",
+        "ita": "Inchiostratura",
+        "jpn": "墨塗り",
+        "kor": "잉크투성이",
+        "pol": "Atrament",
+        "ptb": "Nanquim",
+        "rus": "Чернильная",
+        "spa": "Tinta",
+        "tur": "Mürekkepli"
+      }
+    }
+  },
+  {
+    "id": 8,
+    "game_id": "INSTINCT",
+    "name": "Instinct",
+    "plain_description": "This card's attack damage is doubled.",
+    "is_enchantment": true,
+    "image": "INSTINCT.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "INSTINCT.title",
+      "translations": {
+        "eng": "Instinct",
+        "zhs": "本能",
+        "deu": "Instinkt",
+        "esp": "Instinto",
+        "fra": "Instinct",
+        "ita": "Istinto",
+        "jpn": "本能",
+        "kor": "본능",
+        "pol": "Instynkt",
+        "ptb": "Instinto",
+        "rus": "Инстинкт",
+        "spa": "Instinto",
+        "tha": "มนตร์สัญชาตญาณ",
+        "tur": "İçgüdü"
+      }
+    }
+  },
+  {
+    "id": 9,
+    "game_id": "MOCK_FREE_ENCHANTMENT",
+    "name": "Mock Free Enchantment",
+    "plain_description": "",
+    "is_enchantment": true,
+    "image": "MOCK_FREE_ENCHANTMENT.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "MOCK_FREE_ENCHANTMENT.title",
+      "translations": {
+        "eng": "Mock Free Enchantment",
+        "zhs": "临时免费附魔",
+        "deu": "Test kostenlose Verzauberung",
+        "esp": "Encantamiento sin costo (provisional)",
+        "fra": "Envoûtement gratuit (simulé)",
+        "ita": "Mock Free Enchantment",
+        "jpn": "[テスト用]無料エンチャント",
+        "kor": "가짜 무료 인챈트",
+        "pol": "Mock Free Enchantment",
+        "ptb": "Mock Free Enchantment",
+        "rus": "Бесплатные чары только в мышеловке",
+        "spa": "Mock Free Enchantment",
+        "tha": "Mock Free Enchantment",
+        "tur": "Sahte Ücretsiz Büyüleme"
+      }
+    }
+  },
+  {
+    "id": 10,
+    "game_id": "MOMENTUM",
+    "name": "Momentum",
+    "plain_description": "Increase this card's attack damage by [blue]0[/blue] this combat when played.",
+    "is_enchantment": true,
+    "image": "MOMENTUM.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "MOMENTUM.title",
+      "translations": {
+        "eng": "Momentum",
+        "zhs": "动量",
+        "deu": "Schwung",
+        "esp": "Ímpetu",
+        "fra": "Élan",
+        "ita": "Inerzia",
+        "jpn": "モメンタム",
+        "kor": "기세",
+        "pol": "Impet",
+        "ptb": "Impulso",
+        "rus": "Размах",
+        "spa": "Impulso",
+        "tha": "มนตร์แรงเหวี่ยง",
+        "tur": "İvme"
+      }
+    }
+  },
+  {
+    "id": 11,
+    "game_id": "NIMBLE",
+    "name": "Nimble",
+    "plain_description": "Increases [gold]Block[/gold] gained from this card by [blue]0[/blue].",
+    "is_enchantment": true,
+    "image": "NIMBLE.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "NIMBLE.title",
+      "translations": {
+        "eng": "Nimble",
+        "zhs": "灵巧",
+        "deu": "Geschickt",
+        "esp": "Agilidad",
+        "fra": "Agilité",
+        "ita": "Scioltezza",
+        "jpn": "身軽",
+        "kor": "기민함",
+        "pol": "Zwinność",
+        "ptb": "Ágil",
+        "rus": "Гибкость",
+        "spa": "Agilidad",
+        "tha": "มนตร์ปราดเปรียว",
+        "tur": "Atik"
+      }
+    }
+  },
+  {
+    "id": 12,
+    "game_id": "PERFECT_FIT",
+    "name": "Perfect Fit",
+    "plain_description": "Whenever this would be shuffled into your [gold]Draw Pile[/gold], place it on the top instead.",
+    "is_enchantment": true,
+    "image": "PERFECT_FIT.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "PERFECT_FIT.title",
+      "translations": {
+        "eng": "Perfect Fit",
+        "zhs": "完美契合",
+        "deu": "Passt perfekt",
+        "esp": "Calce perfecto",
+        "fra": "Sur-mesure",
+        "ita": "Incastro Perfetto",
+        "jpn": "完璧な適合",
+        "kor": "안성맞춤",
+        "pol": "Dopasowanie",
+        "ptb": "Encaixe Perfeito",
+        "rus": "Свое место",
+        "spa": "A medida",
+        "tha": "มนตร์เหมาะเหม็ง",
+        "tur": "Cuk Oturdu"
+      }
+    }
+  },
+  {
+    "id": 13,
+    "game_id": "ROYALLY_APPROVED",
+    "name": "Royally Approved",
+    "plain_description": "This card has [gold]Innate[/gold] and [gold]Retain[/gold].",
+    "is_enchantment": true,
+    "image": "ROYALLY_APPROVED.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "ROYALLY_APPROVED.title",
+      "translations": {
+        "eng": "Royally Approved",
+        "zhs": "王室认证",
+        "deu": "Königliche Zusage",
+        "esp": "Aprobación real",
+        "fra": "Sceau royal",
+        "ita": "Approvazione Regale",
+        "jpn": "王室認可",
+        "kor": "왕실 인증",
+        "pol": "Aprobata",
+        "ptb": "Aprovação Real",
+        "rus": "Королевская печать",
+        "spa": "Sigilo real",
+        "tha": "มนตร์พระราชทาน",
+        "tur": "Kraliyet Onaylı"
+      }
+    }
+  },
+  {
+    "id": 14,
+    "game_id": "SHARP",
+    "name": "Sharp",
+    "plain_description": "Increases damage on this card by [blue]0[/blue].",
+    "is_enchantment": true,
+    "image": "SHARP.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "SHARP.title",
+      "translations": {
+        "eng": "Sharp",
+        "zhs": "锋利",
+        "deu": "Scharf",
+        "esp": "Filo",
+        "fra": "Tranchant",
+        "ita": "Affilatura",
+        "jpn": "鋭利",
+        "kor": "예리",
+        "pol": "Szlifierka",
+        "ptb": "Afiada",
+        "rus": "Острая",
+        "spa": "Filo",
+        "tha": "มนตร์แหลมคม",
+        "tur": "Keskin"
+      }
+    }
+  },
+  {
+    "id": 15,
+    "game_id": "SLITHER",
+    "name": "Slither",
+    "plain_description": "When you draw this card, randomize its cost from [blue]0[/blue] to [blue]3[/blue].",
+    "is_enchantment": true,
+    "image": "SLITHER.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "SLITHER.title",
+      "translations": {
+        "eng": "Slither",
+        "zhs": "蛇行",
+        "deu": "Schlängeln",
+        "esp": "Serpentino",
+        "fra": "Serpentin",
+        "ita": "Serpeggiamento",
+        "jpn": "スリザー",
+        "kor": "스르륵",
+        "pol": "Ślizg",
+        "ptb": "Rastejante",
+        "rus": "Зигзаг",
+        "spa": "Serpenteo",
+        "tha": "มนตร์อสรพิษ",
+        "tur": "Sürüngen"
+      }
+    }
+  },
+  {
+    "id": 16,
+    "game_id": "SLUMBERING_ESSENCE",
+    "name": "Slumbering Essence",
+    "plain_description": "If this card is in your hand at the end of turn, reduce its cost by [blue]1[/blue] until it is played.",
+    "is_enchantment": true,
+    "image": "SLUMBERING_ESSENCE.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "SLUMBERING_ESSENCE.title",
+      "translations": {
+        "eng": "Slumbering Essence",
+        "zhs": "沉眠精华",
+        "deu": "Schlummernde Essenz",
+        "esp": "Esencia letárgica",
+        "fra": "Essence dormante",
+        "ita": "Essenza Dormiente",
+        "jpn": "眠れる真髄",
+        "kor": "잠재성",
+        "pol": "Drzemka",
+        "ptb": "Essência Dormente",
+        "rus": "Дремлющая эссенция",
+        "spa": "Esencia latente",
+        "tha": "มนตร์สกัดหลับใหล",
+        "tur": "Uyuyan Öz"
+      }
+    }
+  },
+  {
+    "id": 17,
+    "game_id": "SOULS_POWER",
+    "name": "Soul's Power",
+    "plain_description": "This card loses [gold]Exhaust[/gold].",
+    "is_enchantment": true,
+    "image": "SOULS_POWER.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "SOULS_POWER.title",
+      "translations": {
+        "eng": "Soul's Power",
+        "zhs": "灵魂之力",
+        "deu": "Seelenkraft",
+        "esp": "Poder del alma",
+        "fra": "Puissance animique",
+        "ita": "Potere dell'Anima",
+        "jpn": "魂力",
+        "kor": "영혼의 힘",
+        "pol": "Zapał",
+        "ptb": "Poder Espiritual",
+        "rus": "Искра души",
+        "spa": "Poder del alma",
+        "tha": "มนตร์พลังวิญญาณ",
+        "tur": "Ruh'un Gücü"
+      }
+    }
+  },
+  {
+    "id": 18,
+    "game_id": "SOWN",
+    "name": "Sown",
+    "plain_description": "The first time you play this card each combat, gain 0[img]res://images/packed/sprite_fonts/colorless_energy_icon.png[/img].",
+    "is_enchantment": true,
+    "image": "SOWN.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "SOWN.title",
+      "translations": {
+        "eng": "Sown",
+        "zhs": "播种",
+        "deu": "Eingesät",
+        "esp": "Sembradío",
+        "fra": "Semence",
+        "ita": "Semina",
+        "jpn": "芽吹き",
+        "kor": "발아",
+        "pol": "Nasiono",
+        "ptb": "Semeada",
+        "rus": "Посев",
+        "spa": "Siembra",
+        "tha": "มนตร์หว่านเมล็ด",
+        "tur": "Yatırım"
+      }
+    }
+  },
+  {
+    "id": 19,
+    "game_id": "SPIRAL",
+    "name": "Spiral",
+    "plain_description": "This card gains [gold]Replay[/gold] [blue]1[/blue].",
+    "is_enchantment": true,
+    "image": "SPIRAL.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "SPIRAL.title",
+      "translations": {
+        "eng": "Spiral",
+        "zhs": "涡旋",
+        "deu": "Spirale",
+        "esp": "Espiral",
+        "fra": "Spirale",
+        "ita": "Spirale",
+        "jpn": "らせん",
+        "kor": "소용돌이",
+        "pol": "Spirala",
+        "ptb": "Espiral",
+        "rus": "Спираль",
+        "spa": "Espiral",
+        "tha": "มนตร์หมุนวน",
+        "tur": "Sarmal"
+      }
+    }
+  },
+  {
+    "id": 20,
+    "game_id": "STEADY",
+    "name": "Steady",
+    "plain_description": "This card gains [gold]Retain[/gold].",
+    "is_enchantment": true,
+    "image": "STEADY.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "STEADY.title",
+      "translations": {
+        "eng": "Steady",
+        "zhs": "稳定",
+        "deu": "Beständig",
+        "esp": "Estabilidad",
+        "fra": "Stabilité",
+        "ita": "Stabilità",
+        "jpn": "安定性",
+        "kor": "안정",
+        "pol": "Pewnik",
+        "ptb": "Prontidão",
+        "rus": "Надежность",
+        "spa": "Firmeza",
+        "tha": "มนตร์มั่นคง",
+        "tur": "Sabit"
+      }
+    }
+  },
+  {
+    "id": 21,
+    "game_id": "SWIFT",
+    "name": "Swift",
+    "plain_description": "The first time you play this card, draw [blue]0[/blue] cards.",
+    "is_enchantment": true,
+    "image": "SWIFT.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "SWIFT.title",
+      "translations": {
+        "eng": "Swift",
+        "zhs": "迅速",
+        "deu": "Flott",
+        "esp": "Velocidad",
+        "fra": "Rapide",
+        "ita": "Rapidità",
+        "jpn": "迅速",
+        "kor": "신속",
+        "pol": "Sprint",
+        "ptb": "Célere",
+        "rus": "Скорость",
+        "spa": "Rapidez",
+        "tha": "มนตร์ฉับพลัน",
+        "tur": "Hızlı"
+      }
+    }
+  },
+  {
+    "id": 22,
+    "game_id": "TEZCATARAS_EMBER",
+    "name": "Tezcatara's Ember",
+    "plain_description": "Costs [blue]0[/blue] and gains [gold]Eternal[/gold].",
+    "is_enchantment": true,
+    "image": "TEZCATARAS_EMBER.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "TEZCATARAS_EMBER.title",
+      "translations": {
+        "eng": "Tezcatara's Ember",
+        "zhs": "特兹卡塔拉的余烬",
+        "deu": "Tezcataras Glut",
+        "esp": "Ascua de Tezcatara",
+        "fra": "Braise de Tezcatara",
+        "ita": "Brace di Tezcatara",
+        "jpn": "テスカタラの残り火",
+        "kor": "테즈카타라의 잉걸불",
+        "pol": "Żar Tezcatary",
+        "ptb": "Centelha de Tezcatara",
+        "rus": "Уголек Тецкатары",
+        "spa": "Ascua de Tezcatara",
+        "tha": "เพลิงของเทซคาทารา",
+        "tur": "Tezcatara'nın Koru"
+      }
+    }
+  },
+  {
+    "id": 23,
+    "game_id": "VIGOROUS",
+    "name": "Vigorous",
+    "plain_description": "The first time this card is played, it deals [blue]0[/blue] additional damage.",
+    "is_enchantment": true,
+    "image": "VIGOROUS.webp",
+    "loc_name": {
+      "table": "enchantments",
+      "key": "VIGOROUS.title",
+      "translations": {
+        "eng": "Vigorous",
+        "zhs": "活力",
+        "deu": "Kräftig",
+        "esp": "Vigorosidad",
+        "fra": "Vigoureux",
+        "ita": "Vigorosità",
+        "jpn": "活気",
+        "kor": "활기",
+        "pol": "Werwa",
+        "ptb": "Vigorosa",
+        "rus": "Бодрость",
+        "spa": "Robustez",
+        "tha": "มนตร์ชีวิตชีวา",
+        "tur": "Güçlü"
+      }
+    }
+  }
+]

@@ -36,12 +36,13 @@ internal class BackfillManager
     // ── Packaged data for diff ────────────────────────────────────────────────
 
     // Loaded from embedded resources; keyed by the same lookup key used by each mapper.
-    private Dictionary<string, PackagedEntry> _pkgRelics  = new();
-    private Dictionary<string, PackagedEntry> _pkgPowers  = new();
-    private Dictionary<string, PackagedEntry> _pkgPotions = new();
-    private Dictionary<string, PackagedEntry> _pkgCards   = new(); // key = "game_id:upgrade_level"
-    private Dictionary<string, PackagedEntry> _pkgEnemies = new(); // key = game_id (monster.Id.Entry)
-    private Dictionary<string, PackagedEntry> _pkgIntents = new(); // key = intent_type
+    private Dictionary<string, PackagedEntry> _pkgRelics       = new();
+    private Dictionary<string, PackagedEntry> _pkgPowers       = new();
+    private Dictionary<string, PackagedEntry> _pkgPotions      = new();
+    private Dictionary<string, PackagedEntry> _pkgCards        = new(); // key = "game_id:upgrade_level"
+    private Dictionary<string, PackagedEntry> _pkgEnemies      = new(); // key = game_id (monster.Id.Entry)
+    private Dictionary<string, PackagedEntry> _pkgIntents      = new(); // key = intent_type
+    private Dictionary<string, PackagedEntry> _pkgEnchantments = new();
 
     // ── State ─────────────────────────────────────────────────────────────────
 
@@ -86,11 +87,12 @@ internal class BackfillManager
         _scanned.Clear();
         _pendingLoc.Clear();
         LoadPackagedContent();
-        try { ScanRelics();  } catch (Exception ex) { Logging.Log($"[Backfill] Scan relics error: {ex.Message}"); }
-        try { ScanPowers();  } catch (Exception ex) { Logging.Log($"[Backfill] Scan powers error: {ex.Message}"); }
-        try { ScanPotions(); } catch (Exception ex) { Logging.Log($"[Backfill] Scan potions error: {ex.Message}"); }
-        try { ScanCards();   } catch (Exception ex) { Logging.Log($"[Backfill] Scan cards error: {ex.Message}"); }
-        try { ScanEnemies(); } catch (Exception ex) { Logging.Log($"[Backfill] Scan enemies error: {ex.Message}"); }
+        try { ScanRelics();       } catch (Exception ex) { Logging.Log($"[Backfill] Scan relics error: {ex.Message}"); }
+        try { ScanPowers();       } catch (Exception ex) { Logging.Log($"[Backfill] Scan powers error: {ex.Message}"); }
+        try { ScanPotions();      } catch (Exception ex) { Logging.Log($"[Backfill] Scan potions error: {ex.Message}"); }
+        try { ScanCards();        } catch (Exception ex) { Logging.Log($"[Backfill] Scan cards error: {ex.Message}"); }
+        try { ScanEnemies();      } catch (Exception ex) { Logging.Log($"[Backfill] Scan enemies error: {ex.Message}"); }
+        try { ScanEnchantments(); } catch (Exception ex) { Logging.Log($"[Backfill] Scan enchantments error: {ex.Message}"); }
         try { CollectAllTranslations(); } catch (Exception ex) { Logging.Log($"[Backfill] Loc collection error: {ex.Message}"); }
         try { CaptureNonCardImages(); } catch (Exception ex) { Logging.Log($"[Backfill] Non-card image capture: {ex.Message}"); }
         try { CapturePoolPointers();  } catch (Exception ex) { Logging.Log($"[Backfill] Pool pointer capture: {ex.Message}"); }
@@ -287,11 +289,12 @@ internal class BackfillManager
 
     private static Dictionary<string, HashSet<int>> CollectActiveIds(GameStatePayload state)
     {
-        var cards   = new HashSet<int>();
-        var relics  = new HashSet<int>();
-        var potions = new HashSet<int>();
-        var powers  = new HashSet<int>();
-        var enemies = new HashSet<int>();
+        var cards        = new HashSet<int>();
+        var relics       = new HashSet<int>();
+        var potions      = new HashSet<int>();
+        var powers       = new HashSet<int>();
+        var enemies      = new HashSet<int>();
+        var enchantments = new HashSet<int>();
 
         if (state.Player != null)
         {
@@ -314,13 +317,27 @@ internal class BackfillManager
             }
         }
 
+        if (state.Event != null)
+        {
+            foreach (var opt in state.Event.Options)
+            foreach (var tip in opt.HoverTips)
+            {
+                if (tip.Type == "enchantment")
+                {
+                    var seqId = EnchantmentIdMapper.GetSequentialId(tip.Id);
+                    if (seqId.HasValue) enchantments.Add(seqId.Value);
+                }
+            }
+        }
+
         return new Dictionary<string, HashSet<int>>
         {
-            ["cards"]   = cards,
-            ["relics"]  = relics,
-            ["potions"] = potions,
-            ["powers"]  = powers,
-            ["enemies"] = enemies
+            ["cards"]        = cards,
+            ["relics"]       = relics,
+            ["potions"]      = potions,
+            ["powers"]       = powers,
+            ["enemies"]      = enemies,
+            ["enchantments"] = enchantments
         };
     }
 
@@ -328,18 +345,20 @@ internal class BackfillManager
 
     private void LoadPackagedContent()
     {
-        _pkgRelics  = LoadPackaged("TwitchOverlayMod.data.relics.json",
+        _pkgRelics        = LoadPackaged("TwitchOverlayMod.data.relics.json",
             e => e.GameId ?? "");
-        _pkgPowers  = LoadPackaged("TwitchOverlayMod.data.powers.json",
+        _pkgPowers        = LoadPackaged("TwitchOverlayMod.data.powers.json",
             e => e.GameId ?? "");
-        _pkgPotions = LoadPackaged("TwitchOverlayMod.data.potions.json",
+        _pkgPotions       = LoadPackaged("TwitchOverlayMod.data.potions.json",
             e => e.GameId ?? "");
-        _pkgIntents = LoadPackaged("TwitchOverlayMod.data.intents.json",
+        _pkgIntents       = LoadPackaged("TwitchOverlayMod.data.intents.json",
             e => e.IntentType ?? "");
-        _pkgEnemies = LoadPackaged("TwitchOverlayMod.data.enemies.json",
+        _pkgEnemies       = LoadPackaged("TwitchOverlayMod.data.enemies.json",
             e => e.GameId ?? "");
-        _pkgCards   = LoadPackaged("TwitchOverlayMod.data.cards.json",
+        _pkgCards         = LoadPackaged("TwitchOverlayMod.data.cards.json",
             e => $"{e.GameId}:{e.UpgradeLevel}");
+        _pkgEnchantments  = LoadPackaged("TwitchOverlayMod.data.enchantments.json",
+            e => e.GameId ?? "");
     }
 
     private static Dictionary<string, PackagedEntry> LoadPackaged(
@@ -478,6 +497,93 @@ internal class BackfillManager
                 });
             }
         }
+    }
+
+    private void ScanEnchantments()
+    {
+        var allProp = typeof(ModelDb).GetProperty("DebugEnchantments", BindingFlags.Public | BindingFlags.Static);
+        if (allProp?.GetValue(null) is not System.Collections.IEnumerable all) return;
+
+        foreach (var enc in all)
+        {
+            try
+            {
+                var encType = enc.GetType();
+                var gameId  = encType.GetProperty("Id")?.GetValue(enc)
+                                    ?.GetType().GetProperty("Entry")?.GetValue(
+                                        encType.GetProperty("Id")!.GetValue(enc))?.ToString() ?? "";
+                if (string.IsNullOrEmpty(gameId)) continue;
+
+                var liveName = EnchFormattedText(enc, encType, "Name", "Title") ?? "";
+                var liveDesc = EnchFormattedText(enc, encType, "Description", "DynamicDescription") ?? "";
+
+                var pkgId = EnchantmentIdMapper.GetSequentialId(gameId);
+                if (pkgId == null)
+                {
+                    var capturedEnc = enc;
+                    var item = new BackfillItem
+                    {
+                        Category = "enchantments", Key = gameId, IsNew = true,
+                        Name = liveName, Description = liveDesc,
+                        ExtraFields = new()
+                        {
+                            ["game_id"]           = gameId,
+                            ["is_enchantment"]    = true,
+                            ["plain_description"] = liveDesc,
+                            ["loc_plain_description"] = true,
+                            ["image"]             = (object?)null
+                        },
+                        TextureGetter = () => EnchGetIcon(capturedEnc)
+                    };
+                    _pendingLoc.Add((item, null, null));
+                    _scanned.Add(item);
+                }
+                else if (_pkgEnchantments.TryGetValue(gameId, out var pkg) && ContentChanged(pkg, liveName, liveDesc))
+                {
+                    _scanned.Add(new BackfillItem
+                    {
+                        Category = "enchantments", Key = gameId, IsNew = false,
+                        Id = pkgId.Value,
+                        Name = liveName, Description = liveDesc,
+                        ExtraFields = new()
+                        {
+                            ["game_id"]           = gameId,
+                            ["is_enchantment"]    = true,
+                            ["plain_description"] = liveDesc,
+                            ["loc_plain_description"] = true,
+                            ["image"]             = pkg.Image
+                        }
+                    });
+                }
+            }
+            catch { }
+        }
+    }
+
+    private static string? EnchFormattedText(object enc, Type t, params string[] names)
+    {
+        foreach (var name in names)
+        {
+            try
+            {
+                var val    = t.GetProperty(name)?.GetValue(enc);
+                var method = val?.GetType().GetMethod("GetFormattedText");
+                if (method != null) return method.Invoke(val, null)?.ToString();
+            }
+            catch { }
+        }
+        return null;
+    }
+
+    private static Texture2D? EnchGetIcon(object enc)
+    {
+        var t = enc.GetType();
+        foreach (var name in new[] { "Icon", "BigIcon", "SmallIcon", "Sprite" })
+        {
+            try { if (t.GetProperty(name)?.GetValue(enc) is Texture2D tex) return tex; }
+            catch { }
+        }
+        return null;
     }
 
     private void ScanCards()
@@ -623,13 +729,14 @@ internal class BackfillManager
 
     private static int PackagedMaxId(string category) => category switch
     {
-        "relics"  => 288,
-        "powers"  => 269,
-        "potions" => 63,
-        "intents" => 16,
-        "enemies" => 101,
-        "cards"   => 1116,
-        _         => 0
+        "relics"        => 288,
+        "powers"        => 269,
+        "potions"       => 63,
+        "intents"       => 16,
+        "enemies"       => 101,
+        "cards"         => 1116,
+        "enchantments"  => 23,
+        _               => 0
     };
 
     private void RegisterWithMapper(BackfillItem item)
@@ -638,10 +745,11 @@ internal class BackfillManager
         {
             switch (item.Category)
             {
-                case "relics":  RelicIdMapper.Register(item.Key, item.Id);  break;
-                case "powers":  PowerIdMapper.Register(item.Key, item.Id);  break;
-                case "potions": PotionIdMapper.Register(item.Key, item.Id); break;
-                case "enemies": EnemyIdMapper.Register(item.Key, item.Id);  break;
+                case "relics":        RelicIdMapper.Register(item.Key, item.Id);        break;
+                case "powers":        PowerIdMapper.Register(item.Key, item.Id);        break;
+                case "potions":       PotionIdMapper.Register(item.Key, item.Id);       break;
+                case "enemies":       EnemyIdMapper.Register(item.Key, item.Id);        break;
+                case "enchantments":  EnchantmentIdMapper.Register(item.Key, item.Id);  break;
                 case "cards":
                     var parts = item.Key.Split(':');
                     if (parts.Length == 2 && int.TryParse(parts[1], out var lv))
