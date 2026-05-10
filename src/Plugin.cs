@@ -43,6 +43,9 @@ public class Plugin
         PotionIdMapper.Load();
         Logging.Log("Potion ID map loaded.");
 
+        EnchantmentIdMapper.Load();
+        Logging.Log("Enchantment ID map loaded.");
+
         CredentialManager.LoadSaved();
         Logging.Log("Credentials loaded.");
 

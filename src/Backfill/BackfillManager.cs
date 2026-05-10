@@ -715,7 +715,7 @@ internal class BackfillManager
     private static bool ContentChanged(PackagedEntry pkg, string liveName, string liveDesc)
     {
         var pkgName = pkg.Name ?? pkg.Title ?? "";
-        var pkgDesc = pkg.Description ?? "";
+        var pkgDesc = pkg.Description ?? pkg.PlainDescription ?? "";
         return pkgName != liveName || pkgDesc != liveDesc;
     }
 
@@ -1691,8 +1691,9 @@ internal class PackagedEntry
     [JsonPropertyName("upgrade_level")] public int   UpgradeLevel { get; set; }
     [JsonPropertyName("name")]         public string? Name       { get; set; }
     [JsonPropertyName("title")]        public string? Title      { get; set; }
-    [JsonPropertyName("description")]  public string? Description { get; set; }
-    [JsonPropertyName("image")]        public string? Image      { get; set; }
+    [JsonPropertyName("description")]       public string? Description      { get; set; }
+    [JsonPropertyName("plain_description")] public string? PlainDescription { get; set; }
+    [JsonPropertyName("image")]             public string? Image            { get; set; }
 }
 
 internal class BackfillItem
