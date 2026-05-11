@@ -19,6 +19,7 @@ internal static class BroadcastScheduler
     private static ModConfig?       _config;
     private static BackfillManager? _backfill;
     private static int              _tickCount;
+    private static int              _stateSeq;
     private static readonly string DebugJsonPath = Path.Combine(
         System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData),
         "SlayTheSpire2", "TwitchOverlayMod_latest.json");
@@ -134,9 +135,30 @@ internal static class BroadcastScheduler
 #if DUMP_JSON
         File.WriteAllText(DebugJsonPath, JsonSerializer.Serialize(payload, new JsonSerializerOptions { WriteIndented = true }));
 #endif
-        ConsolePrint($"-> state ({json.Length}b)");
-        if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(json);
-        if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt!, config, channelId!));
+
+        const int MaxDirect = 4700;
+        const int MaxSlice  = 4600;
+
+        if (json.Length <= MaxDirect)
+        {
+            ConsolePrint($"-> state ({json.Length}b)");
+            if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(json);
+            if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(json, jwt!, config, channelId!));
+            return;
+        }
+
+        var b64   = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(json));
+        var seq   = ++_stateSeq;
+        var total = (b64.Length + MaxSlice - 1) / MaxSlice;
+        ConsolePrint($"-> state chunked ({json.Length}b → {total} parts)");
+
+        for (var i = 0; i < total; i++)
+        {
+            var slice = b64.Substring(i * MaxSlice, Math.Min(MaxSlice, b64.Length - i * MaxSlice));
+            var chunk = JsonSerializer.Serialize(new { t = "sc", seq, part = i + 1, of = total, data = slice });
+            if (LocalBroadcastServer.IsRunning) LocalBroadcastServer.Broadcast(chunk);
+            if (hasTwitch) { var c = chunk; Task.Run(() => TwitchPubSubClient.BroadcastAsync(c, jwt!, config, channelId!)); }
+        }
     }
 
     private static void ConsolePrint(string message)
