@@ -640,7 +640,7 @@ internal class BackfillManager
             }
             var title = SafeText(() => mutable.Title);
             var desc  = SafeText(() => mutable.GetDescriptionForPile(PileType.None));
-            try { var ec = mutable.EnergyCost; energyCost = ec.Canonical; costsX = ec.CostsX; } catch { }
+            try { var ec = mutable.EnergyCost; energyCost = ec.GetWithModifiers(CostModifiers.None); costsX = ec.CostsX; } catch { }
             LocString? titleLoc = null;
             LocString? descLoc  = null;
             try { titleLoc = mutable.TitleLocString; } catch { }
