@@ -348,7 +348,11 @@ internal static class GameStateCollector
             if (intent != null)
             {
                 var animation = intent.GetAnimation(targets, enemy);
+                // "status" is StatusIntent's animation key; it maps to the same tooltip as "status_card"
+                if (animation == "status") animation = "status_card";
                 enemyInfo.Intent = IntentIdMapper.GetSequentialId(animation);
+                if (enemyInfo.Intent == null)
+                    Logging.Log($"[IntentIdMapper] Unknown animation type '{animation}' for enemy '{enemy.Name}' (type: {intent.GetType().Name})");
                 try { enemyInfo.IntentLabel = intent.GetIntentLabel(targets, enemy).GetFormattedText(); } catch { }
                 if (intent is MegaCrit.Sts2.Core.MonsterMoves.Intents.AttackIntent atk)
                 {
