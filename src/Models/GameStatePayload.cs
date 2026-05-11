@@ -22,6 +22,9 @@ internal class GameStatePayload
     [JsonPropertyName("event")]
     public EventInfo? Event { get; set; }
 
+    [JsonPropertyName("shop")]
+    public ShopInfo? Shop { get; set; }
+
     [JsonPropertyName("timestamp")]
     public long Timestamp { get; set; }
 }

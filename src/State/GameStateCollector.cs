@@ -12,7 +12,9 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Potions;
+using MegaCrit.Sts2.Core.Entities.Merchant;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 using TwitchOverlayMod.Models;
@@ -148,6 +150,15 @@ internal static class GameStateCollector
         catch (Exception ex)
         {
             Logging.Log($"Error collecting event info: {ex.Message}");
+        }
+
+        try
+        {
+            payload.Shop = CollectShopInfo();
+        }
+        catch (Exception ex)
+        {
+            Logging.Log($"Error collecting shop info: {ex.Message}");
         }
 
         return payload;
@@ -559,5 +570,161 @@ internal static class GameStateCollector
         catch { }
 
         return info;
+    }
+
+    private static bool _shopFieldsLogged;
+
+    private static void LogTypeMembers<T>(string label)
+    {
+        foreach (var p in typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            Logging.Log($"[Shop] {label}.{p.Name}: {p.PropertyType.Name}");
+    }
+
+    private static IEnumerable<T> GetDescendants<T>(Godot.Node root) where T : Godot.Node
+    {
+        foreach (var child in root.GetChildren())
+        {
+            if (child is T t) yield return t;
+            foreach (var d in GetDescendants<T>(child)) yield return d;
+        }
+    }
+
+    private static ShopInfo? CollectShopInfo()
+    {
+        var shopRoom = NMerchantRoom.Instance;
+        if (shopRoom == null) return null;
+
+        var info = new ShopInfo();
+        var screenTransform = shopRoom.GetViewport().GetScreenTransform();
+
+        if (!_shopFieldsLogged)
+        {
+            _shopFieldsLogged = true;
+            LogTypeMembers<CardCreationResult>("CardCreationResult");
+        }
+
+        CollectMerchantCards(shopRoom, screenTransform, info);
+        CollectMerchantRelics(shopRoom, screenTransform, info);
+        CollectMerchantPotions(shopRoom, screenTransform, info);
+        CollectMerchantCardRemoval(shopRoom, screenTransform, info);
+
+        return info;
+    }
+
+    private static CardModel? GetCardFromCreationResult(CardCreationResult? creationResult)
+    {
+        if (creationResult == null) return null;
+        var t = creationResult.GetType();
+        foreach (var prop in t.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+        {
+            if (prop.PropertyType != typeof(CardModel)) continue;
+            try { return prop.GetValue(creationResult) as CardModel; }
+            catch { }
+        }
+        // Walk the _lobbyCreationResult field if direct property search failed
+        var lobbyField = t.GetField("_lobbyCreationResult", BindingFlags.Instance | BindingFlags.NonPublic);
+        var lobbyObj = lobbyField?.GetValue(creationResult);
+        if (lobbyObj != null)
+        {
+            foreach (var prop in lobbyObj.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                if (prop.PropertyType != typeof(CardModel)) continue;
+                try { return prop.GetValue(lobbyObj) as CardModel; }
+                catch { }
+            }
+        }
+        return null;
+    }
+
+    private static void CollectMerchantCards(NMerchantRoom room, Godot.Transform2D st, ShopInfo info)
+    {
+        foreach (var node in GetDescendants<NMerchantCard>(room))
+        {
+            try
+            {
+                var entry = node.Entry as MerchantCardEntry;
+                if (entry == null || !entry.IsStocked) continue;
+                var card = GetCardFromCreationResult(entry.CreationResult);
+                if (card == null) continue;
+                var seqId = CardIdMapper.GetSequentialId(card.Id.ToString(), card.CurrentUpgradeLevel);
+                if (!seqId.HasValue) continue;
+                var rect = st * node.GetGlobalRect();
+                info.Cards.Add(new ShopItemInfo { Id = seqId.Value,
+                    X = rect.Position.X, Y = rect.Position.Y,
+                    Width = rect.Size.X, Height = rect.Size.Y });
+            }
+            catch (Exception ex) { Logging.Log($"[Shop] Card: {ex.Message}"); }
+        }
+    }
+
+    private static void CollectMerchantRelics(NMerchantRoom room, Godot.Transform2D st, ShopInfo info)
+    {
+        foreach (var node in GetDescendants<NMerchantRelic>(room))
+        {
+            try
+            {
+                var entry = node.Entry as MerchantRelicEntry;
+                if (entry == null || !entry.IsStocked) continue;
+                var relic = entry.Model;
+                if (relic == null) continue;
+                var seqId = RelicIdMapper.GetSequentialId(relic.Id.ToString());
+                if (!seqId.HasValue) continue;
+                var rect = st * node.GetGlobalRect();
+                info.Relics.Add(new ShopItemInfo { Id = seqId.Value,
+                    X = rect.Position.X, Y = rect.Position.Y,
+                    Width = rect.Size.X, Height = rect.Size.Y });
+            }
+            catch (Exception ex) { Logging.Log($"[Shop] Relic: {ex.Message}"); }
+        }
+    }
+
+    private static void CollectMerchantPotions(NMerchantRoom room, Godot.Transform2D st, ShopInfo info)
+    {
+        foreach (var node in GetDescendants<NMerchantPotion>(room))
+        {
+            try
+            {
+                var entry = node.Entry as MerchantPotionEntry;
+                if (entry == null || !entry.IsStocked) continue;
+                var potion = entry.Model;
+                if (potion == null) continue;
+                var seqId = PotionIdMapper.GetSequentialId(potion.Id.Entry);
+                if (!seqId.HasValue) continue;
+                var rect = st * node.GetGlobalRect();
+                info.Potions.Add(new ShopItemInfo { Id = seqId.Value,
+                    X = rect.Position.X, Y = rect.Position.Y,
+                    Width = rect.Size.X, Height = rect.Size.Y });
+            }
+            catch (Exception ex) { Logging.Log($"[Shop] Potion: {ex.Message}"); }
+        }
+    }
+
+    private static void CollectMerchantCardRemoval(NMerchantRoom room, Godot.Transform2D st, ShopInfo info)
+    {
+        var node = GetDescendants<NMerchantCardRemoval>(room).FirstOrDefault();
+        if (node == null) return;
+        try
+        {
+            var entry = node.Entry as MerchantCardRemovalEntry;
+            if (entry == null || entry.Used || !entry.IsStocked) return;
+            var rect = st * node.GetGlobalRect();
+            info.CardRemoval = new ShopItemInfo { Id = 0,
+                X = rect.Position.X, Y = rect.Position.Y,
+                Width = rect.Size.X, Height = rect.Size.Y };
+            try { info.CardRemovalTitle = GetLocText(node, "Title");       } catch { }
+            try { info.CardRemovalDesc  = GetLocText(node, "Description"); } catch { }
+            info.CardRemovalCost = entry.Cost;
+        }
+        catch (Exception ex) { Logging.Log($"[Shop] CardRemoval: {ex.Message}"); }
+    }
+
+    // Access a LocString-typed property by name via reflection and call GetFormattedText().
+    private static string? GetLocText(object obj, string propertyName)
+    {
+        var prop = obj.GetType().GetProperty(propertyName,
+            BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+        var locObj = prop?.GetValue(obj);
+        if (locObj == null) return null;
+        return locObj.GetType().GetMethod("GetFormattedText")?.Invoke(locObj, null) as string;
     }
 }
