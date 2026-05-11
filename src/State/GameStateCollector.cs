@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Godot;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Events;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -595,7 +596,6 @@ internal static class GameStateCollector
         if (shopRoom == null) return null;
 
         var info = new ShopInfo();
-        var screenTransform = shopRoom.GetViewport().GetScreenTransform();
 
         if (!_shopFieldsLogged)
         {
@@ -603,10 +603,10 @@ internal static class GameStateCollector
             LogTypeMembers<CardCreationResult>("CardCreationResult");
         }
 
-        CollectMerchantCards(shopRoom, screenTransform, info);
-        CollectMerchantRelics(shopRoom, screenTransform, info);
-        CollectMerchantPotions(shopRoom, screenTransform, info);
-        CollectMerchantCardRemoval(shopRoom, screenTransform, info);
+        CollectMerchantCards(shopRoom, info);
+        CollectMerchantRelics(shopRoom, info);
+        CollectMerchantPotions(shopRoom, info);
+        CollectMerchantCardRemoval(shopRoom, info);
 
         return info;
     }
@@ -636,7 +636,7 @@ internal static class GameStateCollector
         return null;
     }
 
-    private static void CollectMerchantCards(NMerchantRoom room, Godot.Transform2D st, ShopInfo info)
+    private static void CollectMerchantCards(NMerchantRoom room, ShopInfo info)
     {
         foreach (var node in GetDescendants<NMerchantCard>(room))
         {
@@ -648,7 +648,11 @@ internal static class GameStateCollector
                 if (card == null) continue;
                 var seqId = CardIdMapper.GetSequentialId(card.Id.ToString(), card.CurrentUpgradeLevel);
                 if (!seqId.HasValue) continue;
-                var rect = st * node.GetGlobalRect();
+                // 'Hitbox' child covers the actual visual card area; NMerchantCard's own
+                // rect sits ~137 canvas units below the visual card top.
+                var hitbox = node.GetNodeOrNull<Godot.Control>("Hitbox");
+                var source = hitbox ?? (Godot.Control)(Godot.Node)node;
+                var rect   = node.GetViewportTransform() * source.GetGlobalRect();
                 info.Cards.Add(new ShopItemInfo { Id = seqId.Value,
                     X = rect.Position.X, Y = rect.Position.Y,
                     Width = rect.Size.X, Height = rect.Size.Y });
@@ -657,7 +661,7 @@ internal static class GameStateCollector
         }
     }
 
-    private static void CollectMerchantRelics(NMerchantRoom room, Godot.Transform2D st, ShopInfo info)
+    private static void CollectMerchantRelics(NMerchantRoom room, ShopInfo info)
     {
         foreach (var node in GetDescendants<NMerchantRelic>(room))
         {
@@ -669,7 +673,7 @@ internal static class GameStateCollector
                 if (relic == null) continue;
                 var seqId = RelicIdMapper.GetSequentialId(relic.Id.ToString());
                 if (!seqId.HasValue) continue;
-                var rect = st * node.GetGlobalRect();
+                var rect = node.GetViewportTransform() * node.GetGlobalRect();
                 info.Relics.Add(new ShopItemInfo { Id = seqId.Value,
                     X = rect.Position.X, Y = rect.Position.Y,
                     Width = rect.Size.X, Height = rect.Size.Y });
@@ -678,7 +682,7 @@ internal static class GameStateCollector
         }
     }
 
-    private static void CollectMerchantPotions(NMerchantRoom room, Godot.Transform2D st, ShopInfo info)
+    private static void CollectMerchantPotions(NMerchantRoom room, ShopInfo info)
     {
         foreach (var node in GetDescendants<NMerchantPotion>(room))
         {
@@ -690,7 +694,7 @@ internal static class GameStateCollector
                 if (potion == null) continue;
                 var seqId = PotionIdMapper.GetSequentialId(potion.Id.Entry);
                 if (!seqId.HasValue) continue;
-                var rect = st * node.GetGlobalRect();
+                var rect = node.GetViewportTransform() * node.GetGlobalRect();
                 info.Potions.Add(new ShopItemInfo { Id = seqId.Value,
                     X = rect.Position.X, Y = rect.Position.Y,
                     Width = rect.Size.X, Height = rect.Size.Y });
@@ -699,7 +703,7 @@ internal static class GameStateCollector
         }
     }
 
-    private static void CollectMerchantCardRemoval(NMerchantRoom room, Godot.Transform2D st, ShopInfo info)
+    private static void CollectMerchantCardRemoval(NMerchantRoom room, ShopInfo info)
     {
         var node = GetDescendants<NMerchantCardRemoval>(room).FirstOrDefault();
         if (node == null) return;
@@ -707,7 +711,7 @@ internal static class GameStateCollector
         {
             var entry = node.Entry as MerchantCardRemovalEntry;
             if (entry == null || entry.Used || !entry.IsStocked) return;
-            var rect = st * node.GetGlobalRect();
+            var rect = node.GetViewportTransform() * node.GetGlobalRect();
             info.CardRemoval = new ShopItemInfo { Id = 0,
                 X = rect.Position.X, Y = rect.Position.Y,
                 Width = rect.Size.X, Height = rect.Size.Y };
