@@ -238,6 +238,7 @@ internal class BackfillManager
         var activeIds = CollectActiveIds(state);
         if (!activeIds.TryGetValue("cards", out var cardIds) || cardIds.Count == 0)
             return keys;
+        ExpandModCardSiblings(cardIds);
 
         foreach (var item in _scanned)
         {
@@ -253,6 +254,8 @@ internal class BackfillManager
     private IEnumerable<BackfillItem> FilterActive(GameStatePayload? state)
     {
         var activeIds = state != null ? CollectActiveIds(state) : null;
+        if (activeIds != null && activeIds.TryGetValue("cards", out var cardIds))
+            ExpandModCardSiblings(cardIds);
         return activeIds != null
             ? _scanned.Where(i => activeIds.TryGetValue(i.Category, out var catIds) && catIds.Contains(i.Id))
             : _scanned;
@@ -339,6 +342,25 @@ internal class BackfillManager
             ["enemies"]      = enemies,
             ["enchantments"] = enchantments
         };
+    }
+
+    // For any active mod card, also include every sibling upgrade level so that
+    // viewers receive metadata, art, and frames for all levels of that card.
+    private void ExpandModCardSiblings(HashSet<int> cardIds)
+    {
+        var activePrefixes = new HashSet<string>();
+        foreach (var item in _scanned)
+        {
+            if (item.IsNew && item.Category == "cards" && cardIds.Contains(item.Id))
+                activePrefixes.Add(item.Key[..item.Key.LastIndexOf(':')]);
+        }
+        if (activePrefixes.Count == 0) return;
+        foreach (var item in _scanned)
+        {
+            if (item.IsNew && item.Category == "cards"
+                && activePrefixes.Contains(item.Key[..item.Key.LastIndexOf(':')]))
+                cardIds.Add(item.Id);
+        }
     }
 
     // ── Packaged data loading ─────────────────────────────────────────────────
@@ -801,6 +823,8 @@ internal class BackfillManager
         if (_captureInProgress) return;
 
         var activeIds = state != null ? CollectActiveIds(state) : null;
+        if (activeIds != null && activeIds.TryGetValue("cards", out var captureCardIds))
+            ExpandModCardSiblings(captureCardIds);
         var items = _scanned
             .Where(i => i.IsNew
                      && i.Category == "cards"
