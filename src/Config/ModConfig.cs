@@ -21,6 +21,9 @@ internal class ModConfig
     [JsonPropertyName("backfillEveryN")]
     public int BackfillEveryN { get; set; } = 4;
 
+    [JsonPropertyName("broadcastSchedule")]
+    public string BroadcastSchedule { get; set; } = "SMSASL";
+
     [JsonPropertyName("enableLocalServer")]
     public bool EnableLocalServer { get; set; } = false;
 
@@ -42,6 +45,8 @@ internal class ModConfig
         }
 
         var existing = File.ReadAllText(configPath);
-        return JsonSerializer.Deserialize<ModConfig>(existing) ?? new ModConfig();
+        var config   = JsonSerializer.Deserialize<ModConfig>(existing) ?? new ModConfig();
+        File.WriteAllText(configPath, JsonSerializer.Serialize(config, new JsonSerializerOptions { WriteIndented = true }));
+        return config;
     }
 }

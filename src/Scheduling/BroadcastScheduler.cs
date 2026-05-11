@@ -57,20 +57,19 @@ internal static class BroadcastScheduler
 
         try
         {
-            // 6-tick cycle: 1=state, 2=metadata, 3=state, 4=art, 5=state, 6=large-images
-            // Art  (tick 4): small img chunks — relics, powers, potions, card art.
-            //                Rebuilds independently whenever its queue drains.
-            // Large (tick 6): frame and map-pointer chunks.
-            //                 Rebuilds independently whenever its queue drains.
-            var pos = ((_tickCount - 1) % 6) + 1;
+            // Schedule string: S=state, M=metadata, A=art, L=large. Default "SMSASL".
+            // Any unknown character or when backfill is disabled falls back to S.
+            var schedule = (_config.BroadcastSchedule ?? "SMSASL").ToUpperInvariant();
+            if (schedule.Length == 0) schedule = "S";
+            var ch = schedule[(_tickCount - 1) % schedule.Length];
 
-            if (!_config.EnableBackfill || _backfill == null || pos == 1 || pos == 3 || pos == 5)
+            if (!_config.EnableBackfill || _backfill == null || (ch != 'M' && ch != 'A' && ch != 'L'))
             {
                 BroadcastGameState(jwt, channelId, _config, hasTwitch);
                 return;
             }
 
-            if (pos == 2)
+            if (ch == 'M')
             {
                 var state = GameStateCollector.Collect();
                 _backfill.TriggerCaptureForActive(_parent!, state);
@@ -89,7 +88,7 @@ internal static class BroadcastScheduler
                     if (hasTwitch) Task.Run(() => TwitchPubSubClient.BroadcastAsync(chunk, jwt!, _config, channelId!));
                 }
             }
-            else if (pos == 4)
+            else if (ch == 'A')
             {
                 if (!_backfill.HasArt)
                 {
