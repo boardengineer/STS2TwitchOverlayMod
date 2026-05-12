@@ -857,9 +857,12 @@ internal class BackfillManager
 
         try
         {
+            const int hPad   = 37;
+            const int topPad = 25;
+            const int botPad = 2;
             var size = new Vector2I(
-                (int)(NCard.defaultSize.X + 26),
-                (int)(NCard.defaultSize.Y + 26));
+                (int)NCard.defaultSize.X + hPad * 2,
+                (int)NCard.defaultSize.Y + topPad + botPad);
 
             viewport = new SubViewport
             {
@@ -880,7 +883,9 @@ internal class BackfillManager
 
             card          = cardScene.Instantiate<NCard>();
             card.Scale    = Vector2.One;
-            card.Position = new Vector2(size.X / 2f, size.Y / 2f);
+            card.Position = new Vector2(
+                hPad   + NCard.defaultSize.X / 2f,
+                topPad + NCard.defaultSize.Y / 2f);
             viewport.AddChild(card);
         }
         catch (Exception ex)
