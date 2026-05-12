@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -9,6 +10,8 @@ namespace TwitchOverlayMod.State;
 internal static class EnemyIdMapper
 {
     private static Dictionary<string, int>? _map;
+
+    internal static int MaxPackagedId { get; private set; }
 
     internal static void Load()
     {
@@ -24,6 +27,8 @@ internal static class EnemyIdMapper
         _map = new Dictionary<string, int>();
         foreach (var enemy in enemies)
             _map.TryAdd(enemy.Name, enemy.Id);
+
+        MaxPackagedId = _map.Count > 0 ? _map.Values.Max() : 0;
     }
 
     internal static int? GetSequentialId(string name)

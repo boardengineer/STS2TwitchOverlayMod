@@ -751,13 +751,13 @@ internal class BackfillManager
 
     private static int PackagedMaxId(string category) => category switch
     {
-        "relics"        => 288,
-        "powers"        => 269,
-        "potions"       => 63,
-        "intents"       => 16,
-        "enemies"       => 101,
-        "cards"         => 1116,
-        "enchantments"  => 23,
+        "relics"        => RelicIdMapper.MaxPackagedId,
+        "powers"        => PowerIdMapper.MaxPackagedId,
+        "potions"       => PotionIdMapper.MaxPackagedId,
+        "intents"       => IntentIdMapper.MaxPackagedId,
+        "enemies"       => EnemyIdMapper.MaxPackagedId,
+        "cards"         => CardIdMapper.MaxPackagedId,
+        "enchantments"  => EnchantmentIdMapper.MaxPackagedId,
         _               => 0
     };
 
