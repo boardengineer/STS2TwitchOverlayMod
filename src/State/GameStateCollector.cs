@@ -95,7 +95,14 @@ internal static class GameStateCollector
         if (!string.IsNullOrEmpty(tip.Id) && KeywordIdMap.TryGetValue(tip.Id, out var kw))
             return new Models.HoverTipRef { Type = "keyword", Id = kw.ToString() };
         if (!string.IsNullOrEmpty(tip.Id) && EnchantmentTipIdMap.TryGetValue(tip.Id, out var enchGameId))
-            return new Models.HoverTipRef { Type = "enchantment", Id = enchGameId };
+        {
+            // Capture the game-formatted description (e.g. "...by 2") when the concrete
+            // tip type exposes it; null is omitted from JSON and the viewer falls back to
+            // the static plain_description.
+            string? enchDesc = (tip is HoverTip htE && !string.IsNullOrWhiteSpace(htE.Description))
+                ? htE.Description : null;
+            return new Models.HoverTipRef { Type = "enchantment", Id = enchGameId, Description = enchDesc };
+        }
         if (tip is HoverTip ht && (!string.IsNullOrEmpty(ht.Title) || !string.IsNullOrEmpty(ht.Description)))
             return new Models.HoverTipRef { Type = "inline", Title = ht.Title, Description = ht.Description, IsDebuff = tip.IsDebuff };
         return null;
