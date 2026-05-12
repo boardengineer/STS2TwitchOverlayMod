@@ -1,7 +1,7 @@
 {
   "id": "TwitchOverlayMod",
   "name": "Twitch Overlay Mod",
-  "author": "YourName",
+  "author": "BoardEngineer",
   "description": "A Twitch overlay mod for Slay the Spire 2",
   "version": "v0.2.0",
   "has_pck": false,
