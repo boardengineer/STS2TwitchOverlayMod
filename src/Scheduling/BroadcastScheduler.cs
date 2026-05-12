@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -161,6 +162,7 @@ internal static class BroadcastScheduler
         }
     }
 
+    [Conditional("VERBOSE_LOGGING")]
     private static void ConsolePrint(string message)
     {
         try

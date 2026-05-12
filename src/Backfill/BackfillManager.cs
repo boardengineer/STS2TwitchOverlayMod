@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -228,10 +229,7 @@ internal class BackfillManager
         }
 
         foreach (var (charId, webp) in _capturedEnergyIcons)
-        {
-            Logging.Log($"[Backfill] Enqueueing energy icon for {charId} ({webp.Length}b)");
             EnqueueEnergyIconChunk(charId, webp);
-        }
 
         Logging.Log($"[Backfill] Built {_largeChunks.Count} large chunks ({neededFrames.Count} frame key(s), {_capturedPointers.Count} pointer(s), {_capturedEnergyIcons.Count} energy icon(s))");
     }
@@ -1576,11 +1574,7 @@ internal class BackfillManager
             var gameId = item.Key.Split(':')[0];
             var card   = ModelDb.AllCards.FirstOrDefault(c => c.Id.ToString() == gameId);
             var tex    = GetEnergyIconTexture(card?.Pool);
-            if (tex == null)
-            {
-                Logging.Log($"[Backfill] Energy icon: no texture found for {charId}");
-                continue;
-            }
+            if (tex == null) continue;
             try
             {
                 var img = tex.GetImage();
@@ -1592,7 +1586,6 @@ internal class BackfillManager
                     img.Resize((int)(img.GetWidth() * s), (int)(img.GetHeight() * s), Image.Interpolation.Bilinear);
                 }
                 _capturedEnergyIcons[charId] = img.SaveWebpToBuffer(true);
-                Logging.Log($"[Backfill] Captured energy icon for {charId} ({img.GetWidth()}x{img.GetHeight()})");
             }
             catch { }
         }
@@ -1760,6 +1753,7 @@ internal class BackfillManager
         }
     }
 
+    [Conditional("VERBOSE_LOGGING")]
     private static void ConsolePrint(string message)
     {
         try

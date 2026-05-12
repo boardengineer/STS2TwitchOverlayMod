@@ -3,7 +3,7 @@
   "name": "Twitch Overlay Mod",
   "author": "YourName",
   "description": "A Twitch overlay mod for Slay the Spire 2",
-  "version": "v0.1.0",
+  "version": "v0.2.0",
   "has_pck": false,
   "has_dll": true,
   "dependencies": [],
