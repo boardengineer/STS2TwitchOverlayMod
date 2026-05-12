@@ -69,6 +69,7 @@ internal class BackfillManager
 
     private readonly Dictionary<string, FrameCapture> _capturedFrames   = new();
     private readonly Dictionary<string, byte[]>       _capturedPointers = new();
+    private readonly Dictionary<string, byte[]>       _capturedEnergyIcons = new();
 
     internal (string? chunk, Dictionary<int, string>? notes, string? label) DequeueMetadata()
     {
@@ -95,7 +96,8 @@ internal class BackfillManager
         try { ScanEnchantments(); } catch (Exception ex) { Logging.Log($"[Backfill] Scan enchantments error: {ex.Message}"); }
         try { CollectAllTranslations(); } catch (Exception ex) { Logging.Log($"[Backfill] Loc collection error: {ex.Message}"); }
         try { CaptureNonCardImages(); } catch (Exception ex) { Logging.Log($"[Backfill] Non-card image capture: {ex.Message}"); }
-        try { CapturePoolPointers();  } catch (Exception ex) { Logging.Log($"[Backfill] Pool pointer capture: {ex.Message}"); }
+        try { CapturePoolPointers();    } catch (Exception ex) { Logging.Log($"[Backfill] Pool pointer capture: {ex.Message}"); }
+        try { CapturePoolEnergyIcons(); } catch (Exception ex) { Logging.Log($"[Backfill] Pool energy icon capture: {ex.Message}"); }
         var newCount     = _scanned.Count(i => i.IsNew);
         var changedCount = _scanned.Count(i => !i.IsNew);
         Logging.Log($"[Backfill] Scan: {newCount} new, {changedCount} changed");
@@ -225,7 +227,13 @@ internal class BackfillManager
             EnqueuePointerChunk(charId, webp);
         }
 
-        Logging.Log($"[Backfill] Built {_largeChunks.Count} large chunks ({neededFrames.Count} frame key(s), {_capturedPointers.Count} pointer(s))");
+        foreach (var (charId, webp) in _capturedEnergyIcons)
+        {
+            Logging.Log($"[Backfill] Enqueueing energy icon for {charId} ({webp.Length}b)");
+            EnqueueEnergyIconChunk(charId, webp);
+        }
+
+        Logging.Log($"[Backfill] Built {_largeChunks.Count} large chunks ({neededFrames.Count} frame key(s), {_capturedPointers.Count} pointer(s), {_capturedEnergyIcons.Count} energy icon(s))");
     }
 
     // Returns the set of frame keys used by cards that are currently active in the
@@ -1537,6 +1545,73 @@ internal class BackfillManager
                 $"{{\"t\":\"pointer\",\"char_id\":{escapedId},\"part\":{part},\"of\":{total},\"data\":\"{b64.Substring(start, len)}\"}}",
                 $"pointer/{charId} p{part}/{total}"));
         }
+    }
+
+    private void EnqueueEnergyIconChunk(string charId, byte[] webp)
+    {
+        var b64       = Convert.ToBase64String(webp);
+        const int Sz  = 4700;
+        var total     = (b64.Length + Sz - 1) / Sz;
+        var escapedId = JsonSerializer.Serialize(charId);
+        for (int part = 1; part <= total; part++)
+        {
+            var start = (part - 1) * Sz;
+            var len   = Math.Min(Sz, b64.Length - start);
+            _largeChunks.Enqueue((
+                $"{{\"t\":\"energyicon\",\"char_id\":{escapedId},\"part\":{part},\"of\":{total},\"data\":\"{b64.Substring(start, len)}\"}}",
+                $"energyicon/{charId} p{part}/{total}"));
+        }
+    }
+
+    private void CapturePoolEnergyIcons()
+    {
+        var seen = new HashSet<string>();
+        foreach (var item in _scanned.Where(i => i.IsNew && i.Category == "cards" && i.Key.EndsWith(":0")))
+        {
+            var poolName = (item.ExtraFields.TryGetValue("pool", out var p) ? p?.ToString() : null) ?? "";
+            var charId   = poolName.ToLowerInvariant();
+            if (!seen.Add(charId)) continue;
+            if (_capturedEnergyIcons.ContainsKey(charId)) continue;
+
+            var gameId = item.Key.Split(':')[0];
+            var card   = ModelDb.AllCards.FirstOrDefault(c => c.Id.ToString() == gameId);
+            var tex    = GetEnergyIconTexture(card?.Pool);
+            if (tex == null)
+            {
+                Logging.Log($"[Backfill] Energy icon: no texture found for {charId}");
+                continue;
+            }
+            try
+            {
+                var img = tex.GetImage();
+                if (img == null) continue;
+                const int MaxDim = 48;
+                if (img.GetWidth() > MaxDim || img.GetHeight() > MaxDim)
+                {
+                    var s = Math.Min((float)MaxDim / img.GetWidth(), (float)MaxDim / img.GetHeight());
+                    img.Resize((int)(img.GetWidth() * s), (int)(img.GetHeight() * s), Image.Interpolation.Bilinear);
+                }
+                _capturedEnergyIcons[charId] = img.SaveWebpToBuffer(true);
+                Logging.Log($"[Backfill] Captured energy icon for {charId} ({img.GetWidth()}x{img.GetHeight()})");
+            }
+            catch { }
+        }
+    }
+
+    private static Texture2D? GetEnergyIconTexture(object? pool)
+    {
+        if (pool == null) return null;
+        var poolType = pool.GetType();
+        foreach (var name in new[] { "EnergyIcon", "EnergyTexture", "EnergyOrb", "OrbIcon", "CardOrb", "EnergyDisplay" })
+        {
+            try
+            {
+                var prop = poolType.GetProperty(name, BindingFlags.Public | BindingFlags.Instance);
+                if (prop?.GetValue(pool) is Texture2D tex) return tex;
+            }
+            catch { }
+        }
+        return null;
     }
 
     private static Rect2I MeasureFirstByNames<T>(Node root, params string[] names) where T : Control
