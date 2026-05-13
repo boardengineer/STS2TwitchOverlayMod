@@ -30,9 +30,6 @@ internal class BackfillManager
     // For items that share a chunk with others keep images small so batching works.
     private const int MaxImageBase64BytesBatch = 3072;
 
-    private static readonly string CachePath = Path.Combine(
-        System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData),
-        "SlayTheSpire2", "TwitchOverlayMod_backfill_cache.json");
 
     // ── Packaged data for diff ────────────────────────────────────────────────
 
@@ -104,22 +101,7 @@ internal class BackfillManager
         Logging.Log($"[Backfill] Scan: {newCount} new, {changedCount} changed");
     }
 
-    internal void Load()
-    {
-        try
-        {
-            if (!File.Exists(CachePath)) return;
-            var json = File.ReadAllText(CachePath);
-            _cache = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, int>>>(json)
-                     ?? new Dictionary<string, Dictionary<string, int>>();
-            Logging.Log($"[Backfill] Cache loaded: {_cache.Values.Sum(d => d.Count)} entries");
-        }
-        catch (Exception ex)
-        {
-            Logging.Log($"[Backfill] Cache load error: {ex.Message}");
-            _cache = new Dictionary<string, Dictionary<string, int>>();
-        }
-    }
+    internal void Load() { }
 
     internal void AssignIds()
     {
@@ -1622,19 +1604,7 @@ internal class BackfillManager
     private static int CenterX(Rect2I r) => r.Size.X > 0 ? r.Position.X + r.Size.X / 2 : 0;
     private static int CenterY(Rect2I r) => r.Size.Y > 0 ? r.Position.Y + r.Size.Y / 2 : 0;
 
-    private void SaveCache()
-    {
-        try
-        {
-            Directory.CreateDirectory(Path.GetDirectoryName(CachePath)!);
-            File.WriteAllText(CachePath,
-                JsonSerializer.Serialize(_cache, new JsonSerializerOptions { WriteIndented = true }));
-        }
-        catch (Exception ex)
-        {
-            Logging.Log($"[Backfill] Cache save error: {ex.Message}");
-        }
-    }
+    private void SaveCache() { }
 
     private static string SafeText(Func<string> getter)
     {
